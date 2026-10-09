@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<!-- © 2026 PsyGioX | MIT License | https://github.com/PsyGioX/psyscripts | https://psygiox-dev.vercel.app -->
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="description" content="22 lightweight dependency-free JavaScript scripts: tabs, slider, modal, toast, validator and more. MIT.">
+<meta name="theme-color" content="#2b4eff">
+<title>JS Scripts</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Onest:wght@400;500;700&family=Unbounded:wght@700&display=swap">
+<link rel="stylesheet" href="src/tabs.css">
+<style>
+:root{--bg:#f3f5f9;--fg:#0f1b33;--muted:#5b6785;--line:#d5dbe8;--stage:#fff;--accent:#2b4eff;--on:#fff;--mark:#ffd23f;--r:10px;--r2:6px;
+--sans:Onest,system-ui,-apple-system,"Segoe UI",sans-serif;--disp:Unbounded,Onest,system-ui,sans-serif;--mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace}
+:root[data-theme=dark]{--bg:#0b1020;--fg:#e8ecf8;--muted:#98a3c4;--line:#222c4a;--stage:#111a33;--accent:#8ea2ff;--on:#0b1020}
+*{box-sizing:border-box}html{scroll-padding-top:76px;scroll-behavior:smooth}
+body{margin:0;font:400 16px/1.65 var(--sans);background:var(--bg);color:var(--fg);padding:env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left)}
+a{color:var(--accent)}:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+button,input,textarea{font:inherit;color:inherit}
+button{background:var(--stage);border:1px solid var(--line);border-radius:var(--r2);padding:7px 14px;cursor:pointer;transition:border-color .15s,transform .1s}
+button:hover{border-color:var(--accent)}button:active{transform:translateY(1px)}
+input,textarea{background:var(--bg);border:1px solid var(--line);border-radius:var(--r2);padding:7px 10px;max-width:100%}
+header{position:sticky;top:0;z-index:10;background:color-mix(in srgb,var(--bg) 82%,transparent);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.bar{max-width:1120px;margin:auto;padding:10px 20px;display:flex;align-items:center;gap:10px}
+.brand{font:700 15px var(--disp);margin-right:auto;letter-spacing:-.02em}
+nav{display:flex;gap:20px;margin-right:10px}nav a{text-decoration:none;color:var(--muted);font-weight:500}nav a:hover,nav a[aria-current]{color:var(--fg)}
+.seg{display:flex}.seg button{border-radius:0;padding:5px 10px;font-size:13px;font-weight:500}.seg button:first-child{border-radius:var(--r2) 0 0 var(--r2)}.seg button:last-child{border-radius:0 var(--r2) var(--r2) 0;margin-left:-1px}
+.seg button[aria-pressed=true]{background:var(--accent);color:var(--on);border-color:var(--accent);position:relative}
+#theme{font-size:0;width:36px;padding:5px 0}#theme::before{font-size:16px;content:"◐"}#theme[data-mode=light]::before{content:"☀"}#theme[data-mode=dark]::before{content:"☾"}
+[data-menu-toggle]{display:none;width:36px;padding:5px 0}
+.wrap{max-width:1120px;margin:auto;padding:0 20px}
+.hero{padding:clamp(40px,9vw,104px) 0 clamp(32px,6vw,64px)}
+.hero h1{font:700 clamp(30px,6.2vw,64px)/1.08 var(--disp);letter-spacing:-.035em;margin:0 0 20px;max-width:15ch;text-wrap:balance}
+.hero p{font-size:clamp(16px,2vw,19px);color:var(--muted);max-width:56ch;margin:0 0 28px}
+.row{display:flex;gap:12px;flex-wrap:wrap;align-items:stretch}
+.cta{display:inline-flex;align-items:center;padding:11px 20px;border-radius:var(--r2);background:var(--accent);color:var(--on);text-decoration:none;font-weight:700}
+.cta.ghost{background:none;color:var(--fg);border:1px solid var(--line)}
+.clone{display:flex;align-items:center;gap:10px;margin-top:20px;max-width:100%;padding:6px 6px 6px 14px;border:1px solid var(--line);border-radius:var(--r);background:var(--stage)}
+.clone code{font:13px var(--mono);overflow-x:auto;white-space:nowrap;min-width:0}
+.clone button{flex:none}
+.hero>*{animation:up .6s cubic-bezier(.2,.7,.2,1) both}.hero>:nth-child(2){animation-delay:.08s}.hero>:nth-child(3){animation-delay:.16s}.hero>:nth-child(4){animation-delay:.24s}
+@keyframes up{from{opacity:0;transform:translateY(14px)}}
+.layout{display:grid;grid-template-columns:230px minmax(0,1fr);gap:56px;align-items:start}
+.idx{position:sticky;top:84px;display:flex;flex-direction:column;max-height:calc(100vh - 100px);overflow-y:auto;border-left:1px solid var(--line);font-size:14px}
+.idx a{padding:4px 14px;color:var(--muted);text-decoration:none;margin-left:-1px;border-left:2px solid transparent}
+.idx a:hover{color:var(--fg)}.idx a[aria-current]{color:var(--fg);font-weight:700;border-left-color:var(--accent)}
+.c{padding:36px 0;border-top:1px solid var(--line);min-width:0}
+.c h2{font:700 clamp(18px,2.6vw,24px)/1.25 var(--disp);letter-spacing:-.025em;margin:0 0 8px}
+.d{color:var(--muted);max-width:68ch;margin:0 0 18px}
+.c>:not(h2):not(.d){padding:20px;border-radius:var(--r);background:var(--stage);border:1px solid var(--line);background-image:radial-gradient(var(--line) 1px,transparent 1px);background-size:16px 16px;min-width:0;max-width:100%}
+.c>pre,.c>.clone{margin:0}
+pre{font:13px/1.6 var(--mono);overflow-x:auto;background-color:var(--stage)}
+code{font-family:var(--mono);font-size:.9em}
+[data-copied]::after{content:" ✓"}
+.sl{overflow:hidden;position:relative}.tr{display:flex;transition:transform .4s}.tr>div{flex:0 0 100%;padding:48px 20px;text-align:center;font:700 28px var(--disp);background:var(--bg);border-radius:var(--r2)}
+.g{border-radius:var(--r2);margin:0 6px 6px 0;max-width:30%;height:auto}
+nav a{white-space:nowrap}
+table{border-collapse:collapse;display:block;overflow-x:auto;max-width:100%}th,td{padding:8px 16px;border:1px solid var(--line);text-align:left}th[aria-sort]::after{content:" ↕"}
+[data-acc]{display:block;width:100%;text-align:left;margin-top:6px;font-weight:500}
+dialog{background:var(--stage);color:var(--fg);border:1px solid var(--line);border-radius:var(--r);max-width:min(92vw,420px)}dialog::backdrop{background:rgba(5,10,25,.55)}
+.rv{opacity:0;transform:translateY(16px);transition:opacity .5s,transform .5s}.rv.is-visible{opacity:1;transform:none}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(110px,1fr));gap:10px}.grid>div{padding:28px 12px;text-align:center;border:1px solid var(--line);border-radius:var(--r2);background:var(--bg)}
+footer{margin-top:48px;border-top:1px solid var(--line);padding:28px 0 36px;color:var(--muted)}
+footer .wrap{display:flex;gap:8px 24px;flex-wrap:wrap;justify-content:space-between}
+@media(max-width:960px){.layout{display:block}.idx{display:none}}
+@media(max-width:700px){
+.bar{padding:8px 14px;gap:6px}nav{display:none;position:absolute;top:100%;left:0;right:0;flex-direction:column;gap:2px;margin:0;padding:8px 14px 14px;background:var(--bg);border-bottom:1px solid var(--line)}
+nav a{padding:10px 0;font-size:17px}header[data-open] nav{display:flex}[data-menu-toggle]{display:block}
+.wrap{padding:0 14px}.c{padding:28px 0}.c>:not(h2):not(.d){padding:14px}.cta{flex:1;justify-content:center}.clone{width:100%}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+<header id="hdr"><div class="bar"><span class="brand">JS Scripts</span>
+<nav><a href="#scripts" data-i18n="nav.scripts"></a><a href="#usage" data-i18n="nav.usage"></a></nav>
+<div class="seg"><button data-lang="ru" onclick="I18n.set('ru')">RU</button><button data-lang="en" onclick="I18n.set('en')">EN</button></div>
+<button id="theme" data-i18n="theme.btn"></button><button data-menu-toggle aria-label="Menu">☰</button></div></header>
+<div class="wrap">
+<div class="hero"><h1 data-i18n="hero.title"></h1><p data-i18n="hero.sub"></p>
+<div class="row"><a class="cta" href="https://github.com/PsyGioX/psyscripts" data-i18n="hero.cta"></a><a class="cta ghost" href="#scripts" data-i18n="nav.scripts"></a></div>
+<div class="clone"><code id="clone">git clone https://github.com/PsyGioX/psyscripts</code><button data-copy-target="#clone" data-i18n="copy.btn"></button></div></div>
+<div class="layout"><nav class="idx" id="idx" aria-label="Index"></nav>
+<main><div id="scripts">
+<section class="c" id="c-tabs"><h2 data-i18n="tabs.title"></h2><p class="d" data-i18n="tabs.desc"></p>
+<div id="t1"><div data-tab-nav><button data-tab="a" data-i18n="tabs.a"></button><button data-tab="b" data-i18n="tabs.b"></button><button data-tab="c" data-i18n="tabs.c"></button></div>
+<div data-tab-panel="a" data-i18n="tabs.pa"></div><div data-tab-panel="b" data-i18n="tabs.pb"></div><div data-tab-panel="c" data-i18n="tabs.pc"></div></div></section>
+<section class="c" id="c-theme"><h2 data-i18n="theme.title"></h2><p class="d" data-i18n="theme.desc"></p><pre>ThemeSwitcher('#theme');</pre></section>
+<section class="c" id="c-menu"><h2 data-i18n="menu.title"></h2><p class="d" data-i18n="menu.desc"></p><pre>HeaderMenu('#hdr');</pre></section>
+<section class="c" id="c-copy"><h2 data-i18n="copy.title"></h2><p class="d" data-i18n="copy.desc"></p>
+<div class="clone"><code id="code">npm i psyscripts</code><button id="cp" data-copy-target="#code" data-i18n="copy.btn"></button></div></section>
+<section class="c" id="c-reveal"><h2 data-i18n="reveal.title"></h2><p class="d" data-i18n="reveal.desc"></p>
+<div class="grid"><div class="rv"><span data-i18n="reveal.card"></span> 1</div><div class="rv"><span data-i18n="reveal.card"></span> 2</div><div class="rv"><span data-i18n="reveal.card"></span> 3</div></div></section>
+<div id="more"></div></div>
+<section class="c" id="usage"><h2 data-i18n="usage.title"></h2><p class="d" data-i18n="usage.desc"></p>
+<pre>&lt;link rel="stylesheet" href="dist/tabs.min.css"&gt;
+&lt;script src="dist/tabs.min.js"&gt;&lt;/script&gt;
+&lt;script&gt;const t = Tabs('#t1', {hash:true});&lt;/script&gt;</pre></section>
+<section class="c" id="c-npm"><h2 data-i18n="soon.title"></h2><p class="d" data-i18n="soon.desc"></p><pre>npm install
+npm run icons
+npm run build</pre></section>
+</main></div></div>
+<footer><div class="wrap"><span data-i18n="footer.text"></span><span><a href="https://github.com/PsyGioX/psyscripts">GitHub</a> · <a href="https://psygiox-dev.vercel.app">psygiox-dev.vercel.app</a></span></div></footer>
+<script src="src/tabs.js"></script><script src="src/theme-switcher.js"></script><script src="src/header-menu.js"></script>
+<script src="src/copy-button.js"></script><script src="src/scroll-reveal.js"></script>
+<script src="src/slider.js"></script><script src="src/gallery.js"></script><script src="src/native-search.js"></script><script src="src/footer-block.js"></script><script src="src/accordion.js"></script><script src="src/modal.js"></script><script src="src/toast.js"></script><script src="src/lazy-load.js"></script><script src="src/countdown.js"></script><script src="src/tooltip.js"></script><script src="src/form-validator.js"></script><script src="src/scroll-spy.js"></script>
+<script src="src/utils.js"></script><script src="src/safe-storage.js"></script><script src="src/cookie-consent.js"></script><script src="src/autosize.js"></script><script src="src/sort-table.js"></script>
+<script src="demos.js"></script><script src="i18n.js"></script>
+<script>
+Tabs('#t1',{hash:true});ThemeSwitcher('#theme');HeaderMenu('#hdr');CopyButton('[data-copy-target]');ScrollReveal('.rv',{stagger:120});
+document.querySelectorAll('section.c[id^=c-]').forEach(function(s){var a=document.createElement('a');a.href='#'+s.id;a.setAttribute('data-i18n',s.querySelector('h2').getAttribute('data-i18n'));document.getElementById('idx').appendChild(a);});
+ScrollSpy('.idx a');I18n.init();
+</script>
+</body>
+</html>
