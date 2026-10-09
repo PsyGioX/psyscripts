@@ -1,5 +1,5 @@
 <!-- © 2026 PsyGioX | MIT License | https://github.com/PsyGioX/psyscripts | https://psygiox-dev.vercel.app -->
-# JS Scripts
+# PsyScripts
 Lightweight dependency-free scripts: Tabs, ThemeSwitcher, HeaderMenu, CopyButton, ScrollReveal.
 Demo: `index.html` (serve over HTTP, e.g. `npx serve`; translations live in `locales/*.json`).
 © 2026 PsyGioX — MIT. https://github.com/PsyGioX/psyscripts · https://psygiox-dev.vercel.app
@@ -9,3 +9,6 @@ Demo: `index.html` (serve over HTTP, e.g. `npx serve`; translations live in `loc
 
 ## Minified build
 `npm run build` writes `dist/*.min.js`, `dist/tabs.min.css` and `dist/psyscripts.bundle.min.js` (all scripts in one file); author banners are preserved.
+
+## Deploy (Vercel)
+`vercel.json` runs `npm run build`, which assembles the static site into `public/`. Live: https://psyscripts.vercel.app
