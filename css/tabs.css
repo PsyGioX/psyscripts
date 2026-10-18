@@ -1,0 +1,6 @@
+/*! PsyScripts Tabs · © 2026 PsyGioX · MIT */
+[data-tabs] [role=tablist]{display:flex;gap:.25rem;overflow-x:auto;border-bottom:1px solid var(--psy-line);scrollbar-width:none}
+[data-tab]{flex:none;background:none;border:0;border-bottom:2px solid transparent;color:var(--psy-muted);padding:.7rem 1rem;font:inherit;font-weight:600;cursor:pointer;transition:color .2s,border-color .2s}
+[data-tab]:hover{color:var(--psy-text)}
+[data-tab][aria-selected=true]{color:var(--psy-accent);border-color:var(--psy-accent)}
+[data-panel]{padding:1.25rem 0}

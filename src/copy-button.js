@@ -1,18 +1,11 @@
-/*! CopyButton.js v1.0.0 | © 2026 PsyGioX | MIT License | https://github.com/PsyGioX/psyscripts | https://psygiox-dev.vercel.app */
-(function(r,f){typeof module!=='undefined'&&module.exports?module.exports=f():r.CopyButton=f();})(this,function(){
-  function copy(text){
-    if(navigator.clipboard&&window.isSecureContext)return navigator.clipboard.writeText(text);
-    return new Promise(function(ok,fail){var a=document.createElement('textarea');a.value=text;a.style.position='fixed';a.style.opacity='0';
-      document.body.appendChild(a);a.select();try{document.execCommand('copy')?ok():fail();}catch(e){fail(e);}a.remove();});
-  }
-  return function CopyButton(sel,o){
-    o=o||{};var list=[].slice.call(document.querySelectorAll(sel));
-    list.forEach(function(b){b.addEventListener('click',function(){
-      var tg=b.getAttribute('data-copy-target'),n=tg&&document.querySelector(tg),
-        text=b.getAttribute('data-copy')||(n?n.value||n.textContent:'');
-      copy(text).then(function(){b.setAttribute('data-copied','');setTimeout(function(){b.removeAttribute('data-copied');},o.delay||1500);if(o.onCopy)o.onCopy(text);},
-        function(e){if(o.onError)o.onError(e);});
-    });});
-    return{copy:copy};
-  };
-});
+/*! PsyScripts · © 2026 PsyGioX · MIT · github.com/PsyGioX/psyscripts */
+(function(){var P=window.PsyScripts=window.PsyScripts||{};
+function copy(t){if(navigator.clipboard&&isSecureContext)return navigator.clipboard.writeText(t);
+return new Promise(function(ok,no){var a=document.createElement('textarea');a.value=t;a.style.cssText='position:fixed;opacity:0';document.body.appendChild(a);a.select();
+try{document.execCommand('copy')?ok():no()}catch(e){no(e)}a.remove();});}
+P.copy=copy;
+document.addEventListener('click',function(e){var b=e.target.closest('[data-copy],[data-copy-target]');if(!b)return;
+var el=b.dataset.copyTarget&&document.querySelector(b.dataset.copyTarget),t=el?(el.value||el.textContent):b.dataset.copy;
+copy(t.trim()).then(function(){var o=b._o||(b._o=b.textContent);b.textContent=b.dataset.copied||'✓';b.classList.add('is-copied');
+clearTimeout(b._t);b._t=setTimeout(function(){b.textContent=o;b.classList.remove('is-copied')},1600);
+P.Toast&&b.hasAttribute('data-copy-toast')&&P.Toast.show(b.dataset.copyToast||'Copied');});});})();

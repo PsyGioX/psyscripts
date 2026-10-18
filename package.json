@@ -1,25 +1,22 @@
 {
   "name": "psyscripts",
-  "version": "2.1.0",
-  "description": "PsyScripts — lightweight dependency-free JS scripts + icon fonts downloader. © 2026 PsyGioX",
-  "author": "PsyGioX (https://psygiox-dev.vercel.app)",
+  "version": "1.0.0",
+  "description": "Lightweight dependency-free scripts for web developers",
   "license": "MIT",
-  "homepage": "https://psyscripts.vercel.app",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/PsyGioX/psyscripts.git"
-  },
+  "author": "PsyGioX",
+  "homepage": "https://psygiox-dev.vercel.app",
+  "repository": "github:PsyGioX/psyscripts",
   "scripts": {
-    "icons": "node scripts/copy-icons.js",
-    "start": "npm run build && npx serve public",
-    "build": "node scripts/build.js"
+    "build": "node scripts/build.js",
+    "icons": "node scripts/icons.js",
+    "serve": "npx serve .",
+    "docs": "python3 scripts/docs-data.py"
   },
   "devDependencies": {
     "@fortawesome/fontawesome-free": "^6.7.2",
     "@mdi/font": "^7.4.47",
-    "@tabler/icons-webfont": "^3.0.0",
+    "@tabler/icons-webfont": "^3.30.0",
     "bootstrap-icons": "^1.11.3",
-    "terser": "^5.36.0",
-    "csso": "^5.0.5"
+    "esbuild": "^0.25.12"
   }
 }

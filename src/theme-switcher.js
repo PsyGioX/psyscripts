@@ -1,22 +1,9 @@
-/*! ThemeSwitcher.js v1.0.0 | © 2026 PsyGioX | MIT License | https://github.com/PsyGioX/psyscripts | https://psygiox-dev.vercel.app */
-(function(r,f){typeof module!=='undefined'&&module.exports?module.exports=f():r.ThemeSwitcher=f();})(this,function(){
-  return function ThemeSwitcher(btn,o){
-    o=o||{};var key=o.storageKey||'theme',modes=['system','light','dark'],
-      b=typeof btn==='string'?document.querySelector(btn):btn,
-      mq=window.matchMedia('(prefers-color-scheme: dark)'),mode='system';
-    try{mode=localStorage.getItem(key)||'system';}catch(e){}
-    if(modes.indexOf(mode)<0)mode='system';
-    function apply(){
-      var dark=mode==='dark'||(mode==='system'&&mq.matches);
-      document.documentElement.setAttribute('data-theme',dark?'dark':'light');
-      document.documentElement.style.colorScheme=dark?'dark':'light';
-      if(b){b.setAttribute('data-mode',mode);b.setAttribute('aria-label','Theme: '+mode);}
-      if(o.onChange)o.onChange(mode,dark?'dark':'light');
-    }
-    function set(m){if(modes.indexOf(m)<0)return;mode=m;try{localStorage.setItem(key,m);}catch(e){}apply();}
-    if(b)b.addEventListener('click',function(){set(modes[(modes.indexOf(mode)+1)%3]);});
-    mq.addEventListener('change',function(){if(mode==='system')apply();});
-    apply();
-    return{set:set,get:function(){return mode;}};
-  };
-});
+/*! PsyScripts · © 2026 PsyGioX · MIT · github.com/PsyGioX/psyscripts */
+(function(){var P=window.PsyScripts=window.PsyScripts||{},K='psy-theme',d=document.documentElement,m=matchMedia('(prefers-color-scheme: dark)');
+function get(){try{return localStorage.getItem(K)}catch(e){return null}}
+function set(t,save){d.setAttribute('data-theme',t);if(save)try{localStorage.setItem(K,t)}catch(e){}
+document.querySelectorAll('[data-theme-toggle]').forEach(function(b){b.setAttribute('aria-pressed',t==='dark')});}
+P.Theme={set:function(t){set(t,1)},toggle:function(){set(d.getAttribute('data-theme')==='dark'?'light':'dark',1)}};
+set(get()||(m.matches?'dark':'light'));
+m.addEventListener&&m.addEventListener('change',function(e){if(!get())set(e.matches?'dark':'light')});
+document.addEventListener('click',function(e){if(e.target.closest('[data-theme-toggle]'))P.Theme.toggle()});})();

@@ -1,8 +1,8 @@
-/*! ScrollSpy v1.0.0 | © 2026 PsyGioX | MIT License | https://github.com/PsyGioX/psyscripts | https://psygiox-dev.vercel.app */
-(function(r,f){typeof module!=="undefined"&&module.exports?module.exports=f():r.ScrollSpy=f();})(this,function(){
-
-return function ScrollSpy(links,o){o=o||{};var a=[].slice.call(document.querySelectorAll(links)),cls=o.className||"active";
-if(!("IntersectionObserver" in window))return null;
-var io=new IntersectionObserver(function(en){en.forEach(function(x){if(x.isIntersecting)a.forEach(function(l){var on=l.getAttribute("href")==="#"+x.target.id;l.classList.toggle(cls,on);if(on)l.setAttribute("aria-current","true");else l.removeAttribute("aria-current");});});},{rootMargin:"-40% 0px -55% 0px"});
-a.forEach(function(l){var s=document.querySelector(l.getAttribute("href"));if(s)io.observe(s);});return{destroy:function(){io.disconnect();}};};
-});
+/*! PsyScripts · © 2026 PsyGioX · MIT · github.com/PsyGioX/psyscripts */
+(function(){var P=window.PsyScripts=window.PsyScripts||{};
+P.Spy={init:function(){document.querySelectorAll('[data-spy]').forEach(function(nav){if(nav._s)return;nav._s=1;
+var links=[].slice.call(nav.querySelectorAll('a[href^="#"]')),map={};links.forEach(function(a){var s=document.getElementById(a.hash.slice(1));s&&(map[s.id]=a)});
+var secs=Object.keys(map).map(function(k){return document.getElementById(k)});if(!secs.length||!('IntersectionObserver' in window))return;
+var io=new IntersectionObserver(function(l){l.forEach(function(x){if(x.isIntersecting){links.forEach(function(a){a.classList.remove('is-active');a.removeAttribute('aria-current')});var a=map[x.target.id];a.classList.add('is-active');a.setAttribute('aria-current','true')}})},{rootMargin:'-45% 0px -50% 0px'});
+secs.forEach(function(s){io.observe(s)});});}};
+document.addEventListener('DOMContentLoaded',P.Spy.init);})();

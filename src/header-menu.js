@@ -1,14 +1,10 @@
-/*! HeaderMenu.js v1.0.0 | © 2026 PsyGioX | MIT License | https://github.com/PsyGioX/psyscripts | https://psygiox-dev.vercel.app */
-(function(r,f){typeof module!=='undefined'&&module.exports?module.exports=f():r.HeaderMenu=f();})(this,function(){
-  return function HeaderMenu(root,o){
-    o=o||{};var el=typeof root==='string'?document.querySelector(root):root;if(!el)return null;
-    var t=el.querySelector('[data-menu-toggle]');if(!t)return null;
-    function set(v){el.toggleAttribute('data-open',v);t.setAttribute('aria-expanded',v);if(o.onToggle)o.onToggle(v);}
-    t.setAttribute('aria-expanded','false');
-    t.addEventListener('click',function(){set(!el.hasAttribute('data-open'));});
-    document.addEventListener('keydown',function(e){if(e.key==='Escape'&&el.hasAttribute('data-open')){set(false);t.focus();}});
-    document.addEventListener('click',function(e){if(!el.contains(e.target))set(false);});
-    el.addEventListener('click',function(e){if(e.target.closest('a'))set(false);});
-    return{open:function(){set(true);},close:function(){set(false);},toggle:function(){set(!el.hasAttribute('data-open'));}};
-  };
-});
+/*! PsyScripts · © 2026 PsyGioX · MIT · github.com/PsyGioX/psyscripts */
+(function(){var P=window.PsyScripts=window.PsyScripts||{};
+function close(h){h.classList.remove('is-open');var b=h.querySelector('[data-menu-toggle]');b&&b.setAttribute('aria-expanded','false');}
+P.HeaderMenu={close:close};
+document.addEventListener('click',function(e){var b=e.target.closest('[data-menu-toggle]'),h=e.target.closest('[data-header]');
+if(b&&h){var o=h.classList.toggle('is-open');b.setAttribute('aria-expanded',o);return}
+if(h&&e.target.closest('[data-menu] a'))close(h);
+if(!h)document.querySelectorAll('[data-header].is-open').forEach(close);});
+document.addEventListener('keydown',function(e){if(e.key==='Escape')document.querySelectorAll('[data-header].is-open').forEach(close)});
+addEventListener('resize',function(){if(innerWidth>860)document.querySelectorAll('[data-header].is-open').forEach(close)});})();
