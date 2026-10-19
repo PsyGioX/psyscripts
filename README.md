@@ -1,5 +1,5 @@
 # PsyScripts
-Lightweight dependency-free scripts: Tabs, ThemeSwitcher, HeaderMenu, CopyButton, ScrollReveal, Accordion, Modal, Toast, BackToTop, LazyImages, Dropdown, Tooltip, Counter, Carousel, FormValidation, ScrollSpy, StickyTOC, Marquee, ImageLightbox, Parallax, CookieBanner, Skeleton.
+Lightweight dependency-free scripts (lo-fi pastel theme): Tabs, ThemeSwitcher, HeaderMenu, CopyButton, ScrollReveal, Accordion, Modal, Toast, BackToTop, LazyImages, Dropdown, Tooltip, Counter, Carousel, FormValidation, ScrollSpy, StickyTOC, Marquee, ImageLightbox, Parallax, CookieBanner, Skeleton.
 
 Demo: `index.html` (serve over HTTP, e.g. `npx serve`; translations live in `locales/*.json`).
 © 2026 PsyGioX — MIT. https://github.com/PsyGioX/psyscripts · https://psygiox-dev.vercel.app
@@ -22,3 +22,6 @@ Demo: `index.html` (serve over HTTP, e.g. `npx serve`; translations live in `loc
 
 ## Vercel
 `vercel.json` sets `buildCommand: npm run build` and `outputDirectory: public`. `vendor/` and `public/` are generated and git-ignored.
+
+## Translations (I18n)
+`<html lang="ru" data-i18n-langs="ru,en" data-i18n-default="ru" data-i18n-path="locales/{lang}.json">` — then use `data-i18n`, `data-i18n-html`, `data-i18n-attr="placeholder:key"`, `data-i18n-count` (plural forms via `Intl.PluralRules`, `{n}` placeholders), `data-lang-toggle` / `data-lang-set="en"`. Language is picked from `?lang=`, localStorage, then the browser; missing keys fall back to the default language. `npm run build` prerenders the default language into `public/index.html`. Docs strings live in `scripts/docs-content.py` (RU + EN) and are generated into `locales/docs/*.json`. To add a language: add `locales/<code>.json` and `locales/docs/<code>.json` (copy the existing ones) and append the code to `data-i18n-langs`.

@@ -1,55 +1,33 @@
 <!DOCTYPE html>
-<html lang="ru" data-theme="dark">
+<html lang="ru" data-theme="light" data-i18n-langs="ru,en" data-i18n-default="ru" data-i18n-path="locales/{lang}.json">
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>PsyScripts — 10 lightweight scripts</title>
-<meta name="description" content="Lightweight dependency-free scripts: Tabs, ThemeSwitcher, HeaderMenu, CopyButton, ScrollReveal, Accordion, Modal, Toast, BackToTop, LazyImages.">
-<link rel="stylesheet" href="css/psyscripts.css"><link rel="stylesheet" href="css/tabs.css">
-<style>
-*{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:70px}
-body{margin:0;background:var(--psy-bg);color:var(--psy-text);font:16px/1.6 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;background-image:radial-gradient(60rem 30rem at 15% -10%,#7c3aed33,transparent),radial-gradient(50rem 30rem at 90% 0,#06b6d422,transparent);background-repeat:no-repeat}
-.wrap{max-width:1100px;margin:0 auto;padding:0 clamp(1rem,4vw,2rem)}section{padding:4.5rem 0}
-.logo{font-weight:800;font-size:1.2rem;text-decoration:none;color:var(--psy-text)}.logo span{background:linear-gradient(135deg,var(--psy-accent),var(--psy-accent2));-webkit-background-clip:text;background-clip:text;color:transparent}
-.tools{display:flex;gap:.5rem;align-items:center}
-h1{font-size:clamp(2rem,6vw,3.8rem);line-height:1.1;margin:0 0 1rem;letter-spacing:-.02em}h2{font-size:clamp(1.5rem,4vw,2.2rem);margin:0 0 .4rem}
-.grad{background:linear-gradient(135deg,var(--psy-accent),var(--psy-accent2));-webkit-background-clip:text;background-clip:text;color:transparent}
-.muted{color:var(--psy-muted)}.hero{padding:5rem 0 3rem;text-align:center}.hero p{max-width:620px;margin:0 auto 1.8rem;font-size:1.15rem}
-.row{display:flex;gap:.8rem;justify-content:center;flex-wrap:wrap}a.psy-btn{text-decoration:none;display:inline-block}
-.grid{display:grid;gap:1rem;grid-template-columns:repeat(auto-fill,minmax(min(100%,300px),1fr));margin-top:2rem}
-.card{background:var(--psy-card);border:1px solid var(--psy-line);border-radius:var(--psy-radius);padding:1.2rem;display:flex;flex-direction:column;gap:.6rem;transition:border-color .2s,transform .2s}
-.card:hover{border-color:var(--psy-accent);transform:translateY(-3px)}.card h3{margin:0;display:flex;justify-content:space-between;align-items:center}.card .n{color:var(--psy-accent);font:600 .85rem ui-monospace,monospace}
-pre,code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace}pre{margin:0;background:var(--psy-solid);border:1px solid var(--psy-line);border-radius:10px;padding:.8rem 1rem;overflow-x:auto;font-size:.85rem;position:relative}
-.card pre{margin-top:auto}.demo{background:var(--psy-card);border:1px solid var(--psy-line);border-radius:var(--psy-radius);padding:1.2rem;margin-top:2rem}
-.step{display:flex;gap:1rem;margin-top:1.4rem}.step b{flex:none;width:2rem;height:2rem;border-radius:50%;display:grid;place-items:center;background:linear-gradient(135deg,var(--psy-accent),var(--psy-accent2));color:#0b0a14}.step>div{min-width:0;flex:1}
-.cp{display:flex;gap:.5rem;align-items:stretch;margin-top:.5rem}.cp pre{flex:1;min-width:0}
-footer{border-top:1px solid var(--psy-line);padding:2rem 0;text-align:center;color:var(--psy-muted)}footer a{color:var(--psy-accent2)}
-@media(max-width:560px){.cp{flex-direction:column}.step{gap:.7rem}}
-.stats{gap:2.5rem;margin-bottom:1rem}.stats div{display:flex;flex-direction:column;align-items:center}.stats b{font-size:2rem;background:linear-gradient(135deg,var(--psy-accent),var(--psy-accent2));-webkit-background-clip:text;background-clip:text;color:transparent}
-.sl{background:var(--psy-solid);border:1px solid var(--psy-line);border-radius:var(--psy-radius);padding:2rem;text-align:center;font-size:1.3rem;font-weight:700}
-.gal{display:grid;gap:.8rem;grid-template-columns:repeat(auto-fit,minmax(130px,1fr))}.gal img{width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:12px}
-</style>
+<title data-i18n="meta.title">PsyScripts</title>
+<meta name="description" content="" data-i18n-attr="content:meta.desc">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Nunito:wght@500;600;700;800&display=swap" rel="stylesheet"><meta name="theme-color" content="#fdf6ee"><link rel="stylesheet" href="css/psyscripts.css"><link rel="stylesheet" href="css/tabs.css"><link rel="stylesheet" href="css/site.css">
 </head>
 <body>
 <header data-header>
 <a class="logo" href="#top"><span>Psy</span>Scripts</a>
 <nav data-menu data-spy aria-label="Main">
-<a href="#scripts" data-i18n="nav.scripts"></a><a href="#demo" data-i18n="nav.demo"></a><a href="#install" data-i18n="nav.install"></a><a href="docs.html">Docs</a>
+<a href="#scripts" data-i18n="nav.scripts"></a><a href="#demo" data-i18n="nav.demo"></a><a href="#install" data-i18n="nav.install"></a><a href="docs.html" data-i18n="nav.docs"></a>
 <a href="https://github.com/PsyGioX/psyscripts" target="_blank" rel="noopener">GitHub</a>
 </nav>
 <div class="tools">
-<button id="lang" aria-label="Language">EN</button>
-<button data-theme-toggle aria-label="Theme">◐</button>
-<button data-menu-toggle aria-expanded="false" aria-label="Menu">☰</button>
+<button class="psy-btn" data-lang-toggle data-i18n-attr="aria-label:aria.lang" style="padding:0 .9rem">EN</button>
+<button data-theme-toggle aria-label="" data-i18n-attr="aria-label:aria.theme">◐</button>
+<button data-menu-toggle aria-expanded="false" aria-label="" data-i18n-attr="aria-label:aria.menu">☰</button>
 </div>
 </header>
 <main id="top">
 <div class="wrap hero" data-reveal>
 <h1><span class="grad" data-i18n="hero.title"></span></h1>
-<p class="muted" data-i18n="hero.sub"></p>
-<div class="row"><a class="psy-btn psy-btn--primary" href="#scripts" data-i18n="hero.cta"></a><a class="psy-btn" href="docs.html">Docs</a><a class="psy-btn" href="https://github.com/PsyGioX/psyscripts" target="_blank" rel="noopener" data-i18n="hero.cta2"></a></div>
-<div class="row stats" data-reveal><div><b data-counter="22">0</b><span class="muted">scripts</span></div><div><b data-counter="0">0</b><span class="muted">dependencies</span></div><div><b data-counter="100" data-suffix="%">0</b><span class="muted">responsive</span></div></div>
+<p class="muted" data-i18n="hero.sub" data-i18n-count="23"></p>
+<div class="row"><a class="psy-btn psy-btn--primary" href="#scripts" data-i18n="hero.cta"></a><a class="psy-btn" href="docs.html" data-i18n="nav.docs"></a><a class="psy-btn" href="https://github.com/PsyGioX/psyscripts" target="_blank" rel="noopener" data-i18n="hero.cta2"></a></div>
+</div>
+<div class="row stats" data-reveal><div><b data-counter="23">0</b><span data-i18n="stats.scripts" data-i18n-count="23"></span></div><div><b data-counter="0">0</b><span data-i18n="stats.deps" data-i18n-count="0"></span></div><div><b data-counter="100" data-suffix="%">0</b><span data-i18n="stats.responsive"></span></div></div>
 <section id="scripts"><div class="wrap">
-<h2 data-reveal data-i18n="scripts.title"></h2><p class="muted" data-reveal data-i18n="scripts.sub"></p>
+<h2 data-reveal data-i18n="scripts.title" data-i18n-count="23"></h2><p class="muted" data-reveal data-i18n="scripts.sub"></p>
 <div class="grid" id="cards"></div></div></section>
 <section id="demo"><div class="wrap">
 <h2 data-reveal data-i18n="demo.title"></h2>
@@ -60,11 +38,11 @@ footer{border-top:1px solid var(--psy-line);padding:2rem 0;text-align:center;col
 <div data-acc-item><button data-acc-trigger aria-expanded="false" data-i18n="demo.acc2"></button><div data-acc-panel><div data-i18n="demo.acc2a"></div></div></div></div></div>
 <div data-panel><button class="psy-btn psy-btn--primary" data-modal-open="m1" data-i18n="demo.open"></button>
 <dialog id="m1" data-modal><h3 style="margin-top:0">PsyScripts</h3><p class="muted" data-i18n-html="demo.modalText"></p><button class="psy-btn" data-modal-close data-i18n="demo.close"></button></dialog></div>
-<div data-panel><div class="row" style="justify-content:flex-start"><button class="psy-btn" id="t1" data-toast data-toast-type="success" data-i18n="demo.show"></button>
-<div data-dropdown><button data-dd-trigger aria-expanded="false">Dropdown ▾</button><div data-dd-menu><a href="#scripts">Scripts</a><a href="#install">Install</a><button data-toast="Hi!">Toast</button></div></div>
-<button class="psy-btn" data-tooltip="Tooltip">?</button></div></div>
-<div data-panel><form data-validate data-ajax id="f1" style="max-width:420px"><div data-field><input name="email" type="email" required placeholder="Email"></div><div data-field><input name="name" required minlength="3" placeholder="Name (3+)"></div><button class="psy-btn psy-btn--primary" data-i18n="demo.submit"></button></form></div>
-<div data-panel><div data-carousel data-multi data-autoplay="5000"><div data-track><div class="sl">Tabs</div><div class="sl">Modal</div><div class="sl">Toast</div><div class="sl">Carousel</div></div><button data-prev aria-label="Prev">‹</button><button data-next aria-label="Next">›</button><div data-dots></div></div></div>
+<div data-panel><div class="row" style="justify-content:flex-start"><button class="psy-btn" id="t1" data-toast="" data-toast-type="success" data-i18n-attr="data-toast:demo.hello" data-i18n="demo.show"></button>
+<div data-dropdown><button data-dd-trigger aria-expanded="false" data-i18n="demo.dropdown"></button><div data-dd-menu><a href="#scripts" data-i18n="nav.scripts"></a><a href="#install" data-i18n="nav.install"></a><button data-toast="" data-i18n="demo.toast" data-i18n-attr="data-toast:demo.hi"></button></div></div>
+<button class="psy-btn" data-tooltip="" data-i18n-attr="data-tooltip:demo.tip">?</button></div></div>
+<div data-panel><form data-validate data-ajax id="f1" style="max-width:420px"><div data-field><input name="email" type="email" required placeholder="" data-i18n-attr="placeholder:demo.email;data-msg-required:form.required;data-msg-type:form.type"></div><div data-field><input name="name" required minlength="3" placeholder="" data-i18n-attr="placeholder:demo.name;data-msg-required:form.required;data-msg-min:form.min"></div><button class="psy-btn psy-btn--primary" data-i18n="demo.submit"></button></form></div>
+<div data-panel><div data-carousel data-multi data-autoplay="5000"><div data-track><div class="sl">Tabs</div><div class="sl">Modal</div><div class="sl">Toast</div><div class="sl">Carousel</div></div><button data-prev aria-label="" data-i18n-attr="aria-label:aria.prev">‹</button><button data-next aria-label="" data-i18n-attr="aria-label:aria.next">›</button><div data-dots></div></div></div>
 <div data-panel><div data-skeleton data-delay="900" data-lightbox class="gal"></div></div>
 </div></div></section>
 <section id="install"><div class="wrap">
@@ -84,41 +62,37 @@ footer{border-top:1px solid var(--psy-line);padding:2rem 0;text-align:center;col
 <div class="wrap" style="padding-bottom:2rem"><div data-marquee data-speed="25" class="muted" style="font-weight:700;font-size:1.1rem"><span>Tabs</span><span>Theme</span><span>Modal</span><span>Toast</span><span>Carousel</span><span>Lightbox</span><span>Parallax</span><span>Skeleton</span><span>Counter</span><span>TOC</span></div></div>
 <div data-cookie-banner hidden><p data-i18n="cookie.text"></p><button class="psy-btn" data-cookie-decline data-i18n="cookie.decline"></button><button class="psy-btn psy-btn--primary" data-cookie-accept data-i18n="cookie.accept"></button></div>
 <footer><div class="wrap">© 2026 <a href="https://psygiox-dev.vercel.app" target="_blank" rel="noopener">PsyGioX</a> · <span data-i18n="footer.rights"></span> · <a href="https://github.com/PsyGioX/psyscripts" target="_blank" rel="noopener">GitHub</a></div></footer>
-<button data-back-top aria-label="Top">↑</button>
+<button data-back-top aria-label="" data-i18n-attr="aria-label:aria.top">↑</button>
 <script src="dist/psyscripts.bundle.min.js"></script>
 <script>
-var S=[["Tabs","Доступные табы с клавиатурной навигацией","Accessible tabs with keyboard navigation",'data-tabs · data-tab · data-panel'],
-["ThemeSwitcher","Светлая/тёмная тема, сохранение и prefers-color-scheme","Light/dark theme with persistence",'data-theme-toggle'],
-["HeaderMenu","Адаптивное бургер-меню, Esc и клик вне","Responsive burger menu, Esc & outside click",'data-header · data-menu-toggle · data-menu'],
-["CopyButton","Копирование текста или блока в один клик","One-click copy for text or elements",'data-copy="text" / data-copy-target="#id"'],
-["ScrollReveal","Появление элементов при прокрутке","Reveal on scroll, respects reduced motion",'data-reveal="left" data-reveal-delay="100"'],
-["Accordion","Плавный аккордеон, режим одного открытого","Smooth accordion, single-open mode",'data-accordion data-single · data-acc-item'],
-["Modal","Модалки на нативном &lt;dialog&gt;","Modals built on native &lt;dialog&gt;",'data-modal-open="id" · data-modal-close'],
-["Toast","Уведомления из JS или атрибута","Notifications from JS or an attribute",'PsyScripts.Toast.show("Hi",{type:"success"})'],
-["BackToTop","Кнопка «Наверх» с плавным скроллом","Back-to-top button with smooth scroll",'data-back-top'],
-["LazyImages","Ленивая загрузка img и srcset","Lazy-loading img and srcset",'&lt;img data-src="a.jpg" data-srcset="…"&gt;'],
-["Dropdown","Выпадающее меню со стрелками и Esc","Dropdown menu with arrow keys & Esc",'data-dropdown · data-dd-trigger · data-dd-menu'],
-["Tooltip","Подсказки, не вылезают за экран","Tooltips that stay inside the viewport",'data-tooltip="Text"'],
-["Counter","Анимированные числа при появлении","Animated numbers on scroll",'data-counter="1200" data-suffix="+"'],
-["Carousel","Карусель на scroll-snap, точки, автоплей","Scroll-snap carousel, dots, autoplay",'data-carousel · data-track · data-prev · data-next'],
-["FormValidation","Валидация на нативном API с aria","Native-API validation with ARIA",'&lt;form data-validate&gt; · data-msg-required'],
-["ScrollSpy","Подсветка пункта меню по скроллу","Highlights nav link while scrolling",'data-spy on &lt;nav&gt;'],
-["StickyTOC","Автооглавление из заголовков с подсветкой","Auto table of contents with active highlight",'data-toc data-toc-source="#post" data-sticky'],
-["Marquee","Бесконечная бегущая лента, пауза при наведении","Infinite ticker, pauses on hover",'data-marquee data-speed="30"'],
-["ImageLightbox","Просмотр изображений с галереей и стрелками","Image viewer with gallery & arrows",'data-lightbox · data-full="big.jpg"'],
-["Parallax","Лёгкий параллакс без библиотек","Light parallax, no libraries",'data-parallax="0.2"'],
-["CookieBanner","Баннер согласия, событие psy:cookie","Consent banner, psy:cookie event",'data-cookie-banner · data-cookie-accept'],
-["Skeleton","Скелетон-загрузка до готовности контента","Skeleton loading until content is ready",'data-skeleton · Skeleton.done(el)']];
-var L={},lang=localStorage.getItem('psy-lang')||(navigator.language.indexOf('ru')==0?'ru':'en');
-function cards(){document.getElementById('cards').innerHTML=S.map(function(s,i){return '<article class="card" data-reveal data-reveal-delay="'+(i%3)*80+'"><h3>'+s[0]+'<span class="n">'+String(i+1).padStart(2,'0')+'</span></h3><p class="muted" style="margin:0">'+(lang=='ru'?s[1]:s[2])+'</p><pre><code>'+s[3]+'</code></pre></article>'}).join('');PsyScripts.Reveal.init()}
-function apply(){document.documentElement.lang=lang;document.getElementById('lang').textContent=lang=='ru'?'EN':'RU';
-document.querySelectorAll('[data-i18n]').forEach(function(e){e.textContent=L[e.dataset.i18n]||''});
-document.querySelectorAll('[data-i18n-html]').forEach(function(e){e.innerHTML=L[e.dataset.i18nHtml]||''});
-document.querySelectorAll('[data-copy-target]').forEach(function(b){b.dataset.copyToast=L['install.copied']});
-document.getElementById('t1').dataset.toast=L['demo.hello'];document.querySelector('[data-back-top]').setAttribute('aria-label',L.top);cards()}
+var S=[["Tabs",'data-tabs · data-tab · data-panel'],
+["ThemeSwitcher",'data-theme-toggle'],
+["HeaderMenu",'data-header · data-menu-toggle · data-menu'],
+["CopyButton",'data-copy="text" / data-copy-target="#id"'],
+["ScrollReveal",'data-reveal="left" data-reveal-delay="100"'],
+["Accordion",'data-accordion data-single · data-acc-item'],
+["Modal",'data-modal-open="id" · data-modal-close'],
+["Toast",'PsyScripts.Toast.show("Hi",{type:"success"})'],
+["BackToTop",'data-back-top'],
+["LazyImages",'&lt;img data-src="a.jpg" data-srcset="…"&gt;'],
+["Dropdown",'data-dropdown · data-dd-trigger · data-dd-menu'],
+["Tooltip",'data-tooltip="Text"'],
+["Counter",'data-counter="1200" data-suffix="+"'],
+["Carousel",'data-carousel · data-track · data-prev · data-next'],
+["FormValidation",'&lt;form data-validate&gt; · data-msg-required'],
+["ScrollSpy",'data-spy on &lt;nav&gt;'],
+["StickyTOC",'data-toc data-toc-source="#post" data-sticky'],
+["Marquee",'data-marquee data-speed="30"'],
+["ImageLightbox",'data-lightbox · data-full="big.jpg"'],
+["Parallax",'data-parallax="0.2"'],
+["CookieBanner",'data-cookie-banner · data-cookie-accept'],
+["Skeleton",'data-skeleton · Skeleton.done(el)'],
+["I18n",'data-i18n="key" · data-lang-toggle']];
+var I=PsyScripts.I18n;
+function cards(){document.getElementById('cards').innerHTML=S.map(function(s,i){return '<article class="card" data-reveal data-reveal-delay="'+(i%3)*80+'"><h3>'+s[0]+'<span class="n">'+String(i+1).padStart(2,'0')+'</span></h3><p class="muted" style="margin:0">'+I.t('card.'+s[0])+'</p><pre><code>'+s[1]+'</code></pre></article>'}).join('');PsyScripts.Reveal.init()}
 function gal(){var h=[262,190,330,45];document.querySelector('.gal').innerHTML=h.map(function(c,i){var svg='<svg xmlns="http://www.w3.org/2000/svg" width="800" height="600"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="hsl('+c+',80%,60%)"/><stop offset="1" stop-color="hsl('+(c+60)+',80%,40%)"/></linearGradient></defs><rect width="800" height="600" fill="url(#g)"/></svg>';return '<img alt="Image '+(i+1)+'" tabindex="0" src="data:image/svg+xml,'+encodeURIComponent(svg)+'">'}).join('');PsyScripts.Skeleton.init(document.querySelector('.gal').parentNode)}
-function load(){fetch('locales/'+lang+'.json').then(function(r){return r.json()}).then(function(j){L=j;apply()})}
-document.getElementById('lang').onclick=function(){lang=lang=='ru'?'en':'ru';localStorage.setItem('psy-lang',lang);load()};
-document.addEventListener('DOMContentLoaded',function(){gal();load()});document.addEventListener('psy:valid',function(){PsyScripts.Toast.show(L['demo.hello'],{type:'success'})});
+document.addEventListener('DOMContentLoaded',gal);
+document.addEventListener('psy:lang',cards);
+document.addEventListener('psy:valid',function(){PsyScripts.Toast.show(I.t('demo.hello'),{type:'success'})});
 </script>
 </body></html>

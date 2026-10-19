@@ -17,3 +17,10 @@ console.log(py&&py[1].status===0?'Built docs.html':'⚠ docs.html skipped (Pytho
 const fs2=require('fs');fs2.rmSync('public',{recursive:true,force:true});fs2.mkdirSync('public');
 for(const f of ['index.html','docs.html','css','dist','locales','vendor'])if(fs2.existsSync(f))fs2.cpSync(f,'public/'+f,{recursive:true});
 console.log('Built public/');
+// Prerender the default language into public/index.html (no empty flash before locales load)
+{const src=fs2.readFileSync('index.html','utf8'),dl=/data-i18n-default="([^"]+)"/.exec(src)[1],dict=JSON.parse(fs2.readFileSync(`locales/${dl}.json`,'utf8')),pr=new Intl.PluralRules(dl);
+const tr=(k,n)=>{let v=dict[k];if(v==null)return null;if(typeof v==='object')v=v[pr.select(n||0)]||v.other;return String(v).replace(/\{n\}/g,n)};
+const cnt=o=>{const c=/data-i18n-count="(\d+)"/.exec(o);return c?+c[1]:0};
+let out=src.replace(/(<(\w+)\b[^>]*?\bdata-i18n(?:-html)?="([^"]+)"[^>]*>)([\s\S]*?)(<\/\2>)/g,(m,o,t,k,i,c)=>{const v=tr(k,cnt(o));return v==null?m:o+v+c});
+out=out.replace(/<(\w+)\b[^>]*\bdata-i18n-attr="([^"]+)"[^>]*>/g,(m,t,spec)=>{let o=m;for(const p of spec.split(';')){const i=p.indexOf(':'),a=p.slice(0,i),v=tr(p.slice(i+1),cnt(m));if(v==null)continue;const q=v.replace(/"/g,'&quot;'),re=new RegExp('(\\s'+a+'=")[^"]*(")');o=re.test(o)?o.replace(re,'$1'+q+'$2'):o.replace(/\/?>$/,s=>` ${a}="${q}"`+s)}return o});
+fs2.writeFileSync('public/index.html',out);console.log('Prerendered index.html ('+dl+')')}
