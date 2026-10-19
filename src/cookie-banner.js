@@ -1,9 +1,80 @@
 /*! PsyScripts · © 2026 PsyGioX · MIT · github.com/PsyGioX/psyscripts */
-(function(){var P=window.PsyScripts=window.PsyScripts||{},K='psy-cookie';
-function get(){try{return localStorage.getItem(K)}catch(e){return null}}
-function set(v){try{localStorage.setItem(K,v)}catch(e){}document.dispatchEvent(new CustomEvent('psy:cookie',{detail:{consent:v}}))}
-P.Cookie={get:get,reset:function(){try{localStorage.removeItem(K)}catch(e){}document.querySelectorAll('[data-cookie-banner]').forEach(function(b){b.hidden=false})}};
-document.addEventListener('DOMContentLoaded',function(){var b=document.querySelector('[data-cookie-banner]');if(!b)return;
-if(get()){b.hidden=true;document.dispatchEvent(new CustomEvent('psy:cookie',{detail:{consent:get()}}));return}b.hidden=false});
-document.addEventListener('click',function(e){var a=e.target.closest('[data-cookie-accept],[data-cookie-decline]');if(!a)return;
-set(a.hasAttribute('data-cookie-accept')?'accepted':'declined');a.closest('[data-cookie-banner]').hidden=true});})();
+(function () {
+  var P = window.PsyScripts = window.PsyScripts || {};
+  var DEF = { storageKey: 'psy-cookie', days: 365, reloadOnChange: false };
+  (P.q = P.q || []).push(['cookie', DEF]);
+  function O(k, el) { return P.cfg ? P.cfg('cookie', k, DEF[k], el, 'cookie') : DEF[k]; }
+  function E(n, d, el) {
+    if (P.emit) return P.emit(n, d, el);
+    var e = new CustomEvent('psy:' + n, { bubbles: true, cancelable: true, detail: d || {} });
+    (el || document).dispatchEvent(e);
+    return !e.defaultPrevented;
+  }
+
+  /* stored value: {v:'accepted'|'declined'|'custom', c:{category:bool}, t:timestamp}; legacy plain strings are still understood */
+  function read() {
+    var raw;
+    try { raw = localStorage.getItem(O('storageKey')); } catch (e) { return null; }
+    if (!raw) return null;
+    var o;
+    try { o = JSON.parse(raw); } catch (e) { o = null; }
+    if (!o || typeof o !== 'object') o = { v: raw, c: {}, t: 0 };
+    var days = O('days');
+    if (days > 0 && o.t && Date.now() - o.t > days * 864e5) return null;
+    return o;
+  }
+  function get() { var o = read(); return o ? o.v : null; }
+  function save(v, cats) {
+    var o = { v: v, c: cats || {}, t: Date.now() };
+    try { localStorage.setItem(O('storageKey'), JSON.stringify(o)); } catch (e) {}
+    E('cookie', { consent: v, categories: o.c });
+    document.querySelectorAll('[data-cookie-banner]').forEach(function (b) { b.hidden = true; });
+  }
+  function cats(b) {
+    var c = {};
+    b.querySelectorAll('[data-cookie-category]').forEach(function (i) { c[i.dataset.cookieCategory] = i.checked || i.disabled; });
+    return c;
+  }
+
+  P.Cookie = {
+    get: get,
+    has: function (cat) { var o = read(); return !!(o && (o.v === 'accepted' || (o.c && o.c[cat]))); },
+    accept: function () { var all = {}; document.querySelectorAll('[data-cookie-category]').forEach(function (i) { all[i.dataset.cookieCategory] = true; }); save('accepted', all); },
+    decline: function () { save('declined', {}); },
+    save: save,
+    show: function () { document.querySelectorAll('[data-cookie-banner]').forEach(function (b) { b.hidden = false; }); },
+    reset: function () {
+      try { localStorage.removeItem(O('storageKey')); } catch (e) {}
+      P.Cookie.show();
+    }
+  };
+
+  document.addEventListener('DOMContentLoaded', function () {
+    var b = document.querySelector('[data-cookie-banner]');
+    if (!b) return;
+    var o = read();
+    if (o) {
+      b.hidden = true;
+      var all = o.c || {};
+      b.querySelectorAll('[data-cookie-category]').forEach(function (i) { if (all[i.dataset.cookieCategory] != null) i.checked = !!all[i.dataset.cookieCategory]; });
+      E('cookie', { consent: o.v, categories: all });
+      return;
+    }
+    b.hidden = false;
+  });
+  document.addEventListener('click', function (e) {
+    var a = e.target.closest('[data-cookie-accept],[data-cookie-decline],[data-cookie-save]');
+    if (!a) return;
+    var b = a.closest('[data-cookie-banner]');
+    if (a.hasAttribute('data-cookie-accept')) {
+      var all = {};
+      b.querySelectorAll('[data-cookie-category]').forEach(function (i) { i.checked = true; all[i.dataset.cookieCategory] = true; });
+      save('accepted', all);
+    } else if (a.hasAttribute('data-cookie-decline')) {
+      var none = {};
+      b.querySelectorAll('[data-cookie-category]').forEach(function (i) { if (!i.disabled) i.checked = false; none[i.dataset.cookieCategory] = i.disabled; });
+      save('declined', none);
+    } else save('custom', cats(b));
+    if (O('reloadOnChange', b)) location.reload();
+  });
+})();

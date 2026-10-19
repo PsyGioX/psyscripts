@@ -1,7 +1,69 @@
 /*! PsyScripts · © 2026 PsyGioX · MIT · github.com/PsyGioX/psyscripts */
-(function(){var P=window.PsyScripts=window.PsyScripts||{};
-P.Reveal={init:function(r){var els=(r||document).querySelectorAll('[data-reveal]:not(.is-visible)');
-if(!('IntersectionObserver' in window)||matchMedia('(prefers-reduced-motion: reduce)').matches){els.forEach(function(e){e.classList.add('is-visible')});return}
-var io=new IntersectionObserver(function(l){l.forEach(function(x){if(x.isIntersecting){var e=x.target;e.style.transitionDelay=(e.dataset.revealDelay||0)+'ms';e.classList.add('is-visible');io.unobserve(e)}})},{threshold:.12,rootMargin:'0px 0px -5% 0px'});
-els.forEach(function(e){io.observe(e)});}};
-document.addEventListener('DOMContentLoaded',function(){document.documentElement.classList.add('js');P.Reveal.init()});})();
+(function () {
+  var P = window.PsyScripts = window.PsyScripts || {};
+  var DEF = {
+    threshold: 0.12, offset: '0px 0px -5% 0px', once: true, distance: 22, duration: 600,
+    delay: 0, stagger: 0, easing: 'ease'
+  };
+  (P.q = P.q || []).push(['reveal', DEF]);
+  function O(k, el) { return P.cfg ? P.cfg('reveal', k, DEF[k], el, 'reveal') : DEF[k]; }
+  function E(n, d, el) {
+    if (P.emit) return P.emit(n, d, el);
+    var e = new CustomEvent('psy:' + n, { bubbles: true, cancelable: true, detail: d || {} });
+    (el || document).dispatchEvent(e);
+    return !e.defaultPrevented;
+  }
+  var io;
+
+  function vars() {
+    var s = document.documentElement.style;
+    s.setProperty('--psy-reveal-dist', O('distance') + 'px');
+    s.setProperty('--psy-reveal-dur', O('duration') + 'ms');
+    s.setProperty('--psy-reveal-ease', O('easing'));
+  }
+  function stagger(r) {
+    (r || document).querySelectorAll('[data-reveal-stagger]').forEach(function (g) {
+      var step = +g.dataset.revealStagger || O('stagger', g) || 80;
+      [].forEach.call(g.querySelectorAll('[data-reveal]'), function (c, i) {
+        if (c.dataset.revealDelay == null) c.dataset.revealDelay = i * step;
+      });
+    });
+  }
+
+  P.Reveal = {
+    init: function (r) {
+      vars();
+      stagger(r);
+      var els = (r || document).querySelectorAll('[data-reveal]:not(.is-visible)');
+      if (!('IntersectionObserver' in window) || (P.reduced ? P.reduced() : matchMedia('(prefers-reduced-motion: reduce)').matches)) {
+        els.forEach(function (e) { e.classList.add('is-visible'); });
+        return;
+      }
+      if (!io) {
+        io = new IntersectionObserver(function (l) {
+          l.forEach(function (x) {
+            var e = x.target;
+            if (x.isIntersecting) {
+              e.style.transitionDelay = (e.dataset.revealDelay != null ? +e.dataset.revealDelay : O('delay', e)) + 'ms';
+              e.classList.add('is-visible');
+              E('reveal:in', { element: e }, e);
+              if (O('once', e)) io.unobserve(e);
+            } else if (!O('once', e) && e.classList.contains('is-visible')) {
+              e.style.transitionDelay = '0ms';
+              e.classList.remove('is-visible');
+              E('reveal:out', { element: e }, e);
+            }
+          });
+        }, { threshold: O('threshold'), rootMargin: O('offset') });
+      }
+      els.forEach(function (e) { io.observe(e); });
+    },
+    refresh: function () { P.Reveal.destroy(); P.Reveal.init(); },
+    show: function (r) { (r || document).querySelectorAll('[data-reveal]').forEach(function (e) { e.classList.add('is-visible'); }); },
+    destroy: function () { io && io.disconnect(); io = null; }
+  };
+  document.addEventListener('DOMContentLoaded', function () {
+    document.documentElement.classList.add('js');
+    P.Reveal.init();
+  });
+})();

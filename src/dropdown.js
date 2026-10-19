@@ -1,10 +1,69 @@
 /*! PsyScripts · © 2026 PsyGioX · MIT · github.com/PsyGioX/psyscripts */
-(function(){var P=window.PsyScripts=window.PsyScripts||{};
-function closeAll(x){document.querySelectorAll('[data-dropdown].is-open').forEach(function(d){if(d!==x){d.classList.remove('is-open');d.querySelector('[data-dd-trigger]').setAttribute('aria-expanded','false')}})}
-P.Dropdown={closeAll:closeAll};
-document.addEventListener('click',function(e){var t=e.target.closest('[data-dd-trigger]'),d=e.target.closest('[data-dropdown]');closeAll(d);
-if(t&&d){var o=d.classList.toggle('is-open');t.setAttribute('aria-expanded',o);if(o){var f=d.querySelector('[data-dd-menu] a,[data-dd-menu] button');f&&f.focus()}}
-else if(d&&e.target.closest('[data-dd-menu] a,[data-dd-menu] button'))closeAll()});
-document.addEventListener('keydown',function(e){var d=e.target.closest&&e.target.closest('[data-dropdown]');
-if(e.key==='Escape'){var o=document.querySelector('[data-dropdown].is-open');if(o){var t=o.querySelector('[data-dd-trigger]');closeAll();t.focus()}}
-if(d&&d.classList.contains('is-open')&&(e.key==='ArrowDown'||e.key==='ArrowUp')){e.preventDefault();var i=[].slice.call(d.querySelectorAll('[data-dd-menu] a,[data-dd-menu] button')),k=i.indexOf(document.activeElement);i[(k+(e.key==='ArrowDown'?1:-1)+i.length)%i.length].focus()}});})();
+(function () {
+  var P = window.PsyScripts = window.PsyScripts || {};
+  var DEF = { closeOnSelect: true, openOnHover: false, hoverDelay: 120 };
+  (P.q = P.q || []).push(['dropdown', DEF]);
+  function O(k, el) { return P.cfg ? P.cfg('dropdown', k, DEF[k], el) : DEF[k]; }
+  function E(n, d, el) {
+    if (P.emit) return P.emit(n, d, el);
+    var e = new CustomEvent('psy:' + n, { bubbles: true, cancelable: true, detail: d || {} });
+    (el || document).dispatchEvent(e);
+    return !e.defaultPrevented;
+  }
+  var ITEMS = '[data-dd-menu] a,[data-dd-menu] button';
+
+  function set(d, on, focus) {
+    if (!d || d.classList.contains('is-open') === on) return;
+    var t = d.querySelector('[data-dd-trigger]');
+    d.classList.toggle('is-open', on);
+    t.setAttribute('aria-expanded', on);
+    if (on && focus) { var f = d.querySelector(ITEMS); f && f.focus(); }
+    E('dropdown:toggle', { dropdown: d, open: on }, d);
+  }
+  function closeAll(x) {
+    document.querySelectorAll('[data-dropdown].is-open').forEach(function (d) { if (d !== x) set(d, false); });
+  }
+  P.Dropdown = {
+    closeAll: closeAll,
+    open: function (d) { closeAll(d); set(d, true); },
+    close: function (d) { set(d, false); },
+    toggle: function (d) { d.classList.contains('is-open') ? set(d, false) : (closeAll(d), set(d, true)); }
+  };
+
+  document.addEventListener('click', function (e) {
+    var t = e.target.closest('[data-dd-trigger]'), d = e.target.closest('[data-dropdown]');
+    closeAll(d);
+    if (t && d) set(d, !d.classList.contains('is-open'), true);
+    else if (d && e.target.closest(ITEMS) && O('closeOnSelect', d)) set(d, false);
+  });
+  document.addEventListener('keydown', function (e) {
+    var d = e.target.closest && e.target.closest('[data-dropdown]');
+    if (e.key === 'Escape') {
+      var o = document.querySelector('[data-dropdown].is-open');
+      if (o) { var t = o.querySelector('[data-dd-trigger]'); closeAll(); t.focus(); }
+    }
+    if (!d) return;
+    if (!d.classList.contains('is-open') && e.key === 'ArrowDown' && e.target.matches('[data-dd-trigger]')) {
+      e.preventDefault();
+      set(d, true, true);
+      return;
+    }
+    if (d.classList.contains('is-open') && (e.key === 'ArrowDown' || e.key === 'ArrowUp')) {
+      e.preventDefault();
+      var i = [].slice.call(d.querySelectorAll(ITEMS)), k = i.indexOf(document.activeElement);
+      i[(k + (e.key === 'ArrowDown' ? 1 : -1) + i.length) % i.length].focus();
+    }
+  });
+  document.addEventListener('mouseover', function (e) {
+    var d = e.target.closest && e.target.closest('[data-dropdown]');
+    if (!d || !O('openOnHover', d) || d.contains(e.relatedTarget)) return;
+    clearTimeout(d._h);
+    d._h = setTimeout(function () { closeAll(d); set(d, true); }, O('hoverDelay', d));
+  });
+  document.addEventListener('mouseout', function (e) {
+    var d = e.target.closest && e.target.closest('[data-dropdown]');
+    if (!d || !O('openOnHover', d) || d.contains(e.relatedTarget)) return;
+    clearTimeout(d._h);
+    d._h = setTimeout(function () { set(d, false); }, O('hoverDelay', d));
+  });
+})();

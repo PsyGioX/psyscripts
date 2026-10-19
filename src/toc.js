@@ -1,9 +1,69 @@
 /*! PsyScripts · © 2026 PsyGioX · MIT · github.com/PsyGioX/psyscripts */
-(function(){var P=window.PsyScripts=window.PsyScripts||{};
-function slug(t,u){var s=t.toLowerCase().trim().replace(/[^\p{L}\p{N}]+/gu,'-').replace(/^-|-$/g,'')||'section',b=s,n=1;while(u[s])s=b+'-'+(++n);u[s]=1;return s}
-P.TOC={init:function(){document.querySelectorAll('[data-toc]').forEach(function(box){if(box._t)return;box._t=1;
-var src=document.querySelector(box.dataset.tocSource||'main'),hs=src?src.querySelectorAll(box.dataset.tocLevels||'h2,h3'):[],used={},ul=document.createElement('ul');
-[].forEach.call(document.querySelectorAll('[id]'),function(e){used[e.id]=1});
-[].forEach.call(hs,function(h){if(!h.id)h.id=slug(h.textContent,used);var li=document.createElement('li'),a=document.createElement('a');li.className='toc-'+h.tagName.toLowerCase();a.href='#'+h.id;a.textContent=h.textContent;li.appendChild(a);ul.appendChild(li)});
-box.appendChild(ul);box.setAttribute('data-spy','');P.Spy&&P.Spy.init();});}};
-document.addEventListener('DOMContentLoaded',P.TOC.init);})();
+(function () {
+  var P = window.PsyScripts = window.PsyScripts || {};
+  var DEF = { source: 'main', levels: 'h2,h3', numbered: false, title: '' };
+  (P.q = P.q || []).push(['toc', DEF]);
+  function O(k, el) { return P.cfg ? P.cfg('toc', k, DEF[k], el, 'toc') : DEF[k]; }
+  function E(n, d, el) {
+    if (P.emit) return P.emit(n, d, el);
+    var e = new CustomEvent('psy:' + n, { bubbles: true, cancelable: true, detail: d || {} });
+    (el || document).dispatchEvent(e);
+    return !e.defaultPrevented;
+  }
+  function all(r, sel) {
+    r = r || document;
+    var a = [].slice.call(r.querySelectorAll(sel));
+    if (r.matches && r.matches(sel)) a.unshift(r);
+    return a;
+  }
+  function slug(t, u) {
+    var s = t.toLowerCase().trim().replace(/[^\p{L}\p{N}]+/gu, '-').replace(/^-|-$/g, '') || 'section', b = s, n = 1;
+    while (u[s]) s = b + '-' + (++n);
+    u[s] = 1;
+    return s;
+  }
+
+  function build(box) {
+    if (box._t) return;
+    box._t = 1;
+    var src = document.querySelector(O('source', box)), hs = src ? src.querySelectorAll(O('levels', box)) : [];
+    var used = {}, ul = document.createElement('ul');
+    [].forEach.call(document.querySelectorAll('[id]'), function (e) { used[e.id] = 1; });
+    var title = O('title', box);
+    if (title) {
+      var h = document.createElement('p');
+      h.className = 'psy-toc__title';
+      h.textContent = title;
+      box.appendChild(h);
+    }
+    [].forEach.call(hs, function (h) {
+      if (!h.id) h.id = slug(h.textContent, used);
+      var li = document.createElement('li'), a = document.createElement('a');
+      li.className = 'toc-' + h.tagName.toLowerCase();
+      a.href = '#' + h.id;
+      a.textContent = h.textContent;
+      li.appendChild(a);
+      ul.appendChild(li);
+    });
+    ul.className = 'psy-toc__list' + (O('numbered', box) ? ' is-numbered' : '');
+    box.appendChild(ul);
+    box.setAttribute('data-spy', '');
+    P.Spy && P.Spy.init(box);
+    E('toc:ready', { toc: box, count: hs.length }, box);
+  }
+  P.TOC = {
+    init: function (r) { all(r, '[data-toc]').forEach(build); },
+    refresh: function (box) {
+      box = box || document.querySelector('[data-toc]');
+      if (!box) return;
+      P.Spy && P.Spy.destroy(box);
+      box.innerHTML = '';
+      box._t = 0;
+      build(box);
+    },
+    destroy: function (r) {
+      all(r, '[data-toc]').forEach(function (b) { P.Spy && P.Spy.destroy(b); b.innerHTML = ''; b._t = 0; });
+    }
+  };
+  document.addEventListener('DOMContentLoaded', function () { P.TOC.init(); });
+})();

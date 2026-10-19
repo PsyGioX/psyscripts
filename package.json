@@ -1,7 +1,7 @@
 {
   "name": "psyscripts",
-  "version": "1.0.0",
-  "description": "Lightweight dependency-free scripts for web developers",
+  "version": "2.0.0",
+  "description": "Lightweight dependency-free scripts for web developers \u2014 27 scripts with a full configuration API",
   "license": "MIT",
   "author": "PsyGioX",
   "homepage": "https://psygiox-dev.vercel.app",
@@ -10,7 +10,8 @@
     "build": "node scripts/build.js",
     "icons": "node scripts/icons.js",
     "serve": "npx serve .",
-    "docs": "python3 scripts/docs-data.py"
+    "docs": "python3 scripts/docs-data.py",
+    "locales": "python3 scripts/locales-site.py"
   },
   "devDependencies": {
     "@fortawesome/fontawesome-free": "^6.7.2",

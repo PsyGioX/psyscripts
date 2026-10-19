@@ -1,0 +1,79 @@
+/*! PsyScripts · © 2026 PsyGioX · MIT · github.com/PsyGioX/psyscripts */
+(function () {
+  var P = window.PsyScripts = window.PsyScripts || {};
+  var DEF = { position: 'top', height: 6, target: '', color: '', label: 'Reading progress', zIndex: 200 };
+  (P.q = P.q || []).push(['progress', DEF]);
+  function O(k, el) { return P.cfg ? P.cfg('progress', k, DEF[k], el, 'progress') : DEF[k]; }
+  function E(n, d, el) {
+    if (P.emit) return P.emit(n, d, el);
+    var e = new CustomEvent('psy:' + n, { bubbles: true, cancelable: true, detail: d || {} });
+    (el || document).dispatchEvent(e);
+    return !e.defaultPrevented;
+  }
+  function all(r, sel) {
+    r = r || document;
+    var a = [].slice.call(r.querySelectorAll(sel));
+    if (r.matches && r.matches(sel)) a.unshift(r);
+    return a;
+  }
+
+  var bars = [], tk;
+  function value(el) {
+    var sel = O('target', el), t = sel ? document.querySelector(sel) : null, h = innerHeight, v;
+    if (t) {
+      var r = t.getBoundingClientRect(), total = r.height - h;
+      v = total <= 0 ? (r.top < 0 ? 1 : 0) : -r.top / total;
+    } else {
+      var d = document.documentElement, max = d.scrollHeight - h;
+      v = max > 0 ? scrollY / max : 0;
+    }
+    return Math.max(0, Math.min(1, v));
+  }
+  function update() {
+    tk = 0;
+    bars.forEach(function (b) {
+      var v = value(b), pct = Math.round(v * 100);
+      b.style.setProperty('--psy-p', v.toFixed(4));
+      if (pct !== b._pct) {
+        b._pct = pct;
+        b.setAttribute('aria-valuenow', pct);
+        [].forEach.call(b.querySelectorAll('[data-progress-text]'), function (t) { t.textContent = pct + '%'; });
+        E('progress:change', { element: b, value: v, percent: pct }, b);
+        if (pct === 100) E('progress:complete', { element: b }, b);
+      }
+    });
+  }
+  function req() { tk || (tk = requestAnimationFrame(update)); }
+
+  function build(el) {
+    if (el._pg) return;
+    el._pg = 1;
+    var pos = O('position', el);
+    el.classList.add('psy-progress', 'psy-progress--' + pos);
+    el.setAttribute('role', 'progressbar');
+    el.setAttribute('aria-label', O('label', el));
+    el.setAttribute('aria-valuemin', 0);
+    el.setAttribute('aria-valuemax', 100);
+    el.setAttribute('aria-valuenow', 0);
+    el.style.setProperty('--psy-progress-h', O('height', el) + 'px');
+    el.style.setProperty('--psy-progress-z', O('zIndex', el));
+    if (O('color', el)) el.style.setProperty('--psy-progress-color', O('color', el));
+    if (!el.querySelector('.psy-progress__bar')) {
+      var bar = document.createElement('i');
+      bar.className = 'psy-progress__bar';
+      el.insertBefore(bar, el.firstChild);
+    }
+    bars.push(el);
+  }
+  P.Progress = {
+    init: function (r) { all(r, '[data-progress]').forEach(build); req(); },
+    update: update,
+    value: function (el) { return value(el); },
+    destroy: function (r) {
+      all(r, '[data-progress]').forEach(function (e) { e._pg = 0; bars = bars.filter(function (b) { return b !== e; }); });
+    }
+  };
+  addEventListener('scroll', req, { passive: true });
+  addEventListener('resize', req);
+  document.addEventListener('DOMContentLoaded', function () { P.Progress.init(); });
+})();

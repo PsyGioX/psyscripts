@@ -1,6 +1,39 @@
 /*! PsyScripts · © 2026 PsyGioX · MIT · github.com/PsyGioX/psyscripts */
-(function(){var P=window.PsyScripts=window.PsyScripts||{};P.BackToTop={};
-function upd(){var y=scrollY>(+document.documentElement.dataset.backTopAt||400);document.querySelectorAll('[data-back-top]').forEach(function(b){b.classList.toggle('is-visible',y)})}
-var tk;addEventListener('scroll',function(){tk||(tk=requestAnimationFrame(function(){tk=0;upd()}))},{passive:true});
-document.addEventListener('click',function(e){if(e.target.closest('[data-back-top]'))scrollTo({top:0,behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth'})});
-document.addEventListener('DOMContentLoaded',upd);})();
+(function () {
+  var P = window.PsyScripts = window.PsyScripts || {};
+  var DEF = { at: 400, target: '', behavior: 'smooth', offset: 0 };
+  (P.q = P.q || []).push(['backtop', DEF]);
+  function O(k, el) { return P.cfg ? P.cfg('backtop', k, DEF[k], el, 'back-top') : DEF[k]; }
+  function E(n, d, el) {
+    if (P.emit) return P.emit(n, d, el);
+    var e = new CustomEvent('psy:' + n, { bubbles: true, cancelable: true, detail: d || {} });
+    (el || document).dispatchEvent(e);
+    return !e.defaultPrevented;
+  }
+  function reduced() { return P.reduced ? P.reduced() : matchMedia('(prefers-reduced-motion: reduce)').matches; }
+
+  function upd() {
+    document.querySelectorAll('[data-back-top]').forEach(function (b) {
+      var at = b.hasAttribute('data-back-top-at') ? O('at', b) : O('at', document.documentElement);
+      b.classList.toggle('is-visible', scrollY > at);
+    });
+  }
+  P.BackToTop = {
+    scroll: function (target) {
+      var el = target ? document.querySelector(target) : null;
+      var top = el ? el.getBoundingClientRect().top + scrollY - O('offset') : 0;
+      scrollTo({ top: top, behavior: reduced() ? 'auto' : O('behavior') });
+    },
+    update: upd
+  };
+  var tk;
+  addEventListener('scroll', function () { tk || (tk = requestAnimationFrame(function () { tk = 0; upd(); })); }, { passive: true });
+  document.addEventListener('click', function (e) {
+    var b = e.target.closest('[data-back-top]');
+    if (!b) return;
+    var sel = b.dataset.backTop || O('target', b);
+    if (!E('backtop:click', { button: b }, b)) return;
+    P.BackToTop.scroll(sel);
+  });
+  document.addEventListener('DOMContentLoaded', upd);
+})();

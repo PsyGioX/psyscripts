@@ -1,10 +1,62 @@
 /*! PsyScripts · © 2026 PsyGioX · MIT · github.com/PsyGioX/psyscripts */
-(function(){var P=window.PsyScripts=window.PsyScripts||{};
-function close(h){h.classList.remove('is-open');var b=h.querySelector('[data-menu-toggle]');b&&b.setAttribute('aria-expanded','false');}
-P.HeaderMenu={close:close};
-document.addEventListener('click',function(e){var b=e.target.closest('[data-menu-toggle]'),h=e.target.closest('[data-header]');
-if(b&&h){var o=h.classList.toggle('is-open');b.setAttribute('aria-expanded',o);return}
-if(h&&e.target.closest('[data-menu] a'))close(h);
-if(!h)document.querySelectorAll('[data-header].is-open').forEach(close);});
-document.addEventListener('keydown',function(e){if(e.key==='Escape')document.querySelectorAll('[data-header].is-open').forEach(close)});
-addEventListener('resize',function(){if(innerWidth>860)document.querySelectorAll('[data-header].is-open').forEach(close)});})();
+(function () {
+  var P = window.PsyScripts = window.PsyScripts || {};
+  var DEF = { breakpoint: 860, closeOnLink: true, closeOnOutside: true, hideOnScroll: false, hideAfter: 120 };
+  (P.q = P.q || []).push(['menu', DEF]);
+  function O(k, el) { return P.cfg ? P.cfg('menu', k, DEF[k], el) : DEF[k]; }
+  function E(n, d, el) {
+    if (P.emit) return P.emit(n, d, el);
+    var e = new CustomEvent('psy:' + n, { bubbles: true, cancelable: true, detail: d || {} });
+    (el || document).dispatchEvent(e);
+    return !e.defaultPrevented;
+  }
+
+  function setOpen(h, on) {
+    if (h.classList.contains('is-open') === on) return;
+    h.classList.toggle('is-open', on);
+    var b = h.querySelector('[data-menu-toggle]');
+    if (b) b.setAttribute('aria-expanded', on);
+    if (on) h.classList.remove('is-hidden');
+    E('menu:toggle', { header: h, open: on }, h);
+  }
+  function openOnes() { return [].slice.call(document.querySelectorAll('[data-header].is-open')); }
+
+  P.HeaderMenu = {
+    open: function (h) { setOpen(h || document.querySelector('[data-header]'), true); },
+    close: function (h) { setOpen(h || document.querySelector('[data-header]'), false); },
+    toggle: function (h) { h = h || document.querySelector('[data-header]'); setOpen(h, !h.classList.contains('is-open')); }
+  };
+
+  document.addEventListener('click', function (e) {
+    var b = e.target.closest('[data-menu-toggle]'), h = e.target.closest('[data-header]');
+    if (b && h) { setOpen(h, !h.classList.contains('is-open')); return; }
+    if (h && e.target.closest('[data-menu] a') && O('closeOnLink', h)) setOpen(h, false);
+    if (!h) openOnes().forEach(function (o) { if (O('closeOnOutside', o)) setOpen(o, false); });
+  });
+  document.addEventListener('keydown', function (e) {
+    if (e.key !== 'Escape') return;
+    openOnes().forEach(function (h) {
+      setOpen(h, false);
+      var b = h.querySelector('[data-menu-toggle]');
+      b && b.focus();
+    });
+  });
+  addEventListener('resize', function () {
+    openOnes().forEach(function (h) { if (innerWidth > O('breakpoint', h)) setOpen(h, false); });
+  });
+
+  var last = 0, tk;
+  addEventListener('scroll', function () {
+    if (tk) return;
+    tk = requestAnimationFrame(function () {
+      tk = 0;
+      var y = scrollY, dy = y - last;
+      document.querySelectorAll('[data-header]').forEach(function (h) {
+        if (!O('hideOnScroll', h) || h.classList.contains('is-open')) return;
+        if (dy > 6 && y > O('hideAfter', h)) h.classList.add('is-hidden');
+        else if (dy < -6 || y < 10) h.classList.remove('is-hidden');
+      });
+      last = y;
+    });
+  }, { passive: true });
+})();

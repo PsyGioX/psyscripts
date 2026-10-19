@@ -1,8 +1,51 @@
 /*! PsyScripts · © 2026 PsyGioX · MIT · github.com/PsyGioX/psyscripts */
-(function(){var P=window.PsyScripts=window.PsyScripts||{};
-P.Spy={init:function(){document.querySelectorAll('[data-spy]').forEach(function(nav){if(nav._s)return;nav._s=1;
-var links=[].slice.call(nav.querySelectorAll('a[href^="#"]')),map={};links.forEach(function(a){var s=document.getElementById(a.hash.slice(1));s&&(map[s.id]=a)});
-var secs=Object.keys(map).map(function(k){return document.getElementById(k)});if(!secs.length||!('IntersectionObserver' in window))return;
-var io=new IntersectionObserver(function(l){l.forEach(function(x){if(x.isIntersecting){links.forEach(function(a){a.classList.remove('is-active');a.removeAttribute('aria-current')});var a=map[x.target.id];a.classList.add('is-active');a.setAttribute('aria-current','true')}})},{rootMargin:'-45% 0px -50% 0px'});
-secs.forEach(function(s){io.observe(s)});});}};
-document.addEventListener('DOMContentLoaded',P.Spy.init);})();
+(function () {
+  var P = window.PsyScripts = window.PsyScripts || {};
+  var DEF = { margin: '-45% 0px -50% 0px', activeClass: 'is-active' };
+  (P.q = P.q || []).push(['spy', DEF]);
+  function O(k, el) { return P.cfg ? P.cfg('spy', k, DEF[k], el, 'spy') : DEF[k]; }
+  function E(n, d, el) {
+    if (P.emit) return P.emit(n, d, el);
+    var e = new CustomEvent('psy:' + n, { bubbles: true, cancelable: true, detail: d || {} });
+    (el || document).dispatchEvent(e);
+    return !e.defaultPrevented;
+  }
+  function all(r, sel) {
+    r = r || document;
+    var a = [].slice.call(r.querySelectorAll(sel));
+    if (r.matches && r.matches(sel)) a.unshift(r);
+    return a;
+  }
+
+  function build(nav) {
+    if (nav._s) return;
+    var links = [].slice.call(nav.querySelectorAll('a[href^="#"]')), map = {};
+    links.forEach(function (a) {
+      var s = a.hash.length > 1 && document.getElementById(decodeURIComponent(a.hash.slice(1)));
+      if (s) map[s.id] = a;
+    });
+    var secs = Object.keys(map).map(function (k) { return document.getElementById(k); });
+    if (!secs.length || !('IntersectionObserver' in window)) return;
+    var cls = O('activeClass', nav);
+    var io = new IntersectionObserver(function (l) {
+      l.forEach(function (x) {
+        if (!x.isIntersecting) return;
+        links.forEach(function (a) { a.classList.remove(cls); a.removeAttribute('aria-current'); });
+        var a = map[x.target.id];
+        a.classList.add(cls);
+        a.setAttribute('aria-current', 'true');
+        E('spy:change', { id: x.target.id, link: a, section: x.target }, nav);
+      });
+    }, { rootMargin: O('margin', nav) });
+    secs.forEach(function (s) { io.observe(s); });
+    nav._s = io;
+  }
+  P.Spy = {
+    init: function (r) { all(r, '[data-spy]').forEach(build); },
+    refresh: function (nav) { P.Spy.destroy(nav); P.Spy.init(nav); },
+    destroy: function (r) {
+      all(r, '[data-spy]').forEach(function (n) { if (n._s) { n._s.disconnect(); n._s = null; } });
+    }
+  };
+  document.addEventListener('DOMContentLoaded', function () { P.Spy.init(); });
+})();

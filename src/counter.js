@@ -1,10 +1,84 @@
 /*! PsyScripts · © 2026 PsyGioX · MIT · github.com/PsyGioX/psyscripts */
-(function(){var P=window.PsyScripts=window.PsyScripts||{};
-function run(el){var to=parseFloat(el.dataset.counter),from=parseFloat(el.dataset.counterFrom||0),dur=+el.dataset.duration||1600,dec=(el.dataset.counter.split('.')[1]||'').length,
-f=new Intl.NumberFormat(document.documentElement.lang||undefined,{minimumFractionDigits:dec,maximumFractionDigits:dec}),p=el.dataset.prefix||'',s=el.dataset.suffix||'',t0;
-if(matchMedia('(prefers-reduced-motion: reduce)').matches){el.textContent=p+f.format(to)+s;return}
-(function step(t){t0=t0||t;var k=Math.min((t-t0)/dur,1),e=1-Math.pow(1-k,3);el.textContent=p+f.format(from+(to-from)*e)+s;k<1&&requestAnimationFrame(step)})(performance.now());}
-P.Counter={init:function(r){var els=(r||document).querySelectorAll('[data-counter]');
-if(!('IntersectionObserver' in window)){els.forEach(run);return}
-var io=new IntersectionObserver(function(a){a.forEach(function(x){if(x.isIntersecting){run(x.target);io.unobserve(x.target)}})},{threshold:.4});els.forEach(function(e){io.observe(e)})}};
-document.addEventListener('DOMContentLoaded',function(){P.Counter.init()});})();
+(function () {
+  var P = window.PsyScripts = window.PsyScripts || {};
+  var DEF = { duration: 1600, easing: 'easeOutCubic', once: true, threshold: 0.4, separator: true, locale: '', from: 0 };
+  (P.q = P.q || []).push(['counter', DEF]);
+  function O(k, el) { return P.cfg ? P.cfg('counter', k, DEF[k], el) : DEF[k]; }
+  function E(n, d, el) {
+    if (P.emit) return P.emit(n, d, el);
+    var e = new CustomEvent('psy:' + n, { bubbles: true, cancelable: true, detail: d || {} });
+    (el || document).dispatchEvent(e);
+    return !e.defaultPrevented;
+  }
+  function all(r, sel) {
+    r = r || document;
+    var a = [].slice.call(r.querySelectorAll(sel));
+    if (r.matches && r.matches(sel)) a.unshift(r);
+    return a;
+  }
+
+  var easings = {
+    linear: function (t) { return t; },
+    easeOutCubic: function (t) { return 1 - Math.pow(1 - t, 3); },
+    easeInOutCubic: function (t) { return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2; },
+    easeOutExpo: function (t) { return t === 1 ? 1 : 1 - Math.pow(2, -10 * t); },
+    easeOutBack: function (t) { var c = 1.70158; return 1 + (c + 1) * Math.pow(t - 1, 3) + c * Math.pow(t - 1, 2); }
+  };
+  function decimals(el, to) {
+    var d = el.dataset.decimals;
+    return d != null ? +d : (String(to).split('.')[1] || '').length;
+  }
+  function fmt(el, v, dec) {
+    var loc = O('locale', el) || document.documentElement.lang || undefined;
+    return new Intl.NumberFormat(loc, {
+      minimumFractionDigits: dec, maximumFractionDigits: dec, useGrouping: !!O('separator', el)
+    }).format(v);
+  }
+  function animate(el, from, to, o) {
+    o = o || {};
+    cancelAnimationFrame(el._raf);
+    var dur = o.duration != null ? o.duration : O('duration', el), dec = decimals(el, to);
+    var p = el.dataset.prefix || '', s = el.dataset.suffix || '';
+    var ease = easings[o.easing || O('easing', el)] || easings.easeOutCubic;
+    function done() { el._v = to; el.textContent = p + fmt(el, to, dec) + s; E('counter:end', { element: el, value: to }, el); }
+    if ((P.reduced ? P.reduced() : matchMedia('(prefers-reduced-motion: reduce)').matches) || !dur) { done(); return; }
+    var t0 = 0;
+    function step(t) {
+      t0 = t0 || t;
+      var k = Math.min((t - t0) / dur, 1), v = from + (to - from) * ease(k);
+      el._v = v;
+      el.textContent = p + fmt(el, v, dec) + s;
+      if (k < 1) el._raf = requestAnimationFrame(step); else done();
+    }
+    el._raf = requestAnimationFrame(step);
+  }
+  function run(el) {
+    var to = parseFloat(el.dataset.counter);
+    animate(el, parseFloat(el.dataset.counterFrom != null ? el.dataset.counterFrom : O('from', el)) || 0, to);
+  }
+
+  var ios = [];
+  P.Counter = {
+    easings: easings,
+    run: run,
+    set: function (el, value, o) { animate(el, el._v || 0, value, o); },
+    init: function (r) {
+      var els = all(r, '[data-counter]').filter(function (e) { return !e._c; });
+      els.forEach(function (e) { e._c = 1; });
+      if (!('IntersectionObserver' in window)) { els.forEach(run); return; }
+      els.forEach(function (el) {
+        var io = new IntersectionObserver(function (a) {
+          a.forEach(function (x) {
+            if (!x.isIntersecting) return;
+            run(x.target);
+            if (O('once', x.target)) io.unobserve(x.target);
+          });
+        }, { threshold: O('threshold', el) });
+        io.observe(el);
+        ios.push(io);
+      });
+    },
+    destroy: function () { ios.forEach(function (io) { io.disconnect(); }); ios = []; }
+  };
+  document.addEventListener('DOMContentLoaded', function () { P.Counter.init(); });
+})();

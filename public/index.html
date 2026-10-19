@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="ru" data-theme="light" data-i18n-langs="ru,en" data-i18n-default="ru" data-i18n-path="locales/{lang}.json">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title data-i18n="meta.title">PsyScripts — 27 лёгких скриптов для веб-разработчиков</title>
+<meta name="description" content="Лёгкие скрипты без зависимостей: табы, модалки, тосты, карусель, формы, таймеры, переводы — с полным API настройки." data-i18n-attr="content:meta.desc">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Nunito:wght@500;600;700;800&display=swap" rel="stylesheet"><meta name="theme-color" content="#fdf6ee"><link rel="stylesheet" href="css/icons.css"><link rel="stylesheet" href="css/psyscripts.css"><link rel="stylesheet" href="css/tabs.css"><link rel="stylesheet" href="css/site.css">
+</head>
+<body>
+<div data-progress></div>
+<header data-header>
+<a class="logo" href="#top"><span>Psy</span>Scripts</a>
+<nav data-menu data-spy aria-label="Main">
+<a href="#scripts" data-i18n="nav.scripts">Скрипты</a><a href="#demo" data-i18n="nav.demo">Демо</a><a href="#customize" data-i18n="nav.customize">Настройка</a><a href="#install" data-i18n="nav.install">Подключение</a><a href="docs.html" data-i18n="nav.docs">Документация</a>
+<a href="https://github.com/PsyGioX/psyscripts" target="_blank" rel="noopener">GitHub</a>
+</nav>
+<div class="tools">
+<button class="psy-btn" data-lang-toggle data-i18n-attr="aria-label:aria.lang" style="padding:0 .9rem" aria-label="Язык">EN</button>
+<button data-theme-toggle aria-label="Тема" data-i18n-attr="aria-label:aria.theme"><i class="psy-ico psy-ico--theme" aria-hidden="true"></i></button>
+<button data-menu-toggle aria-expanded="false" aria-label="Меню" data-i18n-attr="aria-label:aria.menu"><i class="psy-ico psy-ico--menu" aria-hidden="true"></i></button>
+</div>
+</header>
+<main id="top">
+<div class="wrap hero" data-reveal>
+<h1><span class="grad" data-i18n="hero.title">Лёгкие скрипты для веб-разработчиков</span></h1>
+<p class="big-tw"><span data-i18n="hero.tw">Всё для:</span> <span id="hero-tw" data-typewriter="табов|модалок|каруселей|форм|тостов|переводов|таймеров" data-i18n-attr="data-typewriter:hero.words" data-typewriter-pause="1400" style="color:var(--psy-accent)"></span></p>
+<p class="muted" data-i18n="hero.sub" data-i18n-count="27">27 скриптов без зависимостей. Адаптивные, доступные, подключаются одной строкой.</p>
+<div class="row"><a class="psy-btn psy-btn--primary" href="#scripts" data-i18n="hero.cta">Смотреть скрипты</a><a class="psy-btn" href="#customize"><i class="psy-ico psy-ico--palette" aria-hidden="true"></i><span data-i18n="hero.cta3">Настроить</span></a><a class="psy-btn" href="docs.html" data-i18n="nav.docs">Документация</a><a class="psy-btn" href="https://github.com/PsyGioX/psyscripts" target="_blank" rel="noopener"><i class="psy-ico psy-ico--github" aria-hidden="true"></i><span data-i18n="hero.cta2">GitHub</span></a></div>
+</div>
+<div class="row stats" data-reveal data-reveal-stagger="90">
+<div data-reveal="zoom"><b data-counter="27">0</b><span data-i18n="stats.scripts" data-i18n-count="27">скриптов</span></div>
+<div data-reveal="zoom"><b data-counter="0">0</b><span data-i18n="stats.deps" data-i18n-count="0">зависимостей</span></div>
+<div data-reveal="zoom"><b data-counter="100" data-suffix="%">0</b><span data-i18n="stats.responsive">адаптивность</span></div>
+<div data-reveal="zoom"><b data-counter="100" data-suffix="+">0</b><span data-i18n="stats.options">опций настройки</span></div>
+</div>
+
+<section id="scripts"><div class="wrap">
+<h2 data-reveal data-i18n="scripts.title" data-i18n-count="27">27 скриптов</h2><p class="muted" data-reveal data-i18n="scripts.sub">Каждый работает через data-атрибуты — JavaScript писать не нужно.</p>
+<div class="filters" id="filters" role="group" data-i18n-attr="aria-label:scripts.filter" aria-label="Категории"></div>
+<div class="grid" id="cards"></div></div></section>
+
+<section id="demo"><div class="wrap">
+<h2 data-reveal data-i18n="demo.title">Живое демо</h2><p class="muted" data-reveal data-i18n="demo.sub">Каждый скрипт — живой, с настройками. Меняйте опции и смотрите результат и события.</p>
+<div class="demo" data-reveal data-tabs>
+<div role="tablist">
+<button data-tab data-tab-id="ui" data-i18n="demo.tab.ui">Интерфейс</button><button data-tab data-tab-id="overlays" data-i18n="demo.tab.overlays">Оверлеи</button><button data-tab data-tab-id="media" data-i18n="demo.tab.media">Контент и медиа</button><button data-tab data-tab-id="data" data-i18n="demo.tab.data">Данные и формы</button>
+</div>
+
+<!-- ============ UI ============ -->
+<div data-panel><div class="dgrid">
+
+<article class="dcard"><h3><span data-i18n="c.Tabs">Tabs</span></h3><p data-i18n="d.tabs.p">Режим активации, ориентация, события tabs:change.</p>
+<div class="live"><div data-tabs id="demo-tabs"><div role="tablist"><button data-tab data-i18n="d.tabs.a">Один</button><button data-tab data-i18n="d.tabs.b">Два</button><button data-tab data-i18n="d.tabs.c">Три</button></div>
+<div data-panel data-i18n="d.tabs.pa">Первая панель. Стрелки, Home и End переключают вкладки.</div><div data-panel data-i18n="d.tabs.pb">Вторая панель с roving tabindex.</div><div data-panel data-i18n="d.tabs.pc">Третья панель — aria-controls проставляется сам.</div></div></div>
+<div class="ctrl"><label><span data-i18n="o.activation">активация</span><select id="tabs-act"><option value="auto">auto</option><option value="manual">manual</option></select></label><label><span data-i18n="o.orientation">ориентация</span><select id="tabs-ori"><option value="horizontal">horizontal</option><option value="vertical">vertical</option></select></label></div>
+<ul class="logline" id="log-tabs" aria-live="off"></ul></article>
+
+<article class="dcard"><h3><span data-i18n="c.Accordion">Accordion</span></h3><p data-i18n="d.acc.p">Один открытый или несколько, скорость анимации, API open/close/openAll.</p>
+<div class="live"><div data-accordion id="demo-acc" data-single>
+<div data-acc-item class="is-open"><button data-acc-trigger aria-expanded="true" data-i18n="demo.acc1">Нужны ли зависимости?</button><div data-acc-panel><div data-i18n="demo.acc1a">Нет. Чистый JS и CSS, без сборщиков.</div></div></div>
+<div data-acc-item><button data-acc-trigger aria-expanded="false" data-i18n="demo.acc2">Работает на мобильных?</button><div data-acc-panel><div data-i18n="demo.acc2a">Да, всё адаптивно и доступно с клавиатуры.</div></div></div>
+<div data-acc-item><button data-acc-trigger aria-expanded="false" data-i18n="d.acc.q3">Можно управлять из JS?</button><div data-acc-panel><div data-i18n="d.acc.a3">Да: Accordion.open(), .close(), .openAll() и событие accordion:toggle.</div></div></div></div></div>
+<div class="ctrl"><label class="chk"><input type="checkbox" id="acc-single" checked><span data-i18n="o.single">один открытый</span></label>
+<label><span><span data-i18n="o.duration">скорость</span> <span class="val" id="acc-dur-v">300ms</span></span><input type="range" id="acc-dur" min="0" max="900" step="50" value="300"></label>
+<button class="psy-btn psy-btn--sm" id="acc-open" data-i18n="o.openAll">Открыть все</button><button class="psy-btn psy-btn--sm" id="acc-close" data-i18n="o.closeAll">Закрыть все</button></div></article>
+
+<article class="dcard"><h3><span data-i18n="c.Dropdown">Dropdown</span> · <span data-i18n="c.Tooltip">Tooltip</span></h3><p data-i18n="d.dd.p">Открытие по наведению, клавиатура, тултипы с placement и задержкой.</p>
+<div class="live"><div class="row start">
+<div data-dropdown id="demo-dd"><button data-dd-trigger aria-expanded="false"><span data-i18n="demo.dropdown">Меню ▾</span><i class="psy-ico psy-ico--chevron-down" aria-hidden="true"></i></button><div data-dd-menu><a href="#scripts" data-i18n="nav.scripts">Скрипты</a><a href="#install" data-i18n="nav.install">Подключение</a><button data-toast="Привет!" data-toast-type="success" data-i18n="demo.toast" data-i18n-attr="data-toast:demo.hi">Toast</button></div></div>
+<button class="psy-btn" id="tip1" data-tooltip="Подсказка" data-tooltip-placement="top" data-i18n-attr="data-tooltip:demo.tip"><span data-i18n="o.top">Сверху</span></button>
+<button class="psy-btn" id="tip2" data-tooltip="Подсказка" data-tooltip-placement="right" data-i18n-attr="data-tooltip:demo.tip"><span data-i18n="o.right">Справа</span></button>
+<button class="psy-btn" id="tip3" data-tooltip="Появляюсь с задержкой 400 мс" data-tooltip-placement="bottom" data-tooltip-delay="400" data-i18n-attr="data-tooltip:d.tip.delay"><span data-i18n="o.delayed">С задержкой</span></button></div></div>
+<div class="ctrl"><label class="chk"><input type="checkbox" id="dd-hover"><span data-i18n="o.hover">по наведению</span></label></div></article>
+
+<article class="dcard"><h3><span data-i18n="c.ThemeSwitcher">ThemeSwitcher</span></h3><p data-i18n="d.theme.p">Любое число тем: добавьте свою одной командой — configure + setTokens.</p>
+<div class="live"><div class="row start"><button class="psy-btn" data-theme-set="light"><i class="psy-ico psy-ico--sun" aria-hidden="true"></i><span data-i18n="o.light">Светлая</span></button><button class="psy-btn" data-theme-set="dark"><i class="psy-ico psy-ico--moon" aria-hidden="true"></i><span data-i18n="o.dark">Тёмная</span></button><button class="psy-btn" data-theme-set="sepia" id="sepia-btn" hidden><i class="psy-ico psy-ico--sparkle" aria-hidden="true"></i>sepia</button></div></div>
+<div class="ctrl"><button class="psy-btn psy-btn--sm" id="add-sepia" data-i18n="o.addTheme">Добавить тему sepia</button></div></article>
+
+<article class="dcard"><h3><span data-i18n="d.nav.h">Шапка, ScrollSpy, TOC, BackToTop</span></h3><p data-i18n="d.nav.p">Меню в шапке подсвечивает раздел (ScrollSpy), бургер работает на мобильных, кнопка «наверх» — справа внизу.</p>
+<div class="live"><div>Spy: <code id="spy-out">—</code></div><div class="ctrl"><label class="chk"><input type="checkbox" id="hdr-hide"><span data-i18n="o.hideScroll">Прятать шапку при прокрутке вниз</span></label></div></div></article>
+
+</div></div>
+
+<!-- ============ Overlays ============ -->
+<div data-panel><div class="dgrid">
+
+<article class="dcard"><h3><span data-i18n="c.Modal">Modal</span></h3><p data-i18n="d.modal.p">Нативный &lt;dialog&gt;, опции закрытия и Promise-диалог Modal.confirm().</p>
+<div class="live"><div class="row start"><button class="psy-btn psy-btn--primary" data-modal-open="m1" data-i18n="demo.open">Открыть модалку</button><button class="psy-btn" id="m-confirm" data-i18n="o.confirm">Подтверждение (Promise)</button></div>
+<dialog id="m1" data-modal><h3 class="psy-modal__title">PsyScripts</h3><p class="psy-modal__text" data-i18n-html="demo.modalText">Это &lt;dialog&gt;: Esc, клик по фону и фокус работают из коробки.</p><div class="psy-modal__actions"><button class="psy-btn" data-modal-close data-i18n="demo.close">Закрыть</button></div></dialog></div>
+<div class="ctrl"><label class="chk"><input type="checkbox" id="m-backdrop" checked><span data-i18n="o.backdrop">закрытие по фону</span></label><label class="chk"><input type="checkbox" id="m-esc" checked><span data-i18n="o.esc">закрытие по Esc</span></label></div></article>
+
+<article class="dcard wide"><h3><span data-i18n="c.Toast">Toast</span></h3><p data-i18n="d.toast.p">Позиция, тип, длительность, заголовок, кнопка действия, прогресс и пауза при наведении.</p>
+<div class="live"><div class="ctrl">
+<label><span data-i18n="o.type">тип</span><select id="t-type"><option>info</option><option>success</option><option>warning</option><option>error</option></select></label>
+<label><span data-i18n="o.position">позиция</span><select id="t-pos"><option>top-right</option><option>top-center</option><option>top-left</option><option>bottom-right</option><option>bottom-center</option><option>bottom-left</option></select></label>
+<label><span><span data-i18n="o.durationMs">длительность, мс</span> <span class="val" id="t-dur-v">3000</span></span><input type="range" id="t-dur" min="0" max="10000" step="500" value="3000"></label>
+<label class="chk"><input type="checkbox" id="t-title"><span data-i18n="o.title">заголовок</span></label><label class="chk"><input type="checkbox" id="t-action"><span data-i18n="o.action">кнопка действия</span></label><label class="chk"><input type="checkbox" id="t-close"><span data-i18n="o.closeBtn">кнопка ×</span></label><label class="chk"><input type="checkbox" id="t-progress" checked><span data-i18n="o.progress">прогресс</span></label></div>
+<div class="row start"><button class="psy-btn psy-btn--primary" id="t-show" data-i18n="demo.show">Показать toast</button><button class="psy-btn" id="t-clear" data-i18n="o.clear">Очистить</button></div></div></article>
+
+<article class="dcard"><h3><span data-i18n="c.ImageLightbox">ImageLightbox</span></h3><p data-i18n="d.lb.p">Свайп, стрелки, счётчик, предзагрузка соседних кадров.</p>
+<div class="live"><div data-skeleton data-delay="900" data-lightbox class="gal" id="gal"></div></div>
+<div class="ctrl"><label class="chk"><input type="checkbox" id="lb-loop" checked><span data-i18n="o.loop">по кругу</span></label><label class="chk"><input type="checkbox" id="lb-counter" checked><span data-i18n="o.counter">счётчик</span></label></div></article>
+
+<article class="dcard"><h3><span data-i18n="c.CookieBanner">CookieBanner</span></h3><p data-i18n="d.cookie.p">Категории согласия и срок хранения. Решение доступно через Cookie.has("analytics").</p>
+<div class="live"><div>→ <code id="cookie-out">—</code></div><div class="row start"><button class="psy-btn" id="cookie-reset" data-i18n="o.showBanner">Показать баннер снова</button></div></div></article>
+
+</div></div>
+
+<!-- ============ Media ============ -->
+<div data-panel><div class="dgrid">
+
+<article class="dcard wide"><h3><span data-i18n="c.Carousel">Carousel</span></h3><p data-i18n="d.car.p">perView, адаптивные breakpoints, автоплей, loop и события — меняйте на лету.</p>
+<div class="live"><div data-carousel id="demo-car"><div data-track><div class="sl">Tabs</div><div class="sl">Modal</div><div class="sl">Toast</div><div class="sl">Carousel</div><div class="sl">Compare</div><div class="sl">Countdown</div></div><button data-prev aria-label="Назад" data-i18n-attr="aria-label:aria.prev"><i class="psy-ico psy-ico--chevron-left" aria-hidden="true"></i></button><button data-next aria-label="Вперёд" data-i18n-attr="aria-label:aria.next"><i class="psy-ico psy-ico--chevron-right" aria-hidden="true"></i></button><div data-dots></div></div></div>
+<div class="ctrl">
+<label><span data-i18n="o.perView">слайдов</span><select id="car-pv"><option>1</option><option>2</option><option>3</option></select></label>
+<label><span data-i18n="o.autoplay">автоплей</span><select id="car-ap"><option value="0">off</option><option value="2000">2s</option><option value="4000">4s</option></select></label>
+<label class="chk"><input type="checkbox" id="car-loop" checked><span data-i18n="o.loop">по кругу</span></label><label class="chk"><input type="checkbox" id="car-dots" checked><span data-i18n="o.dots">точки</span></label><label class="chk"><input type="checkbox" id="car-arrows" checked><span data-i18n="o.arrows">стрелки</span></label></div>
+<ul class="logline" id="log-car"></ul></article>
+
+<article class="dcard"><h3><span data-i18n="c.CompareSlider">CompareSlider</span><span class="new" data-i18n="badge.new">new</span></h3><p data-i18n="d.cmp.p">Сравнение «до/после»: мышь, касание и клавиатура, горизонтальный и вертикальный режим.</p>
+<div class="live"><div data-compare data-compare-labels="Before|After" id="cmp1"><div class="cmp-a">Before</div><div class="cmp-b">After</div></div>
+<div data-compare data-compare-orientation="vertical" data-compare-position="35" id="cmp2"><div class="cmp-a" style="min-height:150px">↑</div><div class="cmp-b" style="min-height:150px">↓</div></div></div>
+<div class="ctrl"><label class="chk"><input type="checkbox" id="cmp-hover"><span data-i18n="o.hover">по наведению</span></label></div></article>
+
+<article class="dcard"><h3><span data-i18n="c.Typewriter">Typewriter</span><span class="new" data-i18n="badge.new">new</span></h3><p data-i18n="d.tw.p">Печатающийся текст: слова, скорость, цикл. Учитывает reduced-motion.</p>
+<div class="live"><div class="big-tw"><span id="demo-tw" data-typewriter="Hello|Привет|Hola|你好|Bonjour"></span></div></div>
+<div class="ctrl"><label><span data-i18n="o.words">слова через |</span><input type="text" id="tw-words" value="Hello|Привет|Hola|你好|Bonjour"></label><label><span><span data-i18n="o.speed">скорость, мс/символ</span> <span class="val" id="tw-speed-v">70</span></span><input type="range" id="tw-speed" min="15" max="250" value="70"></label><label class="chk"><input type="checkbox" id="tw-loop" checked><span data-i18n="o.loop">по кругу</span></label></div></article>
+
+<article class="dcard"><h3><span data-i18n="c.Marquee">Marquee</span></h3><p data-i18n="d.marq.p">Лента сама заполняет ширину контейнера; скорость и пауза через API.</p>
+<div class="live"><div data-marquee id="demo-marq" data-speed="18"><span>Tabs</span><span>Toast</span><span>Modal</span><span>Compare</span><span>Typewriter</span><span>Countdown</span></div></div>
+<div class="ctrl"><label><span><span data-i18n="o.cycle">цикл</span> <span class="val" id="marq-v">18s</span></span><input type="range" id="marq-speed" min="4" max="40" value="18"></label><button class="psy-btn psy-btn--sm" id="marq-pause" data-i18n="o.pause">Пауза / пуск</button></div></article>
+
+<article class="dcard"><h3><span data-i18n="c.ScrollReveal">ScrollReveal</span></h3><p data-i18n="d.rev.p">Пять эффектов появления. Расстояние и длительность — глобальные опции.</p>
+<div class="live"><div class="row start" id="rev-box"><span class="psy-btn" data-reveal="up">up</span><span class="psy-btn" data-reveal="left">left</span><span class="psy-btn" data-reveal="right">right</span><span class="psy-btn" data-reveal="zoom">zoom</span><span class="psy-btn" data-reveal="fade">fade</span></div></div>
+<div class="ctrl"><button class="psy-btn psy-btn--sm" id="rev-replay" data-i18n="o.replay">Повторить</button></div></article>
+
+<article class="dcard"><h3><span data-i18n="c.Parallax">Parallax</span> · <span data-i18n="c.Skeleton">Skeleton</span></h3><p data-i18n="d.px.p">Параллакс по оси Y/X и скелетон с ручным управлением.</p>
+<div class="live"><div class="px"><div data-parallax="0.35">parallax</div></div>
+<div id="sk" data-skeleton="manual" style="border-radius:14px"><div class="px" style="height:80px;background:var(--psy-mint)"><div>skeleton</div></div></div></div>
+<div class="ctrl"><button class="psy-btn psy-btn--sm" id="sk-reload" data-i18n="o.reload">Показать скелетон</button></div></article>
+
+</div></div>
+
+<!-- ============ Data & forms ============ -->
+<div data-panel><div class="dgrid">
+
+<article class="dcard"><h3><span data-i18n="c.FormValidation">FormValidation</span></h3><p data-i18n="d.form.p">Свои правила (data-rule, data-match), режимы проверки, события form:invalid и psy:valid.</p>
+<div class="live"><form data-validate data-ajax id="f1" novalidate>
+<div data-field><input name="email" type="email" required autocomplete="email" placeholder="Email" data-i18n-attr="placeholder:demo.email;data-msg-required:form.required;data-msg-type:form.type" data-msg-required="Обязательное поле" data-msg-type="Неверный формат"></div>
+<div data-field><input name="name" required minlength="3" placeholder="Имя (от 3 символов)" data-i18n-attr="placeholder:demo.name;data-msg-required:form.required;data-msg-min:form.min" data-msg-required="Обязательное поле" data-msg-min="Минимум 3 символа"></div>
+<div data-field><input name="pass" id="f-pass" type="password" required minlength="6" autocomplete="new-password" placeholder="Пароль (от 6 символов)" data-i18n-attr="placeholder:d.form.pass;data-msg-required:form.required;data-msg-min:form.min6" data-msg-required="Обязательное поле" data-msg-min="Минимум 6 символов"></div>
+<div data-field><input name="pass2" type="password" data-match="#f-pass" required autocomplete="new-password" placeholder="Повторите пароль" data-i18n-attr="placeholder:d.form.pass2;data-msg-required:form.required;data-msg-match:form.match" data-msg-required="Обязательное поле" data-msg-match="Пароли не совпадают"></div>
+<div data-field><input name="phone" inputmode="numeric" data-rule="digits" placeholder="Телефон (только цифры)" data-i18n-attr="placeholder:d.form.phone;data-msg-digits:form.digits" data-msg-digits="Только цифры"></div>
+<div class="row start"><button class="psy-btn psy-btn--primary" data-i18n="demo.submit">Отправить</button><button type="button" class="psy-btn" id="f-reset" data-i18n="o.reset">Сбросить</button></div></form></div>
+<div class="ctrl"><label><span data-i18n="o.validateOn">проверять при</span><select id="f-mode"><option>blur</option><option>input</option><option>submit</option></select></label></div>
+<ul class="logline" id="log-form"></ul></article>
+
+<article class="dcard"><h3><span data-i18n="c.Counter">Counter</span></h3><p data-i18n="d.cnt.p">Кривые анимации, длительность, анимация к любому значению через Counter.set().</p>
+<div class="live"><div class="big-tw"><b id="demo-cnt" data-counter="12500" data-suffix=" ★">0</b></div></div>
+<div class="ctrl"><label><span data-i18n="o.target">значение</span><input type="number" id="cnt-to" value="48200" step="100"></label><label><span data-i18n="o.easing">кривая</span><select id="cnt-ease"><option>easeOutCubic</option><option>easeInOutCubic</option><option>easeOutExpo</option><option>easeOutBack</option><option>linear</option></select></label><label><span><span data-i18n="o.durationMs">длительность, мс</span> <span class="val" id="cnt-dur-v">1600</span></span><input type="range" id="cnt-dur" min="200" max="4000" step="100" value="1600"></label><button class="psy-btn psy-btn--primary psy-btn--sm" id="cnt-run" data-i18n="o.run">Запустить</button></div></article>
+
+<article class="dcard"><h3><span data-i18n="c.Countdown">Countdown</span><span class="new" data-i18n="badge.new">new</span></h3><p data-i18n="d.cd.p">Обратный отсчёт до даты и таймер «+45» секунд, локализованные подписи через Intl.</p>
+<div class="live"><div id="cd-ny" data-countdown=""></div><div id="cd-timer" data-countdown="+45" data-countdown-units="minutes,seconds" data-countdown-end-text="🎉"></div></div>
+<div class="ctrl"><button class="psy-btn psy-btn--sm" id="cd-restart" data-i18n="o.restart">Перезапустить таймер</button></div></article>
+
+<article class="dcard"><h3><span data-i18n="c.CopyButton">CopyButton</span> · <span data-i18n="c.ScrollProgress">ScrollProgress</span><span class="new" data-i18n="badge.new">new</span></h3><p data-i18n="d.copy.p">Копирование с тостом и индикатор прогресса чтения страницы (полоса сверху + эта).</p>
+<div class="live"><div class="cp"><pre id="cp-src">npm i psyscripts</pre><button data-copy-target="#cp-src" data-copy-toast><i class="psy-ico psy-ico--copy" aria-hidden="true"></i><span data-i18n="install.copy">Копировать</span></button></div>
+<div data-progress data-progress-position="static" data-progress-height="22" data-progress-target="#demo"><span class="psy-progress__text" data-progress-text>0%</span></div></div></article>
+
+<article class="dcard"><h3><span data-i18n="c.I18n">I18n</span></h3><p data-i18n="d.i18n.p">Плюрали через Intl.PluralRules, переключение языка без перезагрузки.</p>
+<div class="live"><div class="big-tw" id="plural-out" data-i18n="d.plural" data-i18n-count="5">5 файлов</div><div class="row start"><button class="psy-btn psy-btn--sm" data-lang-set="ru">RU</button><button class="psy-btn psy-btn--sm" data-lang-set="en">EN</button></div></div>
+<div class="ctrl"><label><span>n</span><input type="number" id="plural-n" min="0" value="5"></label></div></article>
+
+</div></div>
+</div></div></section>
+
+<section id="customize"><div class="wrap">
+<h2 data-reveal data-i18n="cz.title">Настройка и API</h2><p class="muted" data-reveal data-i18n="cz.sub">Меняйте цвета, радиусы, шрифты и поведение — страница перестраивается сразу, а ниже появляется готовый код.</p>
+<div class="cz" data-reveal>
+<div class="cz-pane">
+<h3 data-i18n="cz.tokens">Дизайн-токены (для текущей темы)</h3>
+<div class="presets" role="group" data-i18n-attr="aria-label:cz.presets" aria-label="Пресеты">
+<button class="chip" data-preset="lofi" data-i18n="cz.p.lofi">Lo-fi</button><button class="chip" data-preset="ocean" data-i18n="cz.p.ocean">Океан</button><button class="chip" data-preset="forest" data-i18n="cz.p.forest">Лес</button><button class="chip" data-preset="sunset" data-i18n="cz.p.sunset">Закат</button><button class="chip" data-preset="mono" data-i18n="cz.p.mono">Моно</button></div>
+<div class="swatches" id="swatches"></div>
+<div class="ctrl"><label><span><span data-i18n="cz.radius">радиус</span> <span class="val" id="cz-radius-v">18px</span></span><input type="range" id="cz-radius" min="0" max="32" value="18"></label>
+<label><span><span data-i18n="cz.border">рамка</span> <span class="val" id="cz-bw-v">2px</span></span><input type="range" id="cz-bw" min="1" max="4" value="2"></label>
+<label><span data-i18n="cz.shadow">тень</span><select id="cz-shadow"><option value="3px 3px 0 var(--psy-ink)">hard</option><option value="0 6px 16px color-mix(in srgb,var(--psy-ink) 35%,transparent)">soft</option><option value="6px 6px 0 var(--psy-ink)">big</option><option value="none">none</option></select></label>
+<label><span data-i18n="cz.font">шрифт</span><select id="cz-font"><option value='"Nunito","SF Pro Rounded",ui-rounded,system-ui,sans-serif'>Nunito</option><option value='system-ui,-apple-system,"Segoe UI",sans-serif'>System</option><option value='Georgia,"Times New Roman",serif'>Serif</option><option value='ui-monospace,SFMono-Regular,Menlo,monospace'>Mono</option></select></label></div>
+<div class="row start" style="margin-top:1rem"><button class="psy-btn psy-btn--primary" id="cz-save" data-i18n="cz.save">Запомнить</button><button class="psy-btn" id="cz-reset" data-i18n="cz.reset">Сбросить всё</button></div>
+<h3 style="margin-top:1.4rem" data-i18n="cz.preview">Предпросмотр</h3>
+<div class="preview"><div class="row start"><button class="psy-btn psy-btn--primary" data-i18n="demo.submit">Отправить</button><button class="psy-btn" data-toast="Привет от PsyScripts!" data-toast-type="success" data-i18n="demo.show" data-i18n-attr="data-toast:demo.hello">Показать toast</button><span class="psy-btn" data-tooltip="Подсказка" data-i18n-attr="data-tooltip:demo.tip">?</span></div>
+<div data-tabs><div role="tablist"><button data-tab data-i18n="d.tabs.a">Один</button><button data-tab data-i18n="d.tabs.b">Два</button></div><div data-panel data-i18n="d.tabs.pa">Первая панель. Стрелки, Home и End переключают вкладки.</div><div data-panel data-i18n="d.tabs.pb">Вторая панель с roving tabindex.</div></div>
+<div data-accordion><div data-acc-item class="is-open"><button data-acc-trigger aria-expanded="true" data-i18n="demo.acc1">Нужны ли зависимости?</button><div data-acc-panel><div data-i18n="demo.acc1a">Нет. Чистый JS и CSS, без сборщиков.</div></div></div></div></div>
+</div>
+<div class="cz-pane">
+<h3 data-i18n="cz.config">Глобальные опции</h3>
+<div class="ctrl">
+<label><span data-i18n="cz.toastPos">Toast: позиция</span><select id="g-toast-pos"><option>top-right</option><option>top-center</option><option>bottom-right</option><option>bottom-center</option></select></label>
+<label><span><span data-i18n="cz.toastDur">Toast: время, мс</span> <span class="val" id="g-toast-dur-v">3000</span></span><input type="range" id="g-toast-dur" min="1000" max="8000" step="500" value="3000"></label>
+<label><span data-i18n="cz.tipPlace">Tooltip: место</span><select id="g-tip"><option>top</option><option>bottom</option><option>auto</option></select></label>
+<label><span><span data-i18n="cz.revealDist">Reveal: сдвиг, px</span> <span class="val" id="g-rev-v">22</span></span><input type="range" id="g-rev" min="0" max="80" value="22"></label>
+<label class="chk"><input type="checkbox" id="g-modal" checked><span data-i18n="o.backdrop">закрытие по фону</span></label>
+<label class="chk"><input type="checkbox" id="g-newest"><span data-i18n="cz.newest">Toast: новые сверху</span></label></div>
+<h3 style="margin-top:1.2rem" data-i18n="cz.code">Код</h3>
+<div class="cp"><pre id="cz-code" style="max-height:340px"><code></code></pre><button data-copy-target="#cz-code" data-copy-toast><i class="psy-ico psy-ico--copy" aria-hidden="true"></i><span data-i18n="install.copy">Копировать</span></button></div>
+<h3 style="margin-top:1.2rem" data-i18n="cz.events">Поток событий PsyScripts.on("*")</h3>
+<ul class="logline" id="log-all" style="max-height:170px"></ul>
+<div class="row start" style="margin-top:.8rem"><button class="psy-btn psy-btn--sm" id="log-clear" data-i18n="o.clear">Очистить</button></div>
+</div></div></div></section>
+
+<section id="install"><div class="wrap">
+<h2 data-reveal data-i18n="install.title">Быстрое подключение</h2><p class="muted" data-reveal data-i18n="install.sub">Одна строка — и всё работает.</p>
+<div class="step" data-reveal><b>1</b><div><strong data-i18n="install.auto">Одна строка (скрипты + стили)</strong>
+<div class="cp"><pre id="s1">&lt;script src="dist/psyscripts.auto.min.js" defer&gt;&lt;/script&gt;</pre><button data-copy-target="#s1" data-copy-toast><i class="psy-ico psy-ico--copy" aria-hidden="true"></i><span data-i18n="install.copy">Копировать</span></button></div></div></div>
+<div class="step" data-reveal><b>2</b><div><strong data-i18n="install.split">Быстрее для продакшена: стили отдельно</strong>
+<div class="cp"><pre id="s2">&lt;link rel="stylesheet" href="dist/psyscripts.min.css"&gt;
+&lt;script src="dist/psyscripts.bundle.min.js" defer&gt;&lt;/script&gt;</pre><button data-copy-target="#s2" data-copy-toast><i class="psy-ico psy-ico--copy" aria-hidden="true"></i><span data-i18n="install.copy">Копировать</span></button></div></div></div>
+<p class="muted" data-reveal><span data-i18n="install.more">Отдельные скрипты, иконки и настройка — в</span> <a href="docs.html#install" data-i18n="nav.docs">Документация</a></p>
+</div></section>
+</main>
+<div class="wrap" style="padding-bottom:2rem"><div data-marquee data-speed="25" class="muted" style="font-weight:800;font-size:1.1rem"><span>Tabs</span><span>Theme</span><span>Modal</span><span>Toast</span><span>Carousel</span><span>Lightbox</span><span>Parallax</span><span>Skeleton</span><span>Counter</span><span>TOC</span><span>Typewriter</span><span>Countdown</span><span>Progress</span><span>Compare</span></div></div>
+<div data-cookie-banner hidden><p data-i18n="cookie.text">Мы используем cookie для улучшения работы сайта.</p>
+<div class="psy-cookie__cats"><label><input type="checkbox" checked disabled data-cookie-category="necessary"><span data-i18n="cookie.necessary">Необходимые</span></label><label><input type="checkbox" data-cookie-category="analytics"><span data-i18n="cookie.analytics">Аналитика</span></label><label><input type="checkbox" data-cookie-category="marketing"><span data-i18n="cookie.marketing">Маркетинг</span></label></div>
+<button class="psy-btn" data-cookie-decline data-i18n="cookie.decline">Отклонить</button><button class="psy-btn" data-cookie-save data-i18n="cookie.save">Сохранить выбор</button><button class="psy-btn psy-btn--primary" data-cookie-accept data-i18n="cookie.accept">Принять</button></div>
+<footer><div class="wrap">© 2026 <a href="https://psygiox-dev.vercel.app" target="_blank" rel="noopener">PsyGioX</a> · <span data-i18n="footer.rights">MIT-лицензия</span> · <a href="https://github.com/PsyGioX/psyscripts" target="_blank" rel="noopener">GitHub</a></div></footer>
+<button data-back-top aria-label="Наверх" data-i18n-attr="aria-label:aria.top"><i class="psy-ico psy-ico--arrow-up" aria-hidden="true"></i></button>
+<script src="dist/psyscripts.bundle.min.js"></script>
+<script src="js/demo.js"></script>
+</body></html>

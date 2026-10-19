@@ -1,7 +1,76 @@
 /*! PsyScripts · © 2026 PsyGioX · MIT · github.com/PsyGioX/psyscripts */
-(function(){var P=window.PsyScripts=window.PsyScripts||{};
-document.addEventListener('click',function(e){var t=e.target.closest('[data-acc-trigger]');if(!t)return;
-var root=t.closest('[data-accordion]'),item=t.closest('[data-acc-item]'),open=!item.classList.contains('is-open');
-if(root&&root.hasAttribute('data-single'))root.querySelectorAll('[data-acc-item].is-open').forEach(function(i){i.classList.remove('is-open');i.querySelector('[data-acc-trigger]').setAttribute('aria-expanded','false')});
-item.classList.toggle('is-open',open);t.setAttribute('aria-expanded',open);});
-P.Accordion={};})();
+(function () {
+  var P = window.PsyScripts = window.PsyScripts || {};
+  var DEF = { single: false, duration: 300, keyboard: true };
+  (P.q = P.q || []).push(['accordion', DEF]);
+  function O(k, el) { return P.cfg ? P.cfg('accordion', k, DEF[k], el) : DEF[k]; }
+  function E(n, d, el) {
+    if (P.emit) return P.emit(n, d, el);
+    var e = new CustomEvent('psy:' + n, { bubbles: true, cancelable: true, detail: d || {} });
+    (el || document).dispatchEvent(e);
+    return !e.defaultPrevented;
+  }
+
+  function item(x) { return typeof x === 'string' ? document.querySelector(x) : x; }
+  function setup(root) {
+    if (!root || root._s) return;
+    root._s = 1;
+    root.style.setProperty('--psy-acc-speed', O('duration', root) + 'ms');
+  }
+  function set(it, open) {
+    it = item(it);
+    if (!it) return;
+    var root = it.closest('[data-accordion]'), t = it.querySelector('[data-acc-trigger]');
+    if (open === it.classList.contains('is-open')) return;
+    setup(root);
+    if (open && root && O('single', root)) {
+      [].forEach.call(root.querySelectorAll('[data-acc-item].is-open'), function (i) { if (i !== it) set(i, false); });
+    }
+    it.classList.toggle('is-open', open);
+    t.setAttribute('aria-expanded', open);
+    E('accordion:toggle', { item: it, open: open }, it);
+  }
+  function items(root) {
+    return [].filter.call(root.querySelectorAll('[data-acc-item]'), function (i) { return i.closest('[data-accordion]') === root; });
+  }
+
+  P.Accordion = {
+    open: function (i) { set(i, true); },
+    close: function (i) { set(i, false); },
+    toggle: function (i) { i = item(i); set(i, !i.classList.contains('is-open')); },
+    openAll: function (r) { items(item(r)).forEach(function (i) { set(i, true); }); },
+    closeAll: function (r) { items(item(r)).forEach(function (i) { set(i, false); }); },
+    init: function (r) {
+      var uid = Math.random().toString(36).slice(2, 7), n = 0;
+      (r || document).querySelectorAll('[data-acc-item]').forEach(function (it) {
+        var t = it.querySelector('[data-acc-trigger]'), p = it.querySelector('[data-acc-panel]');
+        if (!t || !p || it._a) return;
+        it._a = 1;
+        p.id = p.id || 'acc-' + uid + '-' + (n++);
+        t.setAttribute('aria-controls', p.id);
+        t.setAttribute('aria-expanded', it.classList.contains('is-open'));
+        p.setAttribute('role', 'region');
+        setup(it.closest('[data-accordion]'));
+      });
+    }
+  };
+
+  document.addEventListener('click', function (e) {
+    var t = e.target.closest('[data-acc-trigger]');
+    if (!t) return;
+    var it = t.closest('[data-acc-item]');
+    set(it, !it.classList.contains('is-open'));
+  });
+  document.addEventListener('keydown', function (e) {
+    var t = e.target.closest && e.target.closest('[data-acc-trigger]');
+    if (!t) return;
+    var root = t.closest('[data-accordion]');
+    if (!root || !O('keyboard', root)) return;
+    var ts = items(root).map(function (i) { return i.querySelector('[data-acc-trigger]'); });
+    var k = ts.indexOf(t), n = e.key === 'ArrowDown' ? k + 1 : e.key === 'ArrowUp' ? k - 1 : e.key === 'Home' ? 0 : e.key === 'End' ? ts.length - 1 : null;
+    if (n === null) return;
+    e.preventDefault();
+    ts[(n + ts.length) % ts.length].focus();
+  });
+  document.addEventListener('DOMContentLoaded', function () { P.Accordion.init(); });
+})();
