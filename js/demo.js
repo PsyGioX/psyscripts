@@ -52,7 +52,7 @@
   var CATS = ['all', 'new', 'nav', 'overlay', 'media', 'data', 'sys'], cat = 'all', query = '', sizes = {};
 
   function mk(tag, cls, txt) { var e = document.createElement(tag); if (cls) e.className = cls; if (txt != null) e.textContent = txt; return e; }
-  function include(f) { return '<script src="dist/core.min.js" defer></script>\n<script src="dist/' + f + '.min.js" defer></script>'; }
+  function include(f) { return '<script src="https://psyscripts.vercel.app/dist/core.min.js" defer></script>\n<script src="https://psyscripts.vercel.app/dist/' + f + '.min.js" defer></script>'; }
   function hit(s) {
     var q = query.trim().toLowerCase();
     if (cat === 'new' ? !s[4] : cat !== 'all' && s[1] !== cat) return false;
@@ -70,7 +70,7 @@
       var f = mk('div', 'cfoot'), a = mk('a', null, I.t('card.docs'));
       a.href = 'docs.html#' + s[0].toLowerCase();
       var cp = mk('button', null, I.t('card.include')); cp.type = 'button'; cp.dataset.copy = include(s[2]); cp.dataset.copied = '✓';
-      cp.title = 'dist/' + s[2] + '.min.js';
+      cp.title = 'https://psyscripts.vercel.app/dist/' + s[2] + '.min.js';
       f.appendChild(a); f.appendChild(cp);
       var z = sizes[s[2]]; if (z) f.appendChild(mk('span', 'size', (z.gzip / 1024).toFixed(1) + ' KB gz'));
       c.appendChild(h); c.appendChild(mk('p', null, I.t('card.' + s[0]))); c.appendChild(pre); c.appendChild(f);

@@ -1,0 +1,23 @@
+# PsyScripts
+
+> 31 lightweight, dependency-free browser scripts (tabs, modal, toast, carousel, data table, command palette, i18n, …) with a full configuration API. Base URL: https://psyscripts.vercel.app · Version 2.1.0 · MIT.
+
+Always include files by absolute URL, e.g. `<script src="https://psyscripts.vercel.app/dist/core.min.js" defer></script>`. `core.min.js` must load before any single-script file; the bundle already contains it.
+
+## Docs
+- [AI integration guide](https://psyscripts.vercel.app/AI-INTEGRATION.md): install recipes, catalog of all scripts, rules for agents
+- [Full documentation](https://psyscripts.vercel.app/docs.html): every option, event and API (RU/EN)
+- [Landing page / catalog](https://psyscripts.vercel.app/)
+- [Agent instructions for the repository](https://github.com/PsyGioX/psyscripts/blob/main/AGENTS.md)
+
+## Files
+- [Bundle (all scripts)](https://psyscripts.vercel.app/dist/psyscripts.bundle.min.js)
+- [One-line include (scripts + styles)](https://psyscripts.vercel.app/dist/psyscripts.auto.min.js)
+- [Styles (base + Tabs + icons)](https://psyscripts.vercel.app/dist/psyscripts.min.css)
+- [Core (required by single-script files)](https://psyscripts.vercel.app/dist/core.min.js)
+- [Manifest with SRI hashes](https://psyscripts.vercel.app/dist/manifest.json)
+
+## Optional
+- [Security policy](https://github.com/PsyGioX/psyscripts/blob/main/SECURITY.md)
+- [Changelog](https://github.com/PsyGioX/psyscripts/blob/main/CHANGELOG.md)
+- [Sitemap](https://psyscripts.vercel.app/sitemap.xml)

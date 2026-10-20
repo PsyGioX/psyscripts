@@ -311,7 +311,7 @@
  "d.safe.links": "allow links",
  "d.safe.stat": "Removed elements: {a}, attributes: {b}",
  "install.each": "Individual scripts: core + the file you need",
- "install.eachNote": "Every script is <code>dist/&lt;name&gt;.min.js</code> (after <code>core.min.js</code>); the path and SRI hash for each one are in the docs and in the “Files” section.",
+ "install.eachNote": "Every script is <code>https://psyscripts.vercel.app/dist/&lt;name&gt;.min.js</code> (after <code>core.min.js</code>); the path and SRI hash for each one are in the docs and in the “Files” section.",
  "footer.security": "Security",
  "footer.files": "Files & SRI"
 }

@@ -1,5 +1,11 @@
 # Changelog
 
+## Unreleased
+### Changed
+- All copy-paste include paths in the landing page, docs, translations, README and the “copy include” button are now absolute: `https://psyscripts.vercel.app/dist/<file>.min.js`.
+### Added
+- Files for AI agents: `AGENTS.md`, `CLAUDE.md`, `AI-INTEGRATION.md` (published at `/AI-INTEGRATION.md`) and `llms.txt`.
+
 ## 2.1.0 — 2026-10-19
 ### Added
 - **CommandPalette**, **DataTable**, **Sortable**, **SafeHTML** (31 scripts in total) with docs (RU/EN), options, events and demos.

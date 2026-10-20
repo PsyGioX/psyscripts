@@ -31,7 +31,7 @@ K = {
 'd.safe.in': ('Ненадёжный HTML', 'Untrusted HTML'), 'd.safe.img': ('разрешить img', 'allow img'), 'd.safe.links': ('разрешить ссылки', 'allow links'),
 'd.safe.stat': ('Удалено элементов: {a}, атрибутов: {b}', 'Removed elements: {a}, attributes: {b}'),
 'install.each': ('Отдельные скрипты: core + нужный файл', 'Individual scripts: core + the file you need'),
-'install.eachNote': ('Каждый скрипт — это <code>dist/&lt;имя&gt;.min.js</code> (после <code>core.min.js</code>); путь и SRI-хэш есть у каждого скрипта в документации и в разделе «Файлы».', 'Every script is <code>dist/&lt;name&gt;.min.js</code> (after <code>core.min.js</code>); the path and SRI hash for each one are in the docs and in the “Files” section.'),
+'install.eachNote': ('Каждый скрипт — это <code>https://psyscripts.vercel.app/dist/&lt;имя&gt;.min.js</code> (после <code>core.min.js</code>); путь и SRI-хэш есть у каждого скрипта в документации и в разделе «Файлы».', 'Every script is <code>https://psyscripts.vercel.app/dist/&lt;name&gt;.min.js</code> (after <code>core.min.js</code>); the path and SRI hash for each one are in the docs and in the “Files” section.'),
 'footer.security': ('Безопасность', 'Security'), 'footer.files': ('Файлы и SRI', 'Files & SRI'),
 }
 for lang, i in (('ru', 0), ('en', 1)):

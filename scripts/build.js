@@ -91,7 +91,7 @@ console.log(py && py[1].status === 0 ? 'Built docs.html' : '⚠ docs.html skippe
 // ---- Vercel/static hosting: collect everything the site needs into public/ ----
 fs.rmSync('public', { recursive: true, force: true });
 fs.mkdirSync('public');
-for (const f of ['index.html', 'docs.html', 'css', 'js', 'dist', 'locales', 'vendor', 'fonts', '.well-known', 'robots.txt', 'sitemap.xml', 'site.webmanifest', 'favicon.svg', 'favicon.ico', 'favicon-16x16.png', 'favicon-32x32.png', 'favicon-48x48.png', 'apple-touch-icon.png', 'icon-192.png', 'icon-512.png', 'icon-maskable-512.png', 'og-image.png']) if (fs.existsSync(f)) fs.cpSync(f, 'public/' + f, { recursive: true });
+for (const f of ['index.html', 'docs.html', 'css', 'js', 'dist', 'locales', 'vendor', 'fonts', '.well-known', 'robots.txt', 'sitemap.xml', 'llms.txt', 'AI-INTEGRATION.md', 'site.webmanifest', 'favicon.svg', 'favicon.ico', 'favicon-16x16.png', 'favicon-32x32.png', 'favicon-48x48.png', 'apple-touch-icon.png', 'icon-192.png', 'icon-512.png', 'icon-maskable-512.png', 'og-image.png']) if (fs.existsSync(f)) fs.cpSync(f, 'public/' + f, { recursive: true });
 console.log('Built public/');
 
 // ---- Prerender the default language into public/index.html (no empty flash before locales load) ----

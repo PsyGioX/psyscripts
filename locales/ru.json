@@ -328,7 +328,7 @@
  "d.safe.links": "разрешить ссылки",
  "d.safe.stat": "Удалено элементов: {a}, атрибутов: {b}",
  "install.each": "Отдельные скрипты: core + нужный файл",
- "install.eachNote": "Каждый скрипт — это <code>dist/&lt;имя&gt;.min.js</code> (после <code>core.min.js</code>); путь и SRI-хэш есть у каждого скрипта в документации и в разделе «Файлы».",
+ "install.eachNote": "Каждый скрипт — это <code>https://psyscripts.vercel.app/dist/&lt;имя&gt;.min.js</code> (после <code>core.min.js</code>); путь и SRI-хэш есть у каждого скрипта в документации и в разделе «Файлы».",
  "footer.security": "Безопасность",
  "footer.files": "Файлы и SRI"
 }
