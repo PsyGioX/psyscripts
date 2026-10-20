@@ -58,13 +58,30 @@ for (const [o, c] of Object.entries(cssOut)) {
 // one-line install: bundle + styles injected from JS (use the two-tag variant in production to avoid a style flash)
 {
   const cssText = fs.readFileSync('dist/psyscripts.min.css', 'utf8').replace(/^\/\*![^*]*\*\//, '');
-  const inject = `(function(){if(document.getElementById('psy-css'))return;var s=document.createElement('style');s.id='psy-css';s.textContent=${JSON.stringify(cssText)};document.head.insertBefore(s,document.head.firstChild)})();\n`;
+  const inject = `(function(){if(document.getElementById('psy-css'))return;var c=${JSON.stringify(cssText)};try{if(window.CSSStyleSheet&&document.adoptedStyleSheets&&CSSStyleSheet.prototype.replaceSync){var h=new CSSStyleSheet();h.replaceSync(c);document.adoptedStyleSheets=[h].concat([].slice.call(document.adoptedStyleSheets));return}}catch(e){}var s=document.createElement('style');s.id='psy-css';var n=document.querySelector('meta[name=psy-nonce]');if(n)s.setAttribute('nonce',n.content);s.textContent=c;document.head.insertBefore(s,document.head.firstChild)})();\n`;
   fs.writeFileSync('dist/psyscripts.auto.min.js', banner + '\n' + inject + fs.readFileSync('dist/psyscripts.bundle.min.js', 'utf8').replace(/^\/\*![^\n]*\*\/\n?/, ''));
 }
 console.log('Built', files.length, 'scripts + bundle' + (esbuild ? '' : ' (fallback minifier)'));
 
 // ---- icon fonts → vendor/icons/ ---------------------------------------------
 require('./icons.js');
+
+// ---- self-hosted fonts (css/fonts.css + fonts/) ---------------------------
+require('./fonts.js');
+
+// ---- dist/manifest.json: size, gzip size and SRI (sha384) of every distributed file ----
+{
+  const crypto = require('crypto'), zlib = require('zlib');
+  const files = {};
+  for (const f of fs.readdirSync('dist').sort()) {
+    if (!/\.(js|css)$/.test(f)) continue;
+    const buf = fs.readFileSync('dist/' + f);
+    files[f] = { bytes: buf.length, gzip: zlib.gzipSync(buf, { level: 9 }).length, integrity: 'sha384-' + crypto.createHash('sha384').update(buf).digest('base64') };
+  }
+  const pkg = JSON.parse(fs.readFileSync('package.json', 'utf8'));
+  fs.writeFileSync('dist/manifest.json', JSON.stringify({ name: pkg.name, version: pkg.version, files }, null, 1) + '\n');
+  console.log('Built dist/manifest.json (' + Object.keys(files).length + ' files)');
+}
 
 // ---- docs.html is generated from scripts/docs-data.py (needs Python 3; skipped if unavailable) ----
 const { spawnSync } = require('child_process');
@@ -74,7 +91,7 @@ console.log(py && py[1].status === 0 ? 'Built docs.html' : '⚠ docs.html skippe
 // ---- Vercel/static hosting: collect everything the site needs into public/ ----
 fs.rmSync('public', { recursive: true, force: true });
 fs.mkdirSync('public');
-for (const f of ['index.html', 'docs.html', 'css', 'js', 'dist', 'locales', 'vendor']) if (fs.existsSync(f)) fs.cpSync(f, 'public/' + f, { recursive: true });
+for (const f of ['index.html', 'docs.html', 'css', 'js', 'dist', 'locales', 'vendor', 'fonts', '.well-known', 'robots.txt', 'sitemap.xml', 'site.webmanifest', 'favicon.svg', 'favicon.ico', 'favicon-16x16.png', 'favicon-32x32.png', 'favicon-48x48.png', 'apple-touch-icon.png', 'icon-192.png', 'icon-512.png', 'icon-maskable-512.png', 'og-image.png']) if (fs.existsSync(f)) fs.cpSync(f, 'public/' + f, { recursive: true });
 console.log('Built public/');
 
 // ---- Prerender the default language into public/index.html (no empty flash before locales load) ----

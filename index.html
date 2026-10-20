@@ -4,18 +4,25 @@
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title data-i18n="meta.title">PsyScripts</title>
 <meta name="description" content="" data-i18n-attr="content:meta.desc">
-<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Nunito:wght@500;600;700;800&display=swap" rel="stylesheet"><meta name="theme-color" content="#fdf6ee"><link rel="stylesheet" href="css/icons.css"><link rel="stylesheet" href="css/psyscripts.css"><link rel="stylesheet" href="css/tabs.css"><link rel="stylesheet" href="css/site.css">
+<link rel="canonical" href="https://psyscripts.vercel.app/">
+<meta property="og:type" content="website"><meta property="og:site_name" content="PsyScripts"><meta property="og:url" content="https://psyscripts.vercel.app/"><meta property="og:title" content="PsyScripts — 31 lightweight scripts"><meta property="og:description" content="Dependency-free scripts for web developers: tabs, modals, command palette, data tables, drag-and-drop, HTML sanitizer."><meta property="og:image" content="https://psyscripts.vercel.app/og-image.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image"><meta name="twitter:image" content="https://psyscripts.vercel.app/og-image.png">
+<meta name="theme-color" content="#fdf6ee"><meta name="referrer" content="strict-origin-when-cross-origin"><meta name="color-scheme" content="light dark">
+<link rel="icon" href="favicon.svg" type="image/svg+xml"><link rel="icon" href="favicon.ico" sizes="48x48"><link rel="icon" href="favicon-32x32.png" type="image/png" sizes="32x32"><link rel="apple-touch-icon" href="apple-touch-icon.png"><link rel="manifest" href="site.webmanifest">
+<link rel="preload" href="fonts/nunito-latin-700-normal.woff2" as="font" type="font/woff2" crossorigin><link rel="preload" href="fonts/nunito-cyrillic-700-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="css/fonts.css"><link rel="stylesheet" href="css/icons.css"><link rel="stylesheet" href="css/psyscripts.css"><link rel="stylesheet" href="css/tabs.css"><link rel="stylesheet" href="css/site.css">
 </head>
 <body>
 <div data-progress></div>
 <header data-header>
 <a class="logo" href="#top"><span>Psy</span>Scripts</a>
-<nav data-menu data-spy aria-label="Main">
+<nav data-menu data-spy data-command-source aria-label="Main">
 <a href="#scripts" data-i18n="nav.scripts"></a><a href="#demo" data-i18n="nav.demo"></a><a href="#customize" data-i18n="nav.customize"></a><a href="#install" data-i18n="nav.install"></a><a href="docs.html" data-i18n="nav.docs"></a>
 <a href="https://github.com/PsyGioX/psyscripts" target="_blank" rel="noopener">GitHub</a>
 </nav>
 <div class="tools">
-<button class="psy-btn" data-lang-toggle data-i18n-attr="aria-label:aria.lang" style="padding:0 .9rem">EN</button>
+<button class="psy-btn u-cmd" data-command-open aria-label="" data-i18n-attr="aria-label:cmd.open"><i class="psy-ico psy-ico--search" aria-hidden="true"></i><kbd class="u-kbd" id="hdr-kbd">Ctrl K</kbd></button>
+<button class="psy-btn u-pad-lang" data-lang-toggle data-i18n-attr="aria-label:aria.lang">EN</button>
 <button data-theme-toggle aria-label="" data-i18n-attr="aria-label:aria.theme"><i class="psy-ico psy-ico--theme" aria-hidden="true"></i></button>
 <button data-menu-toggle aria-expanded="false" aria-label="" data-i18n-attr="aria-label:aria.menu"><i class="psy-ico psy-ico--menu" aria-hidden="true"></i></button>
 </div>
@@ -23,21 +30,26 @@
 <main id="top">
 <div class="wrap hero" data-reveal>
 <h1><span class="grad" data-i18n="hero.title"></span></h1>
-<p class="big-tw"><span data-i18n="hero.tw"></span> <span id="hero-tw" data-typewriter="табы|модалки|карусели|формы|тосты|переводы" data-i18n-attr="data-typewriter:hero.words" data-typewriter-pause="1400" style="color:var(--psy-accent)"></span></p>
-<p class="muted" data-i18n="hero.sub" data-i18n-count="27"></p>
+<p class="big-tw"><span data-i18n="hero.tw"></span> <span id="hero-tw" data-typewriter="табы|модалки|карусели|формы|тосты|переводы" data-i18n-attr="data-typewriter:hero.words" data-typewriter-pause="1400" class="u-accent"></span></p>
+<p class="muted" data-i18n="hero.sub" data-i18n-count="31"></p>
 <div class="row"><a class="psy-btn psy-btn--primary" href="#scripts" data-i18n="hero.cta"></a><a class="psy-btn" href="#customize"><i class="psy-ico psy-ico--palette" aria-hidden="true"></i><span data-i18n="hero.cta3"></span></a><a class="psy-btn" href="docs.html" data-i18n="nav.docs"></a><a class="psy-btn" href="https://github.com/PsyGioX/psyscripts" target="_blank" rel="noopener"><i class="psy-ico psy-ico--github" aria-hidden="true"></i><span data-i18n="hero.cta2"></span></a></div>
 </div>
 <div class="row stats" data-reveal data-reveal-stagger="90">
-<div data-reveal="zoom"><b data-counter="27">0</b><span data-i18n="stats.scripts" data-i18n-count="27"></span></div>
+<div data-reveal="zoom"><b data-counter="31">0</b><span data-i18n="stats.scripts" data-i18n-count="31"></span></div>
 <div data-reveal="zoom"><b data-counter="0">0</b><span data-i18n="stats.deps" data-i18n-count="0"></span></div>
 <div data-reveal="zoom"><b data-counter="100" data-suffix="%">0</b><span data-i18n="stats.responsive"></span></div>
 <div data-reveal="zoom"><b data-counter="100" data-suffix="+">0</b><span data-i18n="stats.options"></span></div>
 </div>
 
 <section id="scripts"><div class="wrap">
-<h2 data-reveal data-i18n="scripts.title" data-i18n-count="27"></h2><p class="muted" data-reveal data-i18n="scripts.sub"></p>
-<div class="filters" id="filters" role="group" data-i18n-attr="aria-label:scripts.filter"></div>
-<div class="grid" id="cards"></div></div></section>
+<h2 data-reveal data-i18n="scripts.title" data-i18n-count="31"></h2><p class="muted" data-reveal data-i18n="scripts.sub"></p>
+<div class="catbar">
+<label class="catsearch"><i class="psy-ico psy-ico--search" aria-hidden="true"></i><input type="search" id="script-q" autocomplete="off" spellcheck="false" data-i18n-attr="placeholder:scripts.search;aria-label:scripts.search"></label>
+<div class="filters" id="filters" role="group" data-i18n-attr="aria-label:scripts.filter"></div></div>
+<p class="muted catcount" id="cards-count" role="status" aria-live="polite"></p>
+<div class="grid" id="cards"></div>
+<p class="muted catempty" id="cards-empty" hidden data-i18n="scripts.empty"></p>
+</div></section>
 
 <section id="demo"><div class="wrap">
 <h2 data-reveal data-i18n="demo.title"></h2><p class="muted" data-reveal data-i18n="demo.sub"></p>
@@ -101,6 +113,11 @@
 <div class="live"><div data-skeleton data-delay="900" data-lightbox class="gal" id="gal"></div></div>
 <div class="ctrl"><label class="chk"><input type="checkbox" id="lb-loop" checked><span data-i18n="o.loop"></span></label><label class="chk"><input type="checkbox" id="lb-counter" checked><span data-i18n="o.counter"></span></label></div></article>
 
+<article class="dcard"><h3><span data-i18n="c.CommandPalette"></span><span class="new" data-i18n="badge.new"></span></h3><p data-i18n="d.cmd.p"></p>
+<div class="live"><div class="row start"><button class="psy-btn psy-btn--primary" data-command-open id="cmd-open"><i class="psy-ico psy-ico--search" aria-hidden="true"></i><span data-i18n="d.cmd.open"></span><kbd class="u-kbd" id="cmd-kbd">Ctrl K</kbd></button></div></div>
+<div class="ctrl"><label class="chk"><input type="checkbox" id="cmd-hl" checked><span data-i18n="d.cmd.hl"></span></label><button class="psy-btn psy-btn--sm" id="cmd-add" data-i18n="d.cmd.add"></button><button class="psy-btn psy-btn--sm" id="cmd-clear" data-i18n="d.cmd.clear"></button></div>
+<ul class="logline" id="log-cmd"></ul></article>
+
 <article class="dcard"><h3><span data-i18n="c.CookieBanner"></span></h3><p data-i18n="d.cookie.p"></p>
 <div class="live"><div>→ <code id="cookie-out">—</code></div><div class="row start"><button class="psy-btn" id="cookie-reset" data-i18n="o.showBanner"></button></div></div></article>
 
@@ -117,12 +134,12 @@
 <label class="chk"><input type="checkbox" id="car-loop" checked><span data-i18n="o.loop"></span></label><label class="chk"><input type="checkbox" id="car-dots" checked><span data-i18n="o.dots"></span></label><label class="chk"><input type="checkbox" id="car-arrows" checked><span data-i18n="o.arrows"></span></label></div>
 <ul class="logline" id="log-car"></ul></article>
 
-<article class="dcard"><h3><span data-i18n="c.CompareSlider"></span><span class="new" data-i18n="badge.new"></span></h3><p data-i18n="d.cmp.p"></p>
+<article class="dcard"><h3><span data-i18n="c.CompareSlider"></span></h3><p data-i18n="d.cmp.p"></p>
 <div class="live"><div data-compare data-compare-labels="Before|After" id="cmp1"><div class="cmp-a">Before</div><div class="cmp-b">After</div></div>
-<div data-compare data-compare-orientation="vertical" data-compare-position="35" id="cmp2"><div class="cmp-a" style="min-height:150px">↑</div><div class="cmp-b" style="min-height:150px">↓</div></div></div>
+<div data-compare data-compare-orientation="vertical" data-compare-position="35" id="cmp2"><div class="cmp-a u-h150">↑</div><div class="cmp-b u-h150">↓</div></div></div>
 <div class="ctrl"><label class="chk"><input type="checkbox" id="cmp-hover"><span data-i18n="o.hover"></span></label></div></article>
 
-<article class="dcard"><h3><span data-i18n="c.Typewriter"></span><span class="new" data-i18n="badge.new"></span></h3><p data-i18n="d.tw.p"></p>
+<article class="dcard"><h3><span data-i18n="c.Typewriter"></span></h3><p data-i18n="d.tw.p"></p>
 <div class="live"><div class="big-tw"><span id="demo-tw" data-typewriter="Hello|Привет|Hola|你好|Bonjour"></span></div></div>
 <div class="ctrl"><label><span data-i18n="o.words"></span><input type="text" id="tw-words" value="Hello|Привет|Hola|你好|Bonjour"></label><label><span><span data-i18n="o.speed"></span> <span class="val" id="tw-speed-v">70</span></span><input type="range" id="tw-speed" min="15" max="250" value="70"></label><label class="chk"><input type="checkbox" id="tw-loop" checked><span data-i18n="o.loop"></span></label></div></article>
 
@@ -136,7 +153,7 @@
 
 <article class="dcard"><h3><span data-i18n="c.Parallax"></span> · <span data-i18n="c.Skeleton"></span></h3><p data-i18n="d.px.p"></p>
 <div class="live"><div class="px"><div data-parallax="0.35">parallax</div></div>
-<div id="sk" data-skeleton="manual" style="border-radius:14px"><div class="px" style="height:80px;background:var(--psy-mint)"><div>skeleton</div></div></div></div>
+<div id="sk" data-skeleton="manual" class="u-r14"><div class="px u-sk"><div>skeleton</div></div></div></div>
 <div class="ctrl"><button class="psy-btn psy-btn--sm" id="sk-reload" data-i18n="o.reload"></button></div></article>
 
 </div></div>
@@ -155,15 +172,31 @@
 <div class="ctrl"><label><span data-i18n="o.validateOn"></span><select id="f-mode"><option>blur</option><option>input</option><option>submit</option></select></label></div>
 <ul class="logline" id="log-form"></ul></article>
 
+<article class="dcard wide"><h3><span data-i18n="c.DataTable"></span><span class="new" data-i18n="badge.new"></span></h3><p data-i18n="d.dt.p"></p>
+<div class="ctrl"><label><span data-i18n="d.dt.search"></span><input type="text" id="dt-q" autocomplete="off"></label><label><span data-i18n="d.dt.page"></span><select id="dt-size"><option value="0">∞</option><option value="5" selected>5</option><option value="10">10</option></select></label><button class="psy-btn psy-btn--sm" id="dt-csv" data-i18n="d.dt.csv"></button></div>
+<div class="live"><div class="tw"><table data-table id="demo-dt" data-table-search="#dt-q" data-table-page-size="5" data-sort-default="3:asc"><thead><tr><th data-i18n="d.dt.c1"></th><th data-i18n="d.dt.c2"></th><th data-sort-type="number" data-i18n="d.dt.c3"></th><th data-sort-type="number" data-i18n="d.dt.c4"></th></tr></thead><tbody></tbody></table></div></div>
+<ul class="logline" id="log-dt"></ul></article>
+
+<article class="dcard"><h3><span data-i18n="c.Sortable"></span><span class="new" data-i18n="badge.new"></span></h3><p data-i18n="d.sort.p"></p>
+<div class="live"><ul data-sortable id="demo-sort" data-sortable-handle=".grip"></ul></div>
+<div class="ctrl"><label><span data-i18n="d.sort.axis"></span><select id="sort-axis"><option value="y">y</option><option value="x">x</option><option value="both">both</option></select></label><button class="psy-btn psy-btn--sm" id="sort-reset" data-i18n="o.reset"></button></div>
+<p class="logline u-order">→ <code id="sort-out">—</code></p></article>
+
+<article class="dcard"><h3><span data-i18n="c.SafeHTML"></span><span class="new" data-i18n="badge.new"></span></h3><p data-i18n="d.safe.p"></p>
+<div class="ctrl"><label class="u-grow"><span data-i18n="d.safe.in"></span><textarea id="safe-in" rows="4" spellcheck="false"></textarea></label></div>
+<div class="ctrl"><label class="chk"><input type="checkbox" id="safe-img"><span data-i18n="d.safe.img"></span></label><label class="chk"><input type="checkbox" id="safe-links" checked><span data-i18n="d.safe.links"></span></label></div>
+<div class="live"><div class="safe-out" id="safe-out" aria-live="polite"></div></div>
+<pre><code id="safe-code"></code></pre><p class="muted u-sm" id="safe-stat" role="status"></p></article>
+
 <article class="dcard"><h3><span data-i18n="c.Counter"></span></h3><p data-i18n="d.cnt.p"></p>
 <div class="live"><div class="big-tw"><b id="demo-cnt" data-counter="12500" data-suffix=" ★">0</b></div></div>
 <div class="ctrl"><label><span data-i18n="o.target"></span><input type="number" id="cnt-to" value="48200" step="100"></label><label><span data-i18n="o.easing"></span><select id="cnt-ease"><option>easeOutCubic</option><option>easeInOutCubic</option><option>easeOutExpo</option><option>easeOutBack</option><option>linear</option></select></label><label><span><span data-i18n="o.durationMs"></span> <span class="val" id="cnt-dur-v">1600</span></span><input type="range" id="cnt-dur" min="200" max="4000" step="100" value="1600"></label><button class="psy-btn psy-btn--primary psy-btn--sm" id="cnt-run" data-i18n="o.run"></button></div></article>
 
-<article class="dcard"><h3><span data-i18n="c.Countdown"></span><span class="new" data-i18n="badge.new"></span></h3><p data-i18n="d.cd.p"></p>
+<article class="dcard"><h3><span data-i18n="c.Countdown"></span></h3><p data-i18n="d.cd.p"></p>
 <div class="live"><div id="cd-ny" data-countdown=""></div><div id="cd-timer" data-countdown="+45" data-countdown-units="minutes,seconds" data-countdown-end-text="🎉"></div></div>
 <div class="ctrl"><button class="psy-btn psy-btn--sm" id="cd-restart" data-i18n="o.restart"></button></div></article>
 
-<article class="dcard"><h3><span data-i18n="c.CopyButton"></span> · <span data-i18n="c.ScrollProgress"></span><span class="new" data-i18n="badge.new"></span></h3><p data-i18n="d.copy.p"></p>
+<article class="dcard"><h3><span data-i18n="c.CopyButton"></span> · <span data-i18n="c.ScrollProgress"></span></h3><p data-i18n="d.copy.p"></p>
 <div class="live"><div class="cp"><pre id="cp-src">npm i psyscripts</pre><button data-copy-target="#cp-src" data-copy-toast><i class="psy-ico psy-ico--copy" aria-hidden="true"></i><span data-i18n="install.copy"></span></button></div>
 <div data-progress data-progress-position="static" data-progress-height="22" data-progress-target="#demo"><span class="psy-progress__text" data-progress-text>0%</span></div></div></article>
 
@@ -186,8 +219,8 @@
 <label><span><span data-i18n="cz.border"></span> <span class="val" id="cz-bw-v">2px</span></span><input type="range" id="cz-bw" min="1" max="4" value="2"></label>
 <label><span data-i18n="cz.shadow"></span><select id="cz-shadow"><option value="3px 3px 0 var(--psy-ink)">hard</option><option value="0 6px 16px color-mix(in srgb,var(--psy-ink) 35%,transparent)">soft</option><option value="6px 6px 0 var(--psy-ink)">big</option><option value="none">none</option></select></label>
 <label><span data-i18n="cz.font"></span><select id="cz-font"><option value='"Nunito","SF Pro Rounded",ui-rounded,system-ui,sans-serif'>Nunito</option><option value='system-ui,-apple-system,"Segoe UI",sans-serif'>System</option><option value='Georgia,"Times New Roman",serif'>Serif</option><option value='ui-monospace,SFMono-Regular,Menlo,monospace'>Mono</option></select></label></div>
-<div class="row start" style="margin-top:1rem"><button class="psy-btn psy-btn--primary" id="cz-save" data-i18n="cz.save"></button><button class="psy-btn" id="cz-reset" data-i18n="cz.reset"></button></div>
-<h3 style="margin-top:1.4rem" data-i18n="cz.preview"></h3>
+<div class="row start u-mt1"><button class="psy-btn psy-btn--primary" id="cz-save" data-i18n="cz.save"></button><button class="psy-btn" id="cz-reset" data-i18n="cz.reset"></button></div>
+<h3 data-i18n="cz.preview" class="u-mt14"></h3>
 <div class="preview"><div class="row start"><button class="psy-btn psy-btn--primary" data-i18n="demo.submit"></button><button class="psy-btn" data-toast="" data-toast-type="success" data-i18n="demo.show" data-i18n-attr="data-toast:demo.hello"></button><span class="psy-btn" data-tooltip="" data-i18n-attr="data-tooltip:demo.tip">?</span></div>
 <div data-tabs><div role="tablist"><button data-tab data-i18n="d.tabs.a"></button><button data-tab data-i18n="d.tabs.b"></button></div><div data-panel data-i18n="d.tabs.pa"></div><div data-panel data-i18n="d.tabs.pb"></div></div>
 <div data-accordion><div data-acc-item class="is-open"><button data-acc-trigger aria-expanded="true" data-i18n="demo.acc1"></button><div data-acc-panel><div data-i18n="demo.acc1a"></div></div></div></div></div>
@@ -201,11 +234,11 @@
 <label><span><span data-i18n="cz.revealDist"></span> <span class="val" id="g-rev-v">22</span></span><input type="range" id="g-rev" min="0" max="80" value="22"></label>
 <label class="chk"><input type="checkbox" id="g-modal" checked><span data-i18n="o.backdrop"></span></label>
 <label class="chk"><input type="checkbox" id="g-newest"><span data-i18n="cz.newest"></span></label></div>
-<h3 style="margin-top:1.2rem" data-i18n="cz.code"></h3>
-<div class="cp"><pre id="cz-code" style="max-height:340px"><code></code></pre><button data-copy-target="#cz-code" data-copy-toast><i class="psy-ico psy-ico--copy" aria-hidden="true"></i><span data-i18n="install.copy"></span></button></div>
-<h3 style="margin-top:1.2rem" data-i18n="cz.events"></h3>
-<ul class="logline" id="log-all" style="max-height:170px"></ul>
-<div class="row start" style="margin-top:.8rem"><button class="psy-btn psy-btn--sm" id="log-clear" data-i18n="o.clear"></button></div>
+<h3 data-i18n="cz.code" class="u-mt12"></h3>
+<div class="cp"><pre id="cz-code" class="u-mh340"><code></code></pre><button data-copy-target="#cz-code" data-copy-toast><i class="psy-ico psy-ico--copy" aria-hidden="true"></i><span data-i18n="install.copy"></span></button></div>
+<h3 data-i18n="cz.events" class="u-mt12"></h3>
+<ul class="logline u-mh170" id="log-all"></ul>
+<div class="row start u-mt08"><button class="psy-btn psy-btn--sm" id="log-clear" data-i18n="o.clear"></button></div>
 </div></div></div></section>
 
 <section id="install"><div class="wrap">
@@ -215,14 +248,19 @@
 <div class="step" data-reveal><b>2</b><div><strong data-i18n="install.split"></strong>
 <div class="cp"><pre id="s2">&lt;link rel="stylesheet" href="dist/psyscripts.min.css"&gt;
 &lt;script src="dist/psyscripts.bundle.min.js" defer&gt;&lt;/script&gt;</pre><button data-copy-target="#s2" data-copy-toast><i class="psy-ico psy-ico--copy" aria-hidden="true"></i><span data-i18n="install.copy"></span></button></div></div></div>
+<div class="step" data-reveal><b>3</b><div><strong data-i18n="install.each"></strong>
+<div class="cp"><pre id="s3">&lt;link rel="stylesheet" href="dist/psyscripts.min.css"&gt;
+&lt;script src="dist/core.min.js" defer&gt;&lt;/script&gt;
+&lt;script src="dist/tabs.min.js" defer&gt;&lt;/script&gt;</pre><button data-copy-target="#s3" data-copy-toast><i class="psy-ico psy-ico--copy" aria-hidden="true"></i><span data-i18n="install.copy"></span></button></div>
+<p class="muted u-sm" data-i18n-html="install.eachNote"></p></div></div>
 <p class="muted" data-reveal><span data-i18n="install.more"></span> <a href="docs.html#install" data-i18n="nav.docs"></a></p>
 </div></section>
 </main>
-<div class="wrap" style="padding-bottom:2rem"><div data-marquee data-speed="25" class="muted" style="font-weight:800;font-size:1.1rem"><span>Tabs</span><span>Theme</span><span>Modal</span><span>Toast</span><span>Carousel</span><span>Lightbox</span><span>Parallax</span><span>Skeleton</span><span>Counter</span><span>TOC</span><span>Typewriter</span><span>Countdown</span><span>Progress</span><span>Compare</span></div></div>
+<div class="wrap u-pb2"><div data-marquee data-speed="25" class="muted u-marq"><span>Tabs</span><span>Theme</span><span>Modal</span><span>Toast</span><span>Carousel</span><span>Lightbox</span><span>Parallax</span><span>Skeleton</span><span>Counter</span><span>TOC</span><span>Typewriter</span><span>Countdown</span><span>Progress</span><span>Compare</span><span>Palette</span><span>DataTable</span><span>Sortable</span><span>SafeHTML</span></div></div>
 <div data-cookie-banner hidden><p data-i18n="cookie.text"></p>
 <div class="psy-cookie__cats"><label><input type="checkbox" checked disabled data-cookie-category="necessary"><span data-i18n="cookie.necessary"></span></label><label><input type="checkbox" data-cookie-category="analytics"><span data-i18n="cookie.analytics"></span></label><label><input type="checkbox" data-cookie-category="marketing"><span data-i18n="cookie.marketing"></span></label></div>
 <button class="psy-btn" data-cookie-decline data-i18n="cookie.decline"></button><button class="psy-btn" data-cookie-save data-i18n="cookie.save"></button><button class="psy-btn psy-btn--primary" data-cookie-accept data-i18n="cookie.accept"></button></div>
-<footer><div class="wrap">© 2026 <a href="https://psygiox-dev.vercel.app" target="_blank" rel="noopener">PsyGioX</a> · <span data-i18n="footer.rights"></span> · <a href="https://github.com/PsyGioX/psyscripts" target="_blank" rel="noopener">GitHub</a></div></footer>
+<footer><div class="wrap"><a href="docs.html#security" data-i18n="footer.security"></a> · <a href="docs.html#files" data-i18n="footer.files"></a> · © 2026 <a href="https://psygiox-dev.vercel.app" target="_blank" rel="noopener">PsyGioX</a> · <span data-i18n="footer.rights"></span> · <a href="https://github.com/PsyGioX/psyscripts" target="_blank" rel="noopener">GitHub</a></div></footer>
 <button data-back-top aria-label="" data-i18n-attr="aria-label:aria.top"><i class="psy-ico psy-ico--arrow-up" aria-hidden="true"></i></button>
 <script src="dist/psyscripts.bundle.min.js"></script>
 <script src="js/demo.js"></script>

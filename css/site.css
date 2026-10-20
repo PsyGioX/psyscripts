@@ -131,3 +131,33 @@ td:first-child{white-space:nowrap}
 @media(max-width:860px){.layout{grid-template-columns:minmax(0,1fr);padding-top:1.5rem}aside[data-toc]{display:none}td:first-child{white-space:normal}}
 @media(max-width:560px){.cp,.step{flex-direction:column}.cp{align-items:stretch}.step b{width:2.2rem;height:2.2rem}.cp [data-copy-target]{align-self:flex-end}.stats div{flex:1;min-width:0;padding:.6rem .3rem}.stats span{font-size:.74rem}.demo{padding:.7rem;border-radius:20px}.dcard{padding:.8rem}}
 @media(max-width:560px){.cp pre{white-space:pre-wrap;overflow-wrap:anywhere}}
+
+/* utilities (replace inline style attributes so a strict CSP can be used) */
+.u-pad-lang{padding:0 .9rem}.u-accent{color:var(--psy-accent)}.u-h150{min-height:150px}.u-r14{border-radius:14px}
+.px.u-sk{height:80px;background:var(--psy-mint)}
+.u-mt1{margin-top:1rem}.u-mt14{margin-top:1.4rem}.u-mt12{margin-top:1.2rem}.u-mt08{margin-top:.8rem}
+.u-mh340{max-height:340px}.u-mh170{max-height:170px}.u-pb2{padding-bottom:2rem}.u-marq{font-weight:800;font-size:1.1rem}
+
+/* catalog: search, counter, card footer */
+.catbar{display:flex;flex-wrap:wrap;gap:.8rem 1.2rem;align-items:center;margin-top:1.4rem}.catbar .filters{margin-top:0}
+.catsearch{position:relative;display:flex;align-items:center;flex:1 1 240px;max-width:360px}
+.catsearch .psy-ico{position:absolute;left:.9rem;color:var(--psy-accent);pointer-events:none}
+.catsearch input{width:100%;min-height:44px;padding:.5rem 1rem .5rem 2.6rem;font:700 .95rem var(--psy-font);color:var(--psy-text);background:var(--psy-solid);border:var(--psy-bw) solid var(--psy-ink);border-radius:999px;box-shadow:var(--psy-sh)}
+.catsearch input::placeholder{color:var(--psy-muted)}
+.catcount{margin:.9rem 0 0;font-size:.88rem;font-weight:700}
+.catempty{padding:2rem 0;text-align:center;font-weight:800}
+.card h3 .n{font:600 .8rem var(--psy-mono);color:var(--psy-muted)}
+.card .cfoot{display:flex;flex-wrap:wrap;align-items:center;gap:.5rem;margin-top:auto;padding-top:.3rem}
+.card .cfoot a,.card .cfoot button{min-height:34px;padding:.25rem .8rem;font:800 .8rem var(--psy-font);color:var(--psy-text);text-decoration:none;cursor:pointer;background:var(--psy-solid);border:var(--psy-bw) solid var(--psy-ink);border-radius:999px;box-shadow:2px 2px 0 var(--psy-ink)}
+.card .cfoot a:hover,.card .cfoot button:hover{background:var(--psy-bg)}
+.card .cfoot button.is-copied{background:var(--psy-mint)}
+.card .size{margin-left:auto;font:600 .75rem var(--psy-mono);color:var(--psy-text);opacity:.85}
+.card mark{color:inherit;background:var(--psy-butter);border-radius:4px}
+.u-cmd{min-height:44px;padding:0 .9rem;gap:.5rem}.u-kbd{padding:.1rem .45rem;font:600 .72rem var(--psy-mono);color:var(--psy-muted);background:var(--psy-lav);border:1px solid var(--psy-line);border-radius:6px}
+.psy-btn--primary .u-kbd{color:var(--psy-on-primary)}
+@media(max-width:600px){.u-cmd .u-kbd{display:none}.u-cmd{padding:0;width:44px}}
+.u-grow{flex:1 1 100%}.u-grow textarea{width:100%}.u-sm{font-size:.82rem;margin:.4rem 0 0}.u-order{margin:0}
+textarea{font:500 .85rem/1.5 var(--psy-mono);color:var(--psy-text);background:var(--psy-solid);border:var(--psy-bw) solid var(--psy-ink);border-radius:12px;padding:.6rem .8rem;resize:vertical}
+.safe-out{width:100%;min-height:56px;padding:.7rem .9rem;background:var(--psy-solid);border:var(--psy-bw) dashed var(--psy-ink);border-radius:12px;overflow-wrap:anywhere}
+#demo-sort{display:flex}.grip{cursor:grab;margin-right:.5rem;color:var(--psy-muted);touch-action:none}
+.psy-sortable>li{display:flex;align-items:center}

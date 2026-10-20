@@ -50,7 +50,7 @@
     function pages() { return Math.max(1, sl.length - pv + 1); }
     function buildDots() {
       if (!dots) return;
-      dots.innerHTML = '';
+      dots.textContent = '';
       dots.hidden = !O('dots', c) || pages() < 2;
       for (var k = 0; k < pages(); k++) {
         (function (k) {

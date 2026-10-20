@@ -1,0 +1,191 @@
+{
+ "name": "psyscripts",
+ "version": "2.1.0",
+ "files": {
+  "accordion.min.js": {
+   "bytes": 2496,
+   "gzip": 1062,
+   "integrity": "sha384-bTtiMNkCch0ocwFZMFNPF7ZScQNiyD3AXzIPb9FC3AbdeGOib+GdBb3XlGN6iQU0"
+  },
+  "back-to-top.min.js": {
+   "bytes": 1323,
+   "gzip": 732,
+   "integrity": "sha384-+qCFAe8WsxtzZApgWYXyJ90cM1f2iSC0ZU9WDWIATIPb2hQJMUGNhh0YTDnyIjGF"
+  },
+  "carousel.min.js": {
+   "bytes": 4117,
+   "gzip": 1849,
+   "integrity": "sha384-mgxhffQCjiSgQ6/d8p6U7q/WjBVQvbNcImg4iWJXzs01SKbft7AB/L66OBjwmHVl"
+  },
+  "command-palette.min.js": {
+   "bytes": 8472,
+   "gzip": 3251,
+   "integrity": "sha384-3nBvh0S5HSQw1JAwk2+uwP8jIBXqq1BS7OMG8Wbmrsp6QYaz2CwyoZ4Ph501DW2Y"
+  },
+  "compare.min.js": {
+   "bytes": 3358,
+   "gzip": 1451,
+   "integrity": "sha384-1XXfGs9+qtnU+B74X8OuMm4yueqkhjZbfHEkqqb09maqWKXSmH6A81jEOrm4Jcbg"
+  },
+  "cookie-banner.min.js": {
+   "bytes": 2752,
+   "gzip": 1083,
+   "integrity": "sha384-+CEj30tgvlxJmaSZMmZk4rM1zgVyQkDrXm9ZamSsnNlBzW8MHGZvdLeL9mG6Jur9"
+  },
+  "copy-button.min.js": {
+   "bytes": 2069,
+   "gzip": 1006,
+   "integrity": "sha384-0CBRJX8zyJbdqWzDwEayQa1SxAaiu1fPZRm9PU3yj0SHO6Rnua1m8N7S3wx7yxdZ"
+  },
+  "core.min.js": {
+   "bytes": 7032,
+   "gzip": 2988,
+   "integrity": "sha384-skiTx5sIXGGJcnW1WTEiSO7PmI7f2LkeY7rma4H2SvR+o5mDq2o5Q90SR7Lzvlv6"
+  },
+  "countdown.min.js": {
+   "bytes": 3254,
+   "gzip": 1570,
+   "integrity": "sha384-+Drhv8d6AZ0K81tt0A0pdtqeFDCYAheyogCf4GbvGjRoMJIzz4G9LkbR2pKJtrQh"
+  },
+  "counter.min.js": {
+   "bytes": 2540,
+   "gzip": 1254,
+   "integrity": "sha384-ieR74mnIrfZ/Agdpp+q5cEbLW9pkgh0/aHKCuSHJwk4yGdNUX7Jl6vcTwKUWKLJc"
+  },
+  "data-table.min.js": {
+   "bytes": 7162,
+   "gzip": 2980,
+   "integrity": "sha384-6kE+uZZAZwRlLO9CNkko4qUgVhHmfzVUc6LyFc5zz39R22Y2JdcOgNlKFQRSLK45"
+  },
+  "dropdown.min.js": {
+   "bytes": 2401,
+   "gzip": 935,
+   "integrity": "sha384-O20rRFJxdQUEumNlyIeg5SYBcNlw3DvgLzi6x4tLPJO+O10spWat+EWMmJeWtN7+"
+  },
+  "form-validation.min.js": {
+   "bytes": 4800,
+   "gzip": 2141,
+   "integrity": "sha384-lL/xyMJhrrQvhHmgd6+bz0M1c+H2xnMiOWEdsMq+0s1GYBC9IgBt1FhAETs5SOWq"
+  },
+  "header-menu.min.js": {
+   "bytes": 2003,
+   "gzip": 884,
+   "integrity": "sha384-Grwy8AfEPd001HdZfV5aoistVQN43YPdjuobKR/0//ZIz/daFaNsupkUNSj7N5T8"
+  },
+  "i18n.min.js": {
+   "bytes": 4415,
+   "gzip": 1927,
+   "integrity": "sha384-F94a9BveRIjPsgYgXO06S0Astl3zLKhNueGwVTQk2hsZNZmHZTpdo1iSBJaj07v9"
+  },
+  "icons.min.css": {
+   "bytes": 11117,
+   "gzip": 1862,
+   "integrity": "sha384-hmHGCdrr+Zvmr8MeKRoUCV6tH7NSFA1DXlxCjXmqKz0hpOVBeAY9mOvY1uibcJJu"
+  },
+  "lazy-images.min.js": {
+   "bytes": 2136,
+   "gzip": 1031,
+   "integrity": "sha384-y/FpY5GSHyYRWMlIE2KiEdtlYO6Aa0taPw7mt7TdubxkdOR9Ocppc8xmNiBLMk7H"
+  },
+  "lightbox.min.js": {
+   "bytes": 3575,
+   "gzip": 1554,
+   "integrity": "sha384-Dw5CMeCSOqtHYjS/ZiJwe2qNU5SR5wwKj3ibfdtrx3eQm7aM1o55/vRDZTjeMpUU"
+  },
+  "marquee.min.js": {
+   "bytes": 1478,
+   "gzip": 749,
+   "integrity": "sha384-mqCTcA+ZLKtFSBReSgJCMA9hCS3Q4C0fpkJW9K+h2S8l7YhakZFEIxJbMHgaWhqY"
+  },
+  "modal.min.js": {
+   "bytes": 3002,
+   "gzip": 1371,
+   "integrity": "sha384-WO8gswiWwxQG3YMinZPP0Y2vr2Pdddmfb/rjKqhJGe7PFic7c9Mlx4s9FryBse1y"
+  },
+  "parallax.min.js": {
+   "bytes": 1247,
+   "gzip": 715,
+   "integrity": "sha384-kSSXXqwZej+Gba0h8UcpZ+HzyEc6xBGjse6HqhmNtt/h2QyV9bZfi3LARRyulGz8"
+  },
+  "psyscripts.auto.min.js": {
+   "bytes": 145092,
+   "gzip": 40042,
+   "integrity": "sha384-B9TlElMWVmaZabxt9zhWolSL4ArmdC4CPIl/J44nQw+dh2jQj5Bxf8zzt1x08FY2"
+  },
+  "psyscripts.bundle.min.js": {
+   "bytes": 102448,
+   "gzip": 31227,
+   "integrity": "sha384-KsPHNvs6rHyNSAlD6I8WcZhmgvE5zsNeydtTCRPP30lv/Tkj7Irn+3rDVhQ1wOT8"
+  },
+  "psyscripts.min.css": {
+   "bytes": 42100,
+   "gzip": 8713,
+   "integrity": "sha384-HJIvAQRFDBtIYMhushSAin0yxupdKwGlhPzQl5/nXuzUbq0TiWQ+H1LP42nkU7ji"
+  },
+  "safe-html.min.js": {
+   "bytes": 4207,
+   "gzip": 1935,
+   "integrity": "sha384-xZBfTfd3XWXMKAyuKFAeheRTpEJWFEMajCkXr/n5jJjMegMmz3ZXHv6vkilgiV9j"
+  },
+  "scroll-progress.min.js": {
+   "bytes": 2322,
+   "gzip": 1117,
+   "integrity": "sha384-vQ4lN1YgEChqphfwoCaVXla2cRhnBlxSTkziBfSoTMaxjCOj4sOyFD35PKCcbs+/"
+  },
+  "scroll-reveal.min.js": {
+   "bytes": 2160,
+   "gzip": 956,
+   "integrity": "sha384-cX0l8LHVz+05/3SdM5d4kgxCGVeixaAgQizppLhc6rrRwffZDv53ERaPQcdrs5vn"
+  },
+  "scroll-spy.min.js": {
+   "bytes": 1616,
+   "gzip": 853,
+   "integrity": "sha384-FA7zN671njp0fVoUo7UbCbzTYtQEUgAQmTMmOEH3JRKZcOhPc6WVM/roTSeHgvyS"
+  },
+  "skeleton.min.js": {
+   "bytes": 1350,
+   "gzip": 734,
+   "integrity": "sha384-4aq8SBG0m9o1/DIT3+6hGGTDc1YG9nEpvKSeqFCKkVSxi6JYb4e9BHNB7BqvzK/a"
+  },
+  "sortable.min.js": {
+   "bytes": 7714,
+   "gzip": 2882,
+   "integrity": "sha384-L8feSmg8Zwl/AkM7lceBw4M4/iBn33Ue8asc+v/X7SfCaLenIPkF+w65ceYMFuDd"
+  },
+  "tabs.min.css": {
+   "bytes": 1527,
+   "gzip": 705,
+   "integrity": "sha384-ag82bwL++HeAJxZeRu0eldSpOlWkCS96k1YrdPWaDrQAKCxCYSA8qX3AtJNVu9It"
+  },
+  "tabs.min.js": {
+   "bytes": 2958,
+   "gzip": 1395,
+   "integrity": "sha384-ckQJ4diovnuRHSrAzUQJaCXhVE8wpZ9gv6/Tt3Dar5LcxdJszroV7SYjlDjd90PI"
+  },
+  "theme-switcher.min.js": {
+   "bytes": 2221,
+   "gzip": 1043,
+   "integrity": "sha384-LX69kkjY8w4ZlGUu094agiQqNrLZf05i3EzegmZ66pRGPfTGERRNsAeNzLPP6AEI"
+  },
+  "toast.min.js": {
+   "bytes": 4024,
+   "gzip": 1651,
+   "integrity": "sha384-MaYfqMwWqBWJm78jXPG+jsrZypsn/V58DBecVjXHTn3IXT2mG1XGhN0aaxFX0sBR"
+  },
+  "toc.min.js": {
+   "bytes": 1891,
+   "gzip": 962,
+   "integrity": "sha384-axSjEoKm1ZwpKnRVPNCdV3SS1f1J103prropZnPo2rg2hxcd+DI2WrmmXUdn6BsS"
+  },
+  "tooltip.min.js": {
+   "bytes": 2203,
+   "gzip": 1009,
+   "integrity": "sha384-ZqKkRq3n2G7pJwMaRw2Uh1wsfkWP0HkYGM5FODfYOYInsmDHBw2bH+QODFB2IgkM"
+  },
+  "typewriter.min.js": {
+   "bytes": 2909,
+   "gzip": 1375,
+   "integrity": "sha384-N15rkhOSG6dTprOw/GXLIhUs64pvCHvTldYpxv9Yxqegor3VpyceKP0Ib6bojyz0"
+  }
+ }
+}

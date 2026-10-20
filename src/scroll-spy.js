@@ -21,7 +21,9 @@
     if (nav._s) return;
     var links = [].slice.call(nav.querySelectorAll('a[href^="#"]')), map = {};
     links.forEach(function (a) {
-      var s = a.hash.length > 1 && document.getElementById(decodeURIComponent(a.hash.slice(1)));
+      var id = a.hash.slice(1);
+      try { id = decodeURIComponent(id); } catch (e) { /* malformed %-sequence: use the raw value instead of breaking init */ }
+      var s = id && document.getElementById(id);
       if (s) map[s.id] = a;
     });
     var secs = Object.keys(map).map(function (k) { return document.getElementById(k); });

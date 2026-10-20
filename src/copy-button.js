@@ -28,19 +28,26 @@
   document.addEventListener('click', function (e) {
     var b = e.target.closest('[data-copy],[data-copy-target]');
     if (!b) return;
-    var el = b.dataset.copyTarget && document.querySelector(b.dataset.copyTarget);
+    var el = b.dataset.copyTarget && (P.sel ? P.sel(b.dataset.copyTarget) : null);
     var t = el ? (el.value || el.textContent) : b.dataset.copy;
     if (t == null) return;
     if (O('trim', b)) t = t.trim();
     if (!E('copy:before', { text: t, button: b }, b)) return;
     copy(t).then(function () {
-      if (b._o == null) b._o = b.innerHTML;
+      /* the button's own nodes are kept and restored; labels are only ever set as text */
+      if (b._o == null) b._o = [].slice.call(b.childNodes);
       var label = b.dataset.copied != null && b.dataset.copied !== '' ? b.dataset.copied : O('copied', b);
-      if (label) b.textContent = label;
-      else b.innerHTML = '<i class="psy-ico psy-ico--check" aria-hidden="true"></i><span class="psy-sr">' + (O('toastText', b)) + '</span>';
+      b.textContent = '';
+      if (label) b.appendChild(document.createTextNode(label));
+      else {
+        var ic = document.createElement('i'), sr = document.createElement('span');
+        ic.className = 'psy-ico psy-ico--check'; ic.setAttribute('aria-hidden', 'true');
+        sr.className = 'psy-sr'; sr.textContent = O('toastText', b);
+        b.appendChild(ic); b.appendChild(sr);
+      }
       b.classList.add('is-copied');
       clearTimeout(b._t);
-      b._t = setTimeout(function () { b.innerHTML = b._o; b._o = null; b.classList.remove('is-copied'); }, O('timeout', b));
+      b._t = setTimeout(function () { b.textContent = ''; (b._o || []).forEach(function (n) { b.appendChild(n); }); b._o = null; b.classList.remove('is-copied'); }, O('timeout', b));
       var wantToast = b.hasAttribute('data-copy-toast') || O('toast', b);
       if (P.Toast && wantToast) P.Toast.show(b.dataset.copyToast || O('toastText', b), { type: 'success' });
       E('copy:done', { text: t, button: b }, b);

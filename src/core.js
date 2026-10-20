@@ -3,7 +3,7 @@
   var P = window.PsyScripts = window.PsyScripts || {};
   if (P.core) return;
   P.core = true;
-  P.version = '2.0.0';
+  P.version = '2.1.0';
 
   var B = {};   /* built-in defaults, registered by every script */
   var G = {};   /* user configuration, set with PsyScripts.configure() */
@@ -11,9 +11,13 @@
   var TOKEN_KEY = 'psy-tokens';
 
   function isObj(x) { return x && typeof x === 'object' && !Array.isArray(x); }
+  var own = Object.prototype.hasOwnProperty;
+  /* keys that could pollute Object.prototype are never copied (prototype-pollution guard) */
+  function bad(k) { return k === '__proto__' || k === 'constructor' || k === 'prototype'; }
   function merge(t, s) {
     for (var k in s) {
-      if (isObj(s[k])) t[k] = merge(isObj(t[k]) ? t[k] : {}, s[k]);
+      if (!own.call(s, k) || bad(k)) continue;
+      if (isObj(s[k])) t[k] = merge(isObj(t[k]) && own.call(t, k) ? t[k] : {}, s[k]);
       else t[k] = s[k];
     }
     return t;
@@ -52,6 +56,7 @@
     var o = a;
     if (typeof a === 'string') { o = {}; o[a] = b; }
     for (var k in o) {
+      if (!own.call(o, k) || bad(k)) continue;           /* '__proto__' / 'constructor' / 'prototype' are never configuration names */
       if (k === 'tokens') P.setTokens(o[k]);
       else if (k === 'icons') P.setIcons(o[k]);
       else G[k] = merge(G[k] || {}, o[k]);
@@ -93,23 +98,48 @@
   };
   var S = { base: {}, themes: {} };
   function varName(k) { return '--psy-' + (MAP[k] || kebab(k)); }
+  /* a token value may never leave its declaration: no braces, semicolons, comments, HTML, escapes, @rules or external url() */
+  var CSS_BAD = /[{};<>\\\u0000-\u001f]|\/\*|@import|expression\s*\(|javascript:|url\s*\(\s*['"]?\s*(?!data:image\/)/i;
+  function cssOk(v) { v = String(v); return v.length < 400 && !CSS_BAD.test(v); }
+  function keyOk(k) { return /^[A-Za-z][\w-]{0,40}$/.test(k) && !bad(k); }
   function decl(o) {
-    return Object.keys(o).map(function (k) { return varName(k) + ':' + o[k]; }).join(';');
+    return Object.keys(o).filter(function (k) { return own.call(o, k) && keyOk(k) && cssOk(o[k]); })
+      .map(function (k) { return varName(k) + ':' + o[k]; }).join(';');
   }
   function render() {
     var css = '';
     if (Object.keys(S.base).length) css += 'html:root{' + decl(S.base) + '}';
     Object.keys(S.themes).forEach(function (t) {
-      css += 'html[data-theme=' + t + ']{' + decl(S.themes[t]) + '}';
+      if (keyOk(t)) css += 'html[data-theme=' + t + ']{' + decl(S.themes[t]) + '}';
     });
-    var st = document.getElementById('psy-tokens');
-    if (!st) { st = document.createElement('style'); st.id = 'psy-tokens'; document.head.appendChild(st); }
+    sheet('psy-tokens', css);
+  }
+  /* CSP-friendly: a constructed stylesheet needs neither 'unsafe-inline' nor a nonce; <style> (with nonce) is only a fallback */
+  var sheets = {};
+  function sheet(id, css) {
+    try {
+      if (window.CSSStyleSheet && document.adoptedStyleSheets && CSSStyleSheet.prototype.replaceSync) {
+        var sh = sheets[id] || (sheets[id] = new CSSStyleSheet());
+        sh.replaceSync(css);
+        if (document.adoptedStyleSheets.indexOf(sh) < 0) document.adoptedStyleSheets = document.adoptedStyleSheets.concat(sh);
+        return;
+      }
+    } catch (e) {}
+    var st = document.getElementById(id);
+    if (!st) {
+      st = document.createElement('style'); st.id = id;
+      var n = document.querySelector('meta[name=psy-nonce]');
+      if (n) st.setAttribute('nonce', n.content);
+      document.head.appendChild(st);
+    }
     st.textContent = css;
   }
+  P.sheet = sheet;
   P.setTokens = function (t, o) {
     for (var k in t) {
+      if (!own.call(t, k) || !keyOk(k)) continue;
       if (isObj(t[k])) S.themes[k] = merge(S.themes[k] || {}, t[k]);
-      else S.base[k] = t[k];
+      else if (cssOk(t[k])) S.base[k] = t[k];
     }
     render();
     if (o && o.save) { try { localStorage.setItem(TOKEN_KEY, JSON.stringify(S)); } catch (e) {} }
@@ -119,6 +149,7 @@
   P.getTokens = function () { return clone(S); };
   P.resetTokens = function () {
     S = { base: {}, themes: {} };
+    sheet('psy-tokens', '');
     var st = document.getElementById('psy-tokens');
     if (st) st.remove();
     try { localStorage.removeItem(TOKEN_KEY); } catch (e) {}
@@ -127,18 +158,45 @@
   };
   try {
     var saved = JSON.parse(localStorage.getItem(TOKEN_KEY) || 'null');
-    if (saved) { S = { base: saved.base || {}, themes: saved.themes || {} }; document.head ? render() : document.addEventListener('DOMContentLoaded', render); }
+    if (saved && isObj(saved)) { S = { base: merge({}, saved.base), themes: merge({}, saved.themes) }; document.head ? render() : document.addEventListener('DOMContentLoaded', render); }
   } catch (e) {}
 
   /* ---------- icons: override any built-in icon with your own SVG ---------- */
   P.setIcons = function (m) {
     for (var k in m) {
       var v = m[k];
-      if (typeof v === 'string' && v.charAt(0) === '<') v = 'url("data:image/svg+xml,' + encodeURIComponent(v) + '")';
+      if (!own.call(m, k) || !keyOk(k) || typeof v !== 'string') continue;
+      if (v.charAt(0) === '<') v = 'url("data:image/svg+xml,' + encodeURIComponent(v) + '")';
+      else if (!/^(url\("?data:image\/|var\(--)/i.test(v) || !cssOk(v.replace(/^url\("?data:image\/[^)]*\)$/i, 'x'))) continue;
       document.documentElement.style.setProperty('--psy-i-' + kebab(k), v);
     }
     return P;
   };
+
+  /* ---------- security helpers (used by every script that touches the DOM with strings) ---------- */
+  /* P.url(u, {schemes, base}) → absolute URL string, or '' if the scheme is not allowed. Default: http, https, relative. */
+  P.url = function (u, o) {
+    o = o || {};
+    if (u == null) return '';
+    u = String(u).trim();
+    if (!u) return '';
+    var ok = o.schemes || ['http:', 'https:'], a;
+    try { a = new URL(u, o.base || document.baseURI); } catch (e) { return ''; }
+    if (ok.indexOf(a.protocol) < 0) return '';
+    if (a.protocol === 'data:' && !/^data:image\/(png|jpe?g|gif|webp|avif|svg\+xml)[;,]/i.test(u)) return '';
+    return /^[a-z][a-z0-9+.-]*:/i.test(u) || u.charAt(0) === '/' ? a.href : u;
+  };
+  /* Trusted Types: one policy named "psyscripts". Works with CSP  require-trusted-types-for 'script'; trusted-types psyscripts */
+  var tt = null;
+  try { if (window.trustedTypes && trustedTypes.createPolicy) tt = trustedTypes.createPolicy('psyscripts', { createHTML: function (s) { return s; } }); } catch (e) {}
+  /* P.html(el, markup): for STATIC markup written by the library itself. Never pass user input here — use P.Sanitize.set() instead. */
+  P.html = function (el, s) { el.innerHTML = tt ? tt.createHTML(s) : s; return el; };
+  P.clear = function (el) { el.textContent = ''; return el; };
+  /* P.sel(selector, root) → element or null; an invalid selector never throws */
+  P.sel = function (q, r) { try { return (r || document).querySelector(q); } catch (e) { return null; } };
+  P.selAll = function (q, r) { try { return [].slice.call((r || document).querySelectorAll(q)); } catch (e) { return []; } };
+  /* P.pick(value, allowed, fallback): whitelist for values that end up in class names */
+  P.pick = function (v, a, f) { return a.indexOf(v) > -1 ? v : f; };
 
   /* ---------- lifecycle ---------- */
   function each(fn, root) {

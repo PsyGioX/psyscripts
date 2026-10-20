@@ -35,9 +35,10 @@
 
   function show(msg, o) {
     o = o || {};
-    var pos = o.position || O('position');
+    var POS = ['top-right', 'top-left', 'top-center', 'bottom-right', 'bottom-left', 'bottom-center'];
+    var pos = POS.indexOf(o.position) > -1 ? o.position : POS.indexOf(O('position')) > -1 ? O('position') : 'top-right';
     var dur = o.duration != null ? o.duration : O('duration');
-    var type = o.type || 'info';
+    var type = ['info', 'success', 'error', 'warning'].indexOf(o.type) > -1 ? o.type : 'info';
     if (!E('toast:show', { message: msg, type: type, options: o })) return null;
 
     var b = box(pos), max = O('max');
@@ -47,7 +48,7 @@
     }
 
     var t = document.createElement('div');
-    t.className = 'psy-toast psy-toast--' + type + (O('icon') && o.icon !== false ? ' has-icon' : '') + ' ' + (o.className || O('className') || '');
+    t.className = 'psy-toast psy-toast--' + type + (O('icon') && o.icon !== false ? ' has-icon' : '') + ' ' + String(o.className || O('className') || '').replace(/[^\w\- ]/g, '');
     if (type === 'error' || type === 'warning') t.setAttribute('role', 'alert');
 
     var body = document.createElement('div');
@@ -79,7 +80,9 @@
       x.type = 'button';
       x.className = 'psy-toast__x';
       x.setAttribute('aria-label', O('closeLabel'));
-      x.innerHTML = '<i class="psy-ico psy-ico--x" aria-hidden="true"></i>';
+      var xi = document.createElement('i');
+      xi.className = 'psy-ico psy-ico--x'; xi.setAttribute('aria-hidden', 'true');
+      x.appendChild(xi);
       x.addEventListener('click', function (e) { e.stopPropagation(); dismiss(t); });
       t.appendChild(x);
     }

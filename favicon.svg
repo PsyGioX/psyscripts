@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+<title>PsyScripts</title>
+<style>.s{fill:#46366a}.t{fill:#cdbcff;stroke:#46366a}.p{stroke:#2a2040}.d{fill:#ffd0e0;stroke:#46366a}
+@media (prefers-color-scheme:dark){.s{fill:#c9b9fa}.t{fill:#c4b0ff;stroke:#1b1729}.p{stroke:#1f1540}.d{fill:#ffb3cf;stroke:#1b1729}}</style>
+<rect class="s" x="8" y="8" width="52" height="52" rx="15"/>
+<rect class="t" x="4" y="4" width="52" height="52" rx="15" stroke-width="4"/>
+<path class="p" d="M23.500 43V19.500H33a8.500 8.500 0 0 1 0 17H23.500" fill="none" stroke-width="6.500" stroke-linecap="round" stroke-linejoin="round"/>
+<circle class="d" cx="45.500" cy="16.500" r="4.200" stroke-width="2.500"/>
+</svg>

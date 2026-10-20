@@ -28,7 +28,8 @@
     handle.setAttribute('aria-orientation', vertical ? 'vertical' : 'horizontal');
     handle.setAttribute('aria-valuemin', 0);
     handle.setAttribute('aria-valuemax', 100);
-    handle.innerHTML = '<span class="psy-compare__knob"><i class="psy-ico psy-ico--' + (vertical ? 'arrows-v' : 'arrows-h') + '" aria-hidden="true"></i></span>';
+    var kh = '<span class="psy-compare__knob"><i class="psy-ico psy-ico--' + (vertical ? 'arrows-v' : 'arrows-h') + '" aria-hidden="true"></i></span>';
+    if (P.html) P.html(handle, kh); else handle.innerHTML = kh;
     el.appendChild(handle);
     el.classList.add('psy-compare');
     el.classList.toggle('is-vertical', vertical);

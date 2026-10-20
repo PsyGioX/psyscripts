@@ -16,9 +16,16 @@
   function load(el) {
     if (el._l) return;
     el._l = 1;
-    if (el.tagName === 'SOURCE') { el.srcset = el.dataset.srcset; return; }
+    var U = function (u) { return P.url ? P.url(u, { schemes: ['http:', 'https:', 'blob:', 'data:'] }) : u; };
+    /* srcset is a list of "url descriptor" candidates: every URL is checked */
+    var SS = function (v) {
+      return String(v || '').split(',').map(function (c) { c = c.trim().split(/\s+/); var u = U(c[0]); return u ? [u].concat(c.slice(1)).join(' ') : ''; }).filter(Boolean).join(', ');
+    };
+    if (el.tagName === 'SOURCE') { el.srcset = SS(el.dataset.srcset); return; }
     if (el.dataset.bg) {
-      el.style.backgroundImage = 'url("' + el.dataset.bg.replace(/"/g, '%22') + '")';
+      var bg = U(el.dataset.bg);
+      if (!bg) { E('lazy:error', { element: el }, el); return; }
+      el.style.backgroundImage = 'url("' + bg.replace(/[\\"\n\r]/g, function (c) { return '%' + c.charCodeAt(0).toString(16).toUpperCase(); }) + '")';
       el.classList.add('is-loaded');
       E('lazy:load', { element: el }, el);
       return;
@@ -27,8 +34,8 @@
     if (pic) [].forEach.call(pic.querySelectorAll('source[data-srcset]'), load);
     el.addEventListener('load', function () { el.classList.add('is-loaded'); E('lazy:load', { element: el }, el); }, { once: true });
     el.addEventListener('error', function () { E('lazy:error', { element: el }, el); }, { once: true });
-    if (el.dataset.srcset) el.srcset = el.dataset.srcset;
-    if (el.dataset.src) el.src = el.dataset.src;
+    if (el.dataset.srcset) el.srcset = SS(el.dataset.srcset);
+    if (el.dataset.src) { var s = U(el.dataset.src); if (s) el.src = s; else E('lazy:error', { element: el }, el); }
   }
   P.Lazy = {
     load: load,

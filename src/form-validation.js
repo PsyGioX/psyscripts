@@ -27,10 +27,11 @@
 
   /* custom rules: fn(value, field, form) -> true | false | 'message' */
   var rules = {
-    match: function (v, f) { var o = document.querySelector(f.dataset.match); return !o || v === o.value; },
+    match: function (v, f) { var o = P.sel ? P.sel(f.dataset.match) : null; return !o || v === o.value; },
     digits: function (v) { return !v || /^\d+$/.test(v); }
   };
 
+  var uid = 0;
   function fld(f) { return /^(INPUT|SELECT|TEXTAREA)$/.test(f.tagName) && !/^(submit|button|reset|image|hidden)$/.test(f.type); }
   function tpl(s, f) {
     return String(s).replace(/\{(\w+)\}/g, function (m, k) {
@@ -72,7 +73,7 @@
     if (!er) {
       er = document.createElement('small');
       er.setAttribute('data-error', '');
-      er.id = 'e-' + (f.name || Math.random().toString(36).slice(2));
+      er.id = 'e-' + (f.name || 'f' + (++uid)).replace(/[^\w-]/g, '_') + '-' + (++uid);
       box ? box.appendChild(er) : f.parentNode.insertBefore(er, f.nextSibling);
     }
     return er;

@@ -1,4 +1,9 @@
 node_modules
 public
 vendor
-package-lock.json
+.vercel
+.env
+.env.*
+*.log
+.DS_Store
+# package-lock.json is committed on purpose (reproducible, auditable installs)

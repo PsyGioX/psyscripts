@@ -1,7 +1,7 @@
 /*! PsyScripts · © 2026 PsyGioX · MIT · github.com/PsyGioX/psyscripts */
 (function () {
   var P = window.PsyScripts = window.PsyScripts || {};
-  var DEF = { source: 'main', levels: 'h2,h3', numbered: false, title: '' };
+  var DEF = { source: 'main', levels: 'h2,h3', numbered: false, title: '', idPrefix: '' };
   (P.q = P.q || []).push(['toc', DEF]);
   function O(k, el) { return P.cfg ? P.cfg('toc', k, DEF[k], el, 'toc') : DEF[k]; }
   function E(n, d, el) {
@@ -26,7 +26,7 @@
   function build(box) {
     if (box._t) return;
     box._t = 1;
-    var src = document.querySelector(O('source', box)), hs = src ? src.querySelectorAll(O('levels', box)) : [];
+    var src = P.sel ? P.sel(O('source', box)) : null, hs = src ? P.selAll(O('levels', box), src) : [];
     var used = {}, ul = document.createElement('ul');
     [].forEach.call(document.querySelectorAll('[id]'), function (e) { used[e.id] = 1; });
     var title = O('title', box);
@@ -37,7 +37,8 @@
       box.appendChild(h);
     }
     [].forEach.call(hs, function (h) {
-      if (!h.id) h.id = slug(h.textContent, used);
+      /* idPrefix guards against DOM clobbering (an id such as "name" or "forms" can shadow window/document properties) */
+      if (!h.id) h.id = O('idPrefix', box) + slug(h.textContent, used);
       var li = document.createElement('li'), a = document.createElement('a');
       li.className = 'toc-' + h.tagName.toLowerCase();
       a.href = '#' + h.id;
@@ -57,12 +58,12 @@
       box = box || document.querySelector('[data-toc]');
       if (!box) return;
       P.Spy && P.Spy.destroy(box);
-      box.innerHTML = '';
+      box.textContent = '';
       box._t = 0;
       build(box);
     },
     destroy: function (r) {
-      all(r, '[data-toc]').forEach(function (b) { P.Spy && P.Spy.destroy(b); b.innerHTML = ''; b._t = 0; });
+      all(r, '[data-toc]').forEach(function (b) { P.Spy && P.Spy.destroy(b); b.textContent = ''; b._t = 0; });
     }
   };
   document.addEventListener('DOMContentLoaded', function () { P.TOC.init(); });

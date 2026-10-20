@@ -465,3 +465,67 @@ dialog.psy-lightbox::backdrop { background: color-mix(in srgb, #150f26 88%, tran
 .psy-compare__label--after { right: .7rem; }
 .is-vertical > .psy-compare__label--after { top: auto; bottom: .7rem; right: auto; left: .7rem; }
 .psy-progress__text { position: absolute; inset: 0; display: grid; place-items: center; font: 800 .75rem var(--psy-mono); color: var(--psy-text); }
+
+/* ============ BackToTop — high-contrast fix (visible in every light theme) ============ */
+[data-back-top] {
+  color: var(--psy-on-primary); background: var(--psy-primary); cursor: pointer;
+  border: var(--psy-bw) solid var(--psy-ink); box-shadow: var(--psy-sh); font-size: 1.1rem;
+}
+[data-back-top] .psy-ico { width: 1.5em; height: 1.5em; vertical-align: middle; }
+[data-back-top]:hover { background: var(--psy-pink); color: var(--psy-text); }
+@media (prefers-contrast: more) { [data-back-top] { background: var(--psy-ink); color: var(--psy-bg); } }
+
+/* ============ CommandPalette ============ */
+dialog.psy-cmd {
+  width: min(94vw, 600px); max-height: min(70vh, 560px); margin: 12vh auto auto; padding: 0; overflow: hidden;
+  font-family: var(--psy-font); color: var(--psy-text); background: var(--psy-solid);
+  border: var(--psy-bw) solid var(--psy-ink); border-radius: 22px; box-shadow: 6px 6px 0 var(--psy-ink);
+}
+dialog.psy-cmd[open] { display: block; animation: psy-pop .18s ease; }
+dialog.psy-cmd::backdrop { background: color-mix(in srgb, var(--psy-ink) 45%, transparent); -webkit-backdrop-filter: blur(3px); backdrop-filter: blur(3px); }
+.psy-cmd__box { display: flex; flex-direction: column; max-height: inherit; }
+.psy-cmd__top { display: flex; align-items: center; gap: .6rem; padding: .35rem 1rem; border-bottom: var(--psy-bw) solid var(--psy-line); }
+.psy-cmd__top .psy-ico { color: var(--psy-accent); }
+.psy-cmd__input { flex: 1; min-width: 0; min-height: 48px; font: 700 1.05rem var(--psy-font); color: var(--psy-text); background: transparent; border: 0; outline: 0; }
+.psy-cmd__input::placeholder { color: var(--psy-muted); }
+.psy-cmd__top:focus-within { box-shadow: inset 0 -3px 0 var(--psy-accent); }
+.psy-cmd kbd { padding: .1rem .45rem; font: 600 .74rem var(--psy-mono); color: var(--psy-muted); background: var(--psy-lav); border: 1px solid var(--psy-line); border-radius: 6px; }
+.psy-cmd__list { margin: 0; padding: .4rem; overflow: auto; list-style: none; overscroll-behavior: contain; }
+.psy-cmd__group { padding: .55rem .7rem .25rem; font: 800 .72rem var(--psy-font); letter-spacing: .06em; text-transform: uppercase; color: var(--psy-muted); }
+.psy-cmd__item { display: flex; align-items: center; justify-content: space-between; gap: .8rem; min-height: 44px; padding: .5rem .7rem; font-weight: 700; border-radius: 12px; cursor: pointer; }
+.psy-cmd__item[aria-selected=true] { background: var(--psy-primary); color: var(--psy-on-primary); }
+.psy-cmd__item[aria-selected=true] kbd { color: var(--psy-on-primary); background: color-mix(in srgb, var(--psy-solid) 60%, transparent); }
+.psy-cmd__item mark { color: inherit; background: var(--psy-butter); border-radius: 4px; box-shadow: 0 0 0 2px var(--psy-butter); }
+.psy-cmd__none { padding: 1.4rem; text-align: center; color: var(--psy-muted); font-weight: 700; }
+@media (max-width: 560px) { dialog.psy-cmd { margin-top: 6vh; } .psy-cmd__esc { display: none; } }
+
+/* ============ DataTable ============ */
+.psy-dt { width: 100%; border-collapse: separate; border-spacing: 0; font-family: var(--psy-font); color: var(--psy-text); background: var(--psy-solid); border: var(--psy-bw) solid var(--psy-ink); border-radius: var(--psy-radius); overflow: hidden; }
+.psy-dt th, .psy-dt td { padding: .6rem .9rem; text-align: left; border-bottom: 1px solid var(--psy-line); }
+.psy-dt thead th { background: var(--psy-lav); font-weight: 800; white-space: nowrap; border-bottom: var(--psy-bw) solid var(--psy-ink); }
+.psy-dt tbody tr:last-child td { border-bottom: 0; }
+.psy-dt tbody tr:hover td { background: color-mix(in srgb, var(--psy-lav) 55%, transparent); }
+.psy-dt [hidden] { display: none; }
+.psy-dt__sort { display: inline-flex; align-items: center; gap: .4rem; padding: .15rem .1rem; font: inherit; color: inherit; cursor: pointer; background: none; border: 0; border-radius: 6px; }
+.psy-dt__arrow { display: inline-block; min-width: .8em; opacity: .4; }
+.psy-dt__arrow::before { content: '↕'; }
+[aria-sort=ascending] .psy-dt__arrow::before { content: '↑'; }
+[aria-sort=descending] .psy-dt__arrow::before { content: '↓'; }
+[aria-sort=ascending] .psy-dt__arrow, [aria-sort=descending] .psy-dt__arrow { opacity: 1; color: var(--psy-accent); }
+.psy-dt__foot { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: .6rem; margin-top: .6rem; }
+.psy-dt__info { margin: 0; font-size: .85rem; font-weight: 700; color: var(--psy-muted); }
+.psy-dt__pager { display: flex; align-items: center; gap: .5rem; font-weight: 800; font-size: .85rem; }
+.psy-dt__pager[hidden] { display: none; }
+.psy-dt__pager button:disabled { opacity: .45; cursor: not-allowed; box-shadow: none; }
+
+/* ============ Sortable ============ */
+.psy-sortable { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: .5rem; touch-action: pan-y; }
+.psy-sortable.is-x { flex-direction: row; flex-wrap: wrap; touch-action: pan-x; }
+.psy-sortable > * { position: relative; padding: .7rem .9rem; background: var(--psy-solid); border: var(--psy-bw) solid var(--psy-ink); border-radius: calc(var(--psy-radius) * .7); box-shadow: 2px 2px 0 var(--psy-ink); user-select: none; -webkit-user-select: none; }
+.psy-sortable > * [data-sortable-handle], .psy-sortable [data-sortable-grip] { cursor: grab; touch-action: none; }
+.psy-sortable > [data-sortable-grip], .psy-sortable:not(:has([data-sortable-handle])) > * { cursor: grab; }
+.psy-sortable > *.is-dragging { z-index: 5; cursor: grabbing; background: var(--psy-lav); box-shadow: 6px 6px 0 var(--psy-ink); opacity: .95; transition: none; }
+.psy-sortable > *.is-grabbed { background: var(--psy-butter); outline: 3px solid var(--psy-accent); outline-offset: 2px; }
+.psy-sortable.is-sorting { cursor: grabbing; }
+.psy-sortable .psy-ico--grip { color: var(--psy-muted); margin-right: .4rem; }
+@media (pointer: coarse) { .psy-sortable:not(:has([data-sortable-handle])) { touch-action: none; } }

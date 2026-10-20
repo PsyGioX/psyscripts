@@ -15,12 +15,13 @@
   }
   var ICON = function (n) { return '<i class="psy-ico psy-ico--' + n + '" aria-hidden="true"></i>'; };
   var dlg, imgs = [], i = 0, img, cap, cnt, x0 = null;
+  function H(el, s) { return P.html ? P.html(el, s) : (el.innerHTML = s, el); }
 
   function build() {
     dlg = document.createElement('dialog');
     dlg.className = 'psy-lightbox';
-    dlg.innerHTML = '<button type="button" class="lb-x">' + ICON('x') + '</button><button type="button" class="lb-p">' + ICON('chevron-left') +
-      '</button><img alt=""><button type="button" class="lb-n">' + ICON('chevron-right') + '</button><p class="lb-cap"></p><span class="lb-c"></span>';
+    H(dlg, '<button type="button" class="lb-x">' + ICON('x') + '</button><button type="button" class="lb-p">' + ICON('chevron-left') +
+      '</button><img alt=""><button type="button" class="lb-n">' + ICON('chevron-right') + '</button><p class="lb-cap"></p><span class="lb-c"></span>');
     img = dlg.querySelector('img');
     cap = dlg.querySelector('.lb-cap');
     cnt = dlg.querySelector('.lb-c');
@@ -49,13 +50,17 @@
       E('lightbox:close', { index: i });
     });
   }
-  function src(s) { return s.dataset.full || s.currentSrc || s.src; }
+  /* only http(s), relative, blob: and data:image/* are ever assigned to the viewer */
+  function src(s) {
+    var u = s.dataset.full || s.currentSrc || s.src;
+    return P.url ? P.url(u, { schemes: ['http:', 'https:', 'blob:', 'data:'] }) : u;
+  }
   function go(n) {
     var len = imgs.length;
     if (!O('loop') && (n < 0 || n >= len)) return;
     i = (n + len) % len;
     var s = imgs[i];
-    img.src = src(s);
+    img.src = src(s) || '';
     img.alt = s.alt;
     cap.textContent = s.dataset.caption || s.alt;
     cap.hidden = !cap.textContent;
@@ -63,7 +68,7 @@
     cnt.hidden = !O('counter') || len < 2;
     dlg.classList.toggle('single', len < 2);
     if (O('preload') && len > 1) {
-      [i - 1, i + 1].forEach(function (k) { var p = imgs[(k + len) % len]; if (p) new Image().src = src(p); });
+      [i - 1, i + 1].forEach(function (k) { var p = imgs[(k + len) % len], u = p && src(p); if (u) new Image().src = u; });
     }
     E('lightbox:change', { index: i, image: s });
   }

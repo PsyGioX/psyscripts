@@ -1,7 +1,7 @@
 /*! PsyScripts · © 2026 PsyGioX · MIT · github.com/PsyGioX/psyscripts */
 (function () {
   var P = window.PsyScripts = window.PsyScripts || {};
-  var DEF = { storageKey: 'psy-cookie', days: 365, reloadOnChange: false };
+  var DEF = { storageKey: 'psy-cookie', days: 365, reloadOnChange: false, version: 1 };
   (P.q = P.q || []).push(['cookie', DEF]);
   function O(k, el) { return P.cfg ? P.cfg('cookie', k, DEF[k], el, 'cookie') : DEF[k]; }
   function E(n, d, el) {
@@ -19,13 +19,16 @@
     var o;
     try { o = JSON.parse(raw); } catch (e) { o = null; }
     if (!o || typeof o !== 'object') o = { v: raw, c: {}, t: 0 };
+    if (typeof o.c !== 'object' || o.c === null || Array.isArray(o.c)) o.c = {};
+    /* bump the "version" option (e.g. after adding a tracker) and everyone is asked again */
+    if ((o.ver || 1) !== O('version')) return null;
     var days = O('days');
     if (days > 0 && o.t && Date.now() - o.t > days * 864e5) return null;
     return o;
   }
   function get() { var o = read(); return o ? o.v : null; }
   function save(v, cats) {
-    var o = { v: v, c: cats || {}, t: Date.now() };
+    var o = { v: v, c: cats || {}, t: Date.now(), ver: O('version') };
     try { localStorage.setItem(O('storageKey'), JSON.stringify(o)); } catch (e) {}
     E('cookie', { consent: v, categories: o.c });
     document.querySelectorAll('[data-cookie-banner]').forEach(function (b) { b.hidden = true; });

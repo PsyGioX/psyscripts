@@ -55,7 +55,8 @@
       d.setAttribute('data-modal', '');
       d.setAttribute('aria-label', o.title || o.text || 'Dialog');
       var h = o.title ? '<h3 class="psy-modal__title"></h3>' : '';
-      d.innerHTML = h + '<p class="psy-modal__text"></p><div class="psy-modal__actions"></div>';
+      var m = h + '<p class="psy-modal__text"></p><div class="psy-modal__actions"></div>';
+      if (P.html) P.html(d, m); else d.innerHTML = m;
       if (o.title) d.querySelector('h3').textContent = o.title;
       d.querySelector('p').textContent = o.text || '';
       var acts = d.querySelector('.psy-modal__actions');
