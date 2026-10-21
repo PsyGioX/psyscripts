@@ -26,7 +26,7 @@ If you only need to **use PsyScripts on someone's website**, read [`AI-INTEGRATI
 ```bash
 npm ci               # exact versions from package-lock.json (install scripts are disabled by .npmrc)
 npm run build        # dist/*, manifest.json (SRI), docs.html, public/
-npm test             # 24 regression tests — must pass before finishing
+npm test             # 29 regression tests — must pass before finishing
 npm run audit        # npm audit --audit-level=low
 ```
 

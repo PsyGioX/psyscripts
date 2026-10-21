@@ -18,9 +18,9 @@
    "integrity": "sha384-mgxhffQCjiSgQ6/d8p6U7q/WjBVQvbNcImg4iWJXzs01SKbft7AB/L66OBjwmHVl"
   },
   "command-palette.min.js": {
-   "bytes": 8472,
-   "gzip": 3251,
-   "integrity": "sha384-3nBvh0S5HSQw1JAwk2+uwP8jIBXqq1BS7OMG8Wbmrsp6QYaz2CwyoZ4Ph501DW2Y"
+   "bytes": 8719,
+   "gzip": 3347,
+   "integrity": "sha384-L5fhp3dljIxa+0Rv1eIo3c1tToffsQCfGt924tqzqLNThxvy9P0rNvCVUUt1mfXr"
   },
   "compare.min.js": {
    "bytes": 3358,
@@ -68,9 +68,9 @@
    "integrity": "sha384-lL/xyMJhrrQvhHmgd6+bz0M1c+H2xnMiOWEdsMq+0s1GYBC9IgBt1FhAETs5SOWq"
   },
   "header-menu.min.js": {
-   "bytes": 2003,
-   "gzip": 884,
-   "integrity": "sha384-Grwy8AfEPd001HdZfV5aoistVQN43YPdjuobKR/0//ZIz/daFaNsupkUNSj7N5T8"
+   "bytes": 2306,
+   "gzip": 993,
+   "integrity": "sha384-Kf9EF6DJCPu6W+7Tc9BsOBLLZ5e71d3wIWTYuwQsFgNqgyiZDGQCbJ2435AS3x9k"
   },
   "i18n.min.js": {
    "bytes": 4415,
@@ -108,19 +108,19 @@
    "integrity": "sha384-kSSXXqwZej+Gba0h8UcpZ+HzyEc6xBGjse6HqhmNtt/h2QyV9bZfi3LARRyulGz8"
   },
   "psyscripts.auto.min.js": {
-   "bytes": 145092,
-   "gzip": 40042,
-   "integrity": "sha384-B9TlElMWVmaZabxt9zhWolSL4ArmdC4CPIl/J44nQw+dh2jQj5Bxf8zzt1x08FY2"
+   "bytes": 152415,
+   "gzip": 41734,
+   "integrity": "sha384-aZ30lWAuyv/HEGaMeJWQ2KXNayi1ebcFDOV1z3xY70vgewYS2rCJGO1qIm6Wxswz"
   },
   "psyscripts.bundle.min.js": {
-   "bytes": 102448,
-   "gzip": 31227,
-   "integrity": "sha384-KsPHNvs6rHyNSAlD6I8WcZhmgvE5zsNeydtTCRPP30lv/Tkj7Irn+3rDVhQ1wOT8"
+   "bytes": 105792,
+   "gzip": 32228,
+   "integrity": "sha384-l0f/IbKvxTdcGh6dCa7XjtB3P64lhnTNVPNZXEHGtJS0lM3da5NFwU1NOGrfdzRa"
   },
   "psyscripts.min.css": {
-   "bytes": 42100,
-   "gzip": 8713,
-   "integrity": "sha384-HJIvAQRFDBtIYMhushSAin0yxupdKwGlhPzQl5/nXuzUbq0TiWQ+H1LP42nkU7ji"
+   "bytes": 46079,
+   "gzip": 9429,
+   "integrity": "sha384-jvlAYNFdpG/nG/Bm7BV7SW+zdC+Kn1M0S0qpQQ0Bchr74/nBusl8/Hsg4eu0cgrO"
   },
   "safe-html.min.js": {
    "bytes": 4207,
@@ -173,9 +173,9 @@
    "integrity": "sha384-MaYfqMwWqBWJm78jXPG+jsrZypsn/V58DBecVjXHTn3IXT2mG1XGhN0aaxFX0sBR"
   },
   "toc.min.js": {
-   "bytes": 1891,
-   "gzip": 962,
-   "integrity": "sha384-axSjEoKm1ZwpKnRVPNCdV3SS1f1J103prropZnPo2rg2hxcd+DI2WrmmXUdn6BsS"
+   "bytes": 4685,
+   "gzip": 1844,
+   "integrity": "sha384-sNQ6gCjYQPZ3XpY0dJ9bMSJqX/EM8p0Ht4NMrB1N9/75r7n1SF1yGSlQckUNlueu"
   },
   "tooltip.min.js": {
    "bytes": 2203,

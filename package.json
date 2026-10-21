@@ -11,7 +11,7 @@
     "icons": "node scripts/icons.js",
     "serve": "npx serve .",
     "docs": "python3 scripts/docs-data.py",
-    "locales": "python3 scripts/locales-site.py && python3 scripts/locales-v21.py",
+    "locales": "python3 scripts/locales-site.py && python3 scripts/locales-v21.py && python3 scripts/locales-v22.py",
     "fonts": "node scripts/fonts.js",
     "favicon": "python3 scripts/favicon.py",
     "test": "node --test tests/*.test.js",

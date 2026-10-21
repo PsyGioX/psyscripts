@@ -90,10 +90,11 @@ head=head.replace('<link rel="canonical" href="https://psyscripts.vercel.app/">'
 head=head.replace('data-i18n-path="locales/{lang}.json"','data-i18n-path="locales/{lang}.json,locales/docs/{lang}.json"')
 intro=plr(N,tr_.strip().capitalize() if False else tr_.strip())
 body='''<body>
+<a class="psy-skip" href="#docs" data-i18n="a11y.skip">Перейти к содержимому</a>
 <header data-header><a class="logo" href="index.html"><span>Psy</span>Scripts</a>
 <nav data-menu data-command-source aria-label="Main"><a href="index.html" data-i18n="nav.home">Главная</a><a href="index.html#demo" data-i18n="nav.demo">Демо</a><a href="docs.html" data-i18n="nav.docs">Документация</a><a href="https://github.com/PsyGioX/psyscripts" target="_blank" rel="noopener">GitHub</a></nav>
 <div class="tools"><button class="psy-btn u-cmd" data-command-open aria-label="" data-i18n-attr="aria-label:cmd.open"><i class="psy-ico psy-ico--search" aria-hidden="true"></i><kbd class="u-kbd">Ctrl K</kbd></button><button class="psy-btn u-pad-lang" data-lang-toggle data-i18n-attr="aria-label:aria.lang">EN</button><button data-theme-toggle aria-label="" data-i18n-attr="aria-label:aria.theme"><i class="psy-ico psy-ico--theme" aria-hidden="true"></i></button><button data-menu-toggle aria-expanded="false" aria-label="" data-i18n-attr="aria-label:aria.menu"><i class="psy-ico psy-ico--menu" aria-hidden="true"></i></button></div></header>
-<div class="wrap layout"><aside data-toc data-toc-source="#docs" data-toc-levels="h2" data-sticky data-command-source data-command-group="Docs" data-i18n-attr="aria-label:docs.contents"></aside>
+<div class="wrap layout"><aside data-toc data-toc-source="#docs" data-toc-levels="h2" data-sticky data-command-source data-command-group="Docs" data-i18n-attr="aria-label:docs.contents;data-command-group:cmd.g.docs"></aside>
 <main id="docs"><h1><span class="grad" data-i18n="docs.h1">'''+R['docs.h1']+'''</span></h1><p class="muted" data-i18n="docs.intro" data-i18n-count="%d">%s</p>
 <section class="doc" id="install"><h2 data-i18n="docs.install.h">%s</h2><p class="muted" data-i18n-html="docs.install.p">%s</p>
 <div class="cp"><pre id="c-install"><code>'''%(N,plr(N,tr_.strip()),R['docs.install.h'],R['docs.install.p'])+e('<!-- 1. one line -->\n<script src="https://psyscripts.vercel.app/dist/psyscripts.auto.min.js" defer></script>\n\n<!-- 2. production: styles + bundle -->\n<link rel="stylesheet" href="https://psyscripts.vercel.app/dist/psyscripts.min.css">\n<script src="https://psyscripts.vercel.app/dist/psyscripts.bundle.min.js" defer></script>\n\n<!-- 3. only what you need (core is required for the configuration API) -->\n<link rel="stylesheet" href="https://psyscripts.vercel.app/dist/psyscripts.min.css">\n<script src="https://psyscripts.vercel.app/dist/core.min.js" defer></script>\n<script src="https://psyscripts.vercel.app/dist/tabs.min.js" defer></script>')+'''</code></pre><button data-copy-target="#c-install" data-copied="✓" data-i18n="docs.copy">'''+R['docs.copy']+'''</button></div></section>
@@ -101,6 +102,7 @@ body='''<body>
 </main></div>
 <button data-back-top aria-label="" data-i18n-attr="aria-label:aria.top"><i class="psy-ico psy-ico--arrow-up" aria-hidden="true"></i></button>
 <script src="dist/psyscripts.bundle.min.js"></script>
+<script src="js/site.js"></script>
 </body></html>
 '''
 open('docs.html','w',encoding='utf-8').write(head+body)

@@ -25,6 +25,9 @@
   --psy-radius: 18px;
   --psy-bw: 2px;
   --psy-sh: 3px 3px 0 var(--psy-ink);
+  --psy-ring: 3px;
+  --psy-dur: .18s;
+  --psy-ease: cubic-bezier(.2, .7, .2, 1);
   --psy-font: "Nunito", "SF Pro Rounded", ui-rounded, system-ui, -apple-system, "Segoe UI", sans-serif;
   --psy-mono: "DM Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
 }
@@ -84,12 +87,15 @@
 [data-copy].is-copied, [data-copy-target].is-copied { background: var(--psy-mint); color: var(--psy-text); }
 [data-dd-trigger] .psy-ico { transition: transform .2s; }
 [data-dd-trigger][aria-expanded=true] .psy-ico--chevron-down { transform: rotate(180deg); }
-:focus-visible { outline: 3px solid var(--psy-accent); outline-offset: 3px; }
+:focus-visible { outline: var(--psy-ring, 3px) solid var(--psy-accent); outline-offset: 3px; }
+:focus:not(:focus-visible) { outline: 0; }
 
 /* ============ HeaderMenu ============ */
 [data-header] {
   position: sticky; top: 0; z-index: 50; display: flex; align-items: center; justify-content: space-between; gap: 1rem;
-  padding: .7rem clamp(1rem, 4vw, 2rem); padding-top: calc(.7rem + env(safe-area-inset-top, 0px));
+  padding: .7rem max(clamp(1rem, 4vw, 2rem), env(safe-area-inset-right, 0px)) .7rem max(clamp(1rem, 4vw, 2rem), env(safe-area-inset-left, 0px));
+  padding-top: calc(.7rem + env(safe-area-inset-top, 0px));
+  background: var(--psy-bg);
   background: color-mix(in srgb, var(--psy-bg) 92%, transparent);
   -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px);
   border-bottom: var(--psy-bw) solid var(--psy-ink);
@@ -157,6 +163,7 @@
 dialog[data-modal] {
   width: min(92vw, 480px); padding: 1.6rem; font-family: var(--psy-font); color: var(--psy-text); background: var(--psy-solid);
   border: var(--psy-bw) solid var(--psy-ink); border-radius: 24px; box-shadow: 6px 6px 0 var(--psy-ink);
+  max-height: calc(100vh - 2rem); max-height: calc(100dvh - 2rem); overflow: auto; overscroll-behavior: contain;
 }
 dialog[data-modal]::backdrop {
   background: color-mix(in srgb, var(--psy-ink) 45%, transparent); -webkit-backdrop-filter: blur(3px); backdrop-filter: blur(3px);
@@ -219,7 +226,7 @@ dialog[data-modal][open] { animation: psy-pop .22s ease; }
 
 /* ============ BackToTop ============ */
 [data-back-top] {
-  position: fixed; right: 1rem; bottom: calc(1rem + env(safe-area-inset-bottom, 0px)); z-index: 40;
+  position: fixed; right: max(1rem, env(safe-area-inset-right, 0px)); bottom: calc(1rem + env(safe-area-inset-bottom, 0px)); z-index: 40;
   width: 48px; height: 48px; padding: 0; border-radius: 50%; background: var(--psy-pink); font-size: 1.2rem;
   opacity: 0; visibility: hidden; transform: translateY(12px);
 }
@@ -306,7 +313,7 @@ form[data-validate] [aria-invalid=false] { border-color: var(--psy-ok); }
 .psy-toc__title { margin: 0 0 .5rem; font-weight: 800; color: var(--psy-text); }
 [data-toc] li a {
   display: block; padding: .4rem .9rem; color: var(--psy-muted); text-decoration: none; font-weight: 800; font-size: .92rem;
-  border-radius: 999px; transition: .2s;
+  border-radius: 999px; transition: background var(--psy-dur), color var(--psy-dur);
 }
 [data-toc] li.toc-h3 a { padding-left: 1.7rem; font-size: .86rem; font-weight: 700; }
 [data-toc] a:hover { color: var(--psy-text); background: var(--psy-butter); }
@@ -316,7 +323,39 @@ form[data-validate] [aria-invalid=false] { border-color: var(--psy-ok); }
 [data-toc] .is-numbered li.toc-h2 a::before { content: counter(toc) ". "; }
 [data-toc] .is-numbered li.toc-h3 { counter-increment: sub; }
 [data-toc] .is-numbered li.toc-h3 a::before { content: counter(toc) "." counter(sub) " "; }
-[data-toc][data-sticky] { position: sticky; top: var(--psy-toc-top, 90px); align-self: start; max-height: calc(100vh - 110px); overflow: auto; }
+[data-toc][data-sticky] {
+  position: sticky; top: var(--psy-toc-top, 90px); align-self: start;
+  max-height: calc(100vh - 110px); max-height: calc(100dvh - 110px); overflow: auto; overscroll-behavior: contain; scrollbar-width: thin;
+}
+/* the collapsible header exists in the DOM on every screen but is shown on small ones only */
+.psy-toc__toggle { display: none; }
+
+/* Phones and small tablets: a compact sticky bar ("Contents · current section") that opens a sheet */
+@media (max-width: 860px) {
+  [data-toc] { position: relative; z-index: 30; }
+  [data-toc][data-sticky] { position: sticky; top: calc(var(--psy-header-h, 4.5rem) + .5rem); max-height: none; overflow: visible; }
+  .psy-toc__toggle {
+    display: flex; align-items: center; gap: .6rem; width: 100%; min-height: 48px; padding: .4rem 1rem; margin: 0;
+    font: 800 .95rem/1.2 var(--psy-font); color: var(--psy-text); text-align: start; cursor: pointer;
+    background: var(--psy-solid); border: var(--psy-bw) solid var(--psy-ink); border-radius: 999px; box-shadow: var(--psy-sh);
+    -webkit-tap-highlight-color: transparent; touch-action: manipulation;
+  }
+  .psy-toc__label { flex: none; font-size: .72rem; letter-spacing: .08em; text-transform: uppercase; color: var(--psy-muted); }
+  .psy-toc__current { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .psy-toc__toggle .psy-ico { flex: none; transition: transform var(--psy-dur) var(--psy-ease); }
+  [data-toc].is-open .psy-toc__toggle .psy-ico { transform: rotate(180deg); }
+  [data-toc].is-open .psy-toc__toggle { background: var(--psy-lav); }
+  .psy-toc__panel {
+    position: absolute; inset-inline: 0; top: calc(100% + .5rem); max-height: min(65vh, 28rem); max-height: min(65dvh, 28rem);
+    overflow: auto; overscroll-behavior: contain; padding: .5rem;
+    background: var(--psy-solid); border: var(--psy-bw) solid var(--psy-ink); border-radius: var(--psy-radius); box-shadow: var(--psy-sh);
+    opacity: 0; visibility: hidden; transform: translateY(-6px);
+    transition: opacity var(--psy-dur), transform var(--psy-dur) var(--psy-ease), visibility 0s linear var(--psy-dur);
+  }
+  [data-toc].is-open .psy-toc__panel { opacity: 1; visibility: visible; transform: none; transition-delay: 0s; }
+  [data-toc] li a { min-height: 44px; display: flex; align-items: center; padding: .55rem 1rem; font-size: 1rem; }
+  [data-toc] li.toc-h3 a { padding-left: 2rem; font-size: .95rem; }
+}
 
 /* ============ Marquee ============ */
 [data-marquee] {
@@ -371,7 +410,8 @@ dialog.psy-lightbox::backdrop { background: color-mix(in srgb, #150f26 88%, tran
 
 /* ============ CookieBanner ============ */
 [data-cookie-banner] {
-  position: fixed; left: 1rem; right: 1rem; bottom: calc(1rem + env(safe-area-inset-bottom, 0px)); z-index: 90;
+  position: fixed; left: max(1rem, env(safe-area-inset-left, 0px)); right: max(1rem, env(safe-area-inset-right, 0px)); bottom: calc(1rem + env(safe-area-inset-bottom, 0px)); z-index: 90;
+  max-height: calc(100vh - 2rem); max-height: calc(100dvh - 2rem); overflow: auto;
   max-width: 620px; margin: auto; display: flex; flex-wrap: wrap; align-items: center; gap: .7rem 1rem; padding: 1rem 1.2rem;
   color: var(--psy-text); background: var(--psy-butter); border: var(--psy-bw) solid var(--psy-ink); border-radius: var(--psy-radius);
   box-shadow: 5px 5px 0 var(--psy-ink);
@@ -529,3 +569,40 @@ dialog.psy-cmd::backdrop { background: color-mix(in srgb, var(--psy-ink) 45%, tr
 .psy-sortable.is-sorting { cursor: grabbing; }
 .psy-sortable .psy-ico--grip { color: var(--psy-muted); margin-right: .4rem; }
 @media (pointer: coarse) { .psy-sortable:not(:has([data-sortable-handle])) { touch-action: none; } }
+
+/* ============ Foundations: accessibility, input modes, print ============ */
+/* skip link: first focusable element of the page (WCAG 2.4.1) */
+.psy-skip {
+  position: fixed; inset-block-start: .75rem; inset-inline-start: .75rem; z-index: 1000; padding: .7rem 1.1rem;
+  font: 800 .95rem/1 var(--psy-font); color: var(--psy-on-primary); text-decoration: none;
+  background: var(--psy-primary); border: var(--psy-bw) solid var(--psy-ink); border-radius: 999px; box-shadow: var(--psy-sh);
+  transform: translateY(-200%);
+}
+.psy-skip:focus { transform: none; }
+
+/* touch: every control gets a 44 x 44 px target (WCAG 2.5.5 / Apple HIG) */
+@media (pointer: coarse) {
+  [data-copy], [data-copy-target], [data-tab], .psy-btn--sm { min-height: 44px; }
+  [data-theme-toggle], [data-menu-toggle] { min-width: 44px; }
+  input[type=checkbox], input[type=radio] { min-width: 1.25rem; min-height: 1.25rem; }
+}
+
+/* reduced motion: no transitions on PsyScripts surfaces */
+@media (prefers-reduced-motion: reduce) {
+  .psy-btn, [data-copy], [data-copy-target], [data-theme-toggle], [data-menu-toggle], [data-dd-trigger], [data-header], [data-tab],
+  [data-toc] li a, .psy-toc__toggle .psy-ico, .psy-toc__panel, [data-back-top] { transition: none; }
+  .psy-btn:hover, [data-copy]:hover, [data-copy-target]:hover, [data-theme-toggle]:hover, [data-menu-toggle]:hover, [data-dd-trigger]:hover { transform: none; }
+}
+
+/* Windows High Contrast / forced colors */
+@media (forced-colors: active) {
+  .psy-btn, [data-copy], [data-copy-target], [data-theme-toggle], [data-menu-toggle], [data-dd-trigger], .psy-toc__toggle, .psy-toc__panel, [data-header] { border-color: ButtonText; box-shadow: none; }
+  :focus-visible { outline: 3px solid Highlight; }
+  [data-toc] a.is-active, [data-tab][aria-selected=true], .psy-btn[aria-pressed=true] { background: Highlight; color: HighlightText; forced-color-adjust: none; }
+}
+
+/* print: content only */
+@media print {
+  [data-header], [data-toc], [data-back-top], [data-cookie-banner], [data-progress], .psy-skip, .psy-toasts { display: none !important; }
+  * { box-shadow: none !important; }
+}

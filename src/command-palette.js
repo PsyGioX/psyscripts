@@ -80,7 +80,12 @@
       var head = rc.map(function (id) { return byId[id]; }).filter(Boolean).map(function (c) { return { c: c, g: O('groupRecent') }; });
       var ids = {};
       head.forEach(function (r) { ids[r.c.id] = 1; });
-      res = head.concat(all.filter(function (c) { return !ids[c.id]; }).map(function (c) { return { c: c, g: c.group || O('groupDefault') }; }));
+      var rest = all.filter(function (c) { return !ids[c.id]; }).map(function (c) { return { c: c, g: c.group || O('groupDefault') }; });
+      /* commands come from several sources: keep each group together (order of first appearance) so headings are not repeated */
+      var order = [];
+      rest.forEach(function (r) { if (order.indexOf(r.g) < 0) order.push(r.g); });
+      rest = rest.map(function (r, i) { return { r: r, o: order.indexOf(r.g), i: i }; }).sort(function (a, b) { return a.o - b.o || a.i - b.i; }).map(function (x) { return x.r; });
+      res = head.concat(rest);
     } else {
       res = all.map(function (c) { return { c: c, s: rank(c, terms), g: c.group || O('groupDefault') }; })
         .filter(function (r) { return r.s > 0; }).sort(function (a, b) { return b.s - a.s; });
@@ -156,7 +161,8 @@
     if (!shown.length) {
       var n = el('li', 'psy-cmd__none', O('empty')); n.setAttribute('role', 'presentation'); list.appendChild(n);
     }
-    live.textContent = shown.length ? String(O('results')).replace('{n}', shown.length) : O('empty');
+    var rs = O('results');
+    live.textContent = shown.length ? (typeof rs === 'function' ? String(rs(shown.length)) : String(rs).replace('{n}', shown.length)) : O('empty');
     go(shown.length ? 0 : -1, true);
   }
   function go(i, noScroll) {

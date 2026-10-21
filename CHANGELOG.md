@@ -1,6 +1,18 @@
 # Changelog
 
 ## Unreleased
+### Fixed
+- **StickyTOC on phones**: the contents list was hidden below 860 px. It is now a sticky “Contents · current section” bar that opens a sheet (closes on link tap, Escape and outside tap; announces state via `aria-expanded`). New options `collapsible`, `label` and event `toc:toggle`.
+- **Command palette on the docs page** was only partly translated: palette texts, group names and plural forms are now set by the shared `js/site.js` on every page; `results` may be a function. Duplicate group headings are merged.
+### Responsive
+- Header no longer overflows at 320–360 px (fluid logo, compact 40 px tools) and the landing page switches to the burger menu below 1100 px (`data-breakpoint`) instead of scrolling sideways at 861–1080 px; the menu is a compact card on tablets and scrolls inside itself on short landscape screens.
+- Docs: long inline `<code>` no longer stretches the page on phones; tables get scroll shadows and compact cells; fluid sidebar width.
+- Landing: stat cards 2 × 2 on narrow phones, one-row swipeable catalog filters, full-width search; customizer stays two-column down to 720 px.
+- Wide screens: container grows to 1240 / 1400 px, root font size scales gently (percent-based, respects the browser setting), header lines up with the container.
+- Modals, cookie banner and back-to-top respect `dvh` and left/right safe areas; compact header and menu in landscape phones.
+### Changed
+- Design: new tokens `--psy-ring`, `--psy-dur`, `--psy-ease`; skip link; 44 px touch targets on coarse pointers; safe-area insets (`viewport-fit=cover`); `prefers-reduced-motion`, `forced-colors` and print styles; `--psy-header-h` / `--psy-toc-h` keep anchors clear of sticky bars; hover effects only on hover-capable devices; readable line length in docs.
+- **Customizer** rebuilt: sticky live preview with light/dark switch, 7 presets (new Slate and Contrast AAA; all pass WCAG AA), colour picker + HEX field, live WCAG contrast report, shape/typography controls, behaviour options, export as JS / CSS / JSON and import.
 ### Changed
 - All copy-paste include paths in the landing page, docs, translations, README and the “copy include” button are now absolute: `https://psyscripts.vercel.app/dist/<file>.min.js`.
 ### Added

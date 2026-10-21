@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="ru" data-theme="light" data-i18n-langs="ru,en" data-i18n-default="ru" data-i18n-path="locales/{lang}.json">
 <head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title data-i18n="meta.title">PsyScripts</title>
 <meta name="description" content="" data-i18n-attr="content:meta.desc">
 <link rel="canonical" href="https://psyscripts.vercel.app/">
@@ -13,8 +13,9 @@
 <link rel="stylesheet" href="css/fonts.css"><link rel="stylesheet" href="css/icons.css"><link rel="stylesheet" href="css/psyscripts.css"><link rel="stylesheet" href="css/tabs.css"><link rel="stylesheet" href="css/site.css">
 </head>
 <body>
+<a class="psy-skip" href="#top" data-i18n="a11y.skip">Перейти к содержимому</a>
 <div data-progress></div>
-<header data-header>
+<header data-header class="hdr-wide" data-breakpoint="1100">
 <a class="logo" href="#top"><span>Psy</span>Scripts</a>
 <nav data-menu data-spy data-command-source aria-label="Main">
 <a href="#scripts" data-i18n="nav.scripts"></a><a href="#demo" data-i18n="nav.demo"></a><a href="#customize" data-i18n="nav.customize"></a><a href="#install" data-i18n="nav.install"></a><a href="docs.html" data-i18n="nav.docs"></a>
@@ -210,36 +211,69 @@
 <section id="customize"><div class="wrap">
 <h2 data-reveal data-i18n="cz.title"></h2><p class="muted" data-reveal data-i18n="cz.sub"></p>
 <div class="cz" data-reveal>
+
+<div class="cz-stage">
 <div class="cz-pane">
-<h3 data-i18n="cz.tokens"></h3>
-<div class="presets" role="group" data-i18n-attr="aria-label:cz.presets">
-<button class="chip" data-preset="lofi" data-i18n="cz.p.lofi"></button><button class="chip" data-preset="ocean" data-i18n="cz.p.ocean"></button><button class="chip" data-preset="forest" data-i18n="cz.p.forest"></button><button class="chip" data-preset="sunset" data-i18n="cz.p.sunset"></button><button class="chip" data-preset="mono" data-i18n="cz.p.mono"></button></div>
-<div class="swatches" id="swatches"></div>
-<div class="ctrl"><label><span><span data-i18n="cz.radius"></span> <span class="val" id="cz-radius-v">18px</span></span><input type="range" id="cz-radius" min="0" max="32" value="18"></label>
-<label><span><span data-i18n="cz.border"></span> <span class="val" id="cz-bw-v">2px</span></span><input type="range" id="cz-bw" min="1" max="4" value="2"></label>
-<label><span data-i18n="cz.shadow"></span><select id="cz-shadow"><option value="3px 3px 0 var(--psy-ink)">hard</option><option value="0 6px 16px color-mix(in srgb,var(--psy-ink) 35%,transparent)">soft</option><option value="6px 6px 0 var(--psy-ink)">big</option><option value="none">none</option></select></label>
-<label><span data-i18n="cz.font"></span><select id="cz-font"><option value='"Nunito","SF Pro Rounded",ui-rounded,system-ui,sans-serif'>Nunito</option><option value='system-ui,-apple-system,"Segoe UI",sans-serif'>System</option><option value='Georgia,"Times New Roman",serif'>Serif</option><option value='ui-monospace,SFMono-Regular,Menlo,monospace'>Mono</option></select></label></div>
-<div class="row start u-mt1"><button class="psy-btn psy-btn--primary" id="cz-save" data-i18n="cz.save"></button><button class="psy-btn" id="cz-reset" data-i18n="cz.reset"></button></div>
-<h3 data-i18n="cz.preview" class="u-mt14"></h3>
+<div class="cz-head"><h3 data-i18n="cz.preview"></h3>
+<div class="seg" role="group" data-i18n-attr="aria-label:cz.mode"><button type="button" data-theme-set="light" data-i18n="cz.light"></button><button type="button" data-theme-set="dark" data-i18n="cz.dark"></button></div></div>
 <div class="preview"><div class="row start"><button class="psy-btn psy-btn--primary" data-i18n="demo.submit"></button><button class="psy-btn" data-toast="" data-toast-type="success" data-i18n="demo.show" data-i18n-attr="data-toast:demo.hello"></button><span class="psy-btn" data-tooltip="" data-i18n-attr="data-tooltip:demo.tip">?</span></div>
 <div data-tabs><div role="tablist"><button data-tab data-i18n="d.tabs.a"></button><button data-tab data-i18n="d.tabs.b"></button></div><div data-panel data-i18n="d.tabs.pa"></div><div data-panel data-i18n="d.tabs.pb"></div></div>
 <div data-accordion><div data-acc-item class="is-open"><button data-acc-trigger aria-expanded="true" data-i18n="demo.acc1"></button><div data-acc-panel><div data-i18n="demo.acc1a"></div></div></div></div></div>
 </div>
 <div class="cz-pane">
-<h3 data-i18n="cz.config"></h3>
+<div class="cz-head"><h3 data-i18n="cz.a11y"></h3></div>
+<ul class="a11y" id="cz-a11y" aria-live="polite"></ul>
+<p class="muted u-sm" data-i18n="cz.a11y.note"></p>
+</div>
+</div>
+
+<div class="cz-pane">
+<div data-tabs>
+<div role="tablist" data-i18n-attr="aria-label:cz.tabs"><button data-tab data-i18n="cz.tab.colors"></button><button data-tab data-i18n="cz.tab.shape"></button><button data-tab data-i18n="cz.tab.behavior"></button><button data-tab data-i18n="cz.tab.code"></button></div>
+
+<div data-panel>
+<h3 class="cz-sub" data-i18n="cz.presets"></h3>
+<div class="presets" role="group" data-i18n-attr="aria-label:cz.presets">
+<button type="button" class="preset" data-preset="lofi" aria-pressed="true"><span class="dots"></span><span data-i18n="cz.p.lofi"></span></button><button type="button" class="preset" data-preset="slate" aria-pressed="false"><span class="dots"></span><span data-i18n="cz.p.slate"></span></button><button type="button" class="preset" data-preset="ocean" aria-pressed="false"><span class="dots"></span><span data-i18n="cz.p.ocean"></span></button><button type="button" class="preset" data-preset="forest" aria-pressed="false"><span class="dots"></span><span data-i18n="cz.p.forest"></span></button><button type="button" class="preset" data-preset="sunset" aria-pressed="false"><span class="dots"></span><span data-i18n="cz.p.sunset"></span></button><button type="button" class="preset" data-preset="mono" aria-pressed="false"><span class="dots"></span><span data-i18n="cz.p.mono"></span></button><button type="button" class="preset" data-preset="contrast" aria-pressed="false"><span class="dots"></span><span data-i18n="cz.p.contrast"></span></button></div>
+<p class="muted u-sm" data-i18n="cz.tokens"></p>
+<div id="swatches"></div>
+<div class="cz-actions"><button class="psy-btn psy-btn--primary" id="cz-save" data-i18n="cz.save"></button><button class="psy-btn" id="cz-reset" data-i18n="cz.reset"></button></div>
+</div>
+
+<div data-panel>
+<div class="ctrl"><label><span><span data-i18n="cz.radius"></span> <span class="val" id="cz-radius-v">18px</span></span><input type="range" id="cz-radius" min="0" max="32" value="18"></label>
+<label><span><span data-i18n="cz.border"></span> <span class="val" id="cz-bw-v">2px</span></span><input type="range" id="cz-bw" min="1" max="4" value="2"></label></div>
+<h3 class="cz-sub" data-i18n="cz.shadow"></h3>
+<div class="seg" id="cz-shadow" role="group" data-i18n-attr="aria-label:cz.shadow"><button type="button" data-shadow="hard" aria-pressed="true" data-i18n="cz.s.hard"></button><button type="button" data-shadow="soft" aria-pressed="false" data-i18n="cz.s.soft"></button><button type="button" data-shadow="big" aria-pressed="false" data-i18n="cz.s.big"></button><button type="button" data-shadow="none" aria-pressed="false" data-i18n="cz.s.none"></button></div>
+<h3 class="cz-sub" data-i18n="cz.font"></h3>
+<div class="seg" id="cz-font" role="group" data-i18n-attr="aria-label:cz.font"><button type="button" data-font="nunito" aria-pressed="true">Nunito</button><button type="button" data-font="system" aria-pressed="false">System</button><button type="button" data-font="serif" aria-pressed="false">Serif</button><button type="button" data-font="mono" aria-pressed="false">Mono</button></div>
+</div>
+
+<div data-panel>
 <div class="ctrl">
 <label><span data-i18n="cz.toastPos"></span><select id="g-toast-pos"><option>top-right</option><option>top-center</option><option>bottom-right</option><option>bottom-center</option></select></label>
 <label><span><span data-i18n="cz.toastDur"></span> <span class="val" id="g-toast-dur-v">3000</span></span><input type="range" id="g-toast-dur" min="1000" max="8000" step="500" value="3000"></label>
 <label><span data-i18n="cz.tipPlace"></span><select id="g-tip"><option>top</option><option>bottom</option><option>auto</option></select></label>
 <label><span><span data-i18n="cz.revealDist"></span> <span class="val" id="g-rev-v">22</span></span><input type="range" id="g-rev" min="0" max="80" value="22"></label>
 <label class="chk"><input type="checkbox" id="g-modal" checked><span data-i18n="o.backdrop"></span></label>
-<label class="chk"><input type="checkbox" id="g-newest"><span data-i18n="cz.newest"></span></label></div>
-<h3 data-i18n="cz.code" class="u-mt12"></h3>
-<div class="cp"><pre id="cz-code" class="u-mh340"><code></code></pre><button data-copy-target="#cz-code" data-copy-toast><i class="psy-ico psy-ico--copy" aria-hidden="true"></i><span data-i18n="install.copy"></span></button></div>
-<h3 data-i18n="cz.events" class="u-mt12"></h3>
+<label class="chk"><input type="checkbox" id="g-newest"><span data-i18n="cz.newest"></span></label>
+<label class="chk"><input type="checkbox" id="g-menu"><span data-i18n="cz.menuHide"></span></label></div>
+<h3 class="cz-sub" data-i18n="cz.events"></h3>
 <ul class="logline u-mh170" id="log-all"></ul>
 <div class="row start u-mt08"><button class="psy-btn psy-btn--sm" id="log-clear" data-i18n="o.clear"></button></div>
-</div></div></div></section>
+</div>
+
+<div data-panel>
+<div class="cz-head"><div class="seg" id="cz-fmt" role="group" data-i18n-attr="aria-label:cz.format"><button type="button" data-fmt="js" aria-pressed="true">JS</button><button type="button" data-fmt="css" aria-pressed="false">CSS</button><button type="button" data-fmt="json" aria-pressed="false">JSON</button></div></div>
+<div class="cp"><pre id="cz-code" class="u-mh340" tabindex="0"><code></code></pre><button data-copy-target="#cz-code" data-copy-toast><i class="psy-ico psy-ico--copy" aria-hidden="true"></i><span data-i18n="install.copy"></span></button></div>
+<h3 class="cz-sub" data-i18n="cz.import"></h3>
+<textarea id="cz-import" spellcheck="false" autocomplete="off" data-i18n-attr="aria-label:cz.import;placeholder:cz.import.ph"></textarea>
+<div class="cz-actions"><button class="psy-btn psy-btn--sm" id="cz-apply" data-i18n="cz.apply"></button></div>
+<p class="cz-msg" id="cz-msg" role="status"></p>
+</div>
+
+</div></div>
+</div></div></section>
 
 <section id="install"><div class="wrap">
 <h2 data-reveal data-i18n="install.title"></h2><p class="muted" data-reveal data-i18n="install.sub"></p>
@@ -263,5 +297,6 @@
 <footer><div class="wrap"><a href="docs.html#security" data-i18n="footer.security"></a> · <a href="docs.html#files" data-i18n="footer.files"></a> · © 2026 <a href="https://psygiox-dev.vercel.app" target="_blank" rel="noopener">PsyGioX</a> · <span data-i18n="footer.rights"></span> · <a href="https://github.com/PsyGioX/psyscripts" target="_blank" rel="noopener">GitHub</a></div></footer>
 <button data-back-top aria-label="" data-i18n-attr="aria-label:aria.top"><i class="psy-ico psy-ico--arrow-up" aria-hidden="true"></i></button>
 <script src="dist/psyscripts.bundle.min.js"></script>
+<script src="js/site.js"></script>
 <script src="js/demo.js"></script>
 </body></html>

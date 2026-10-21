@@ -16,8 +16,13 @@
     h.classList.toggle('is-open', on);
     var b = h.querySelector('[data-menu-toggle]');
     if (b) b.setAttribute('aria-expanded', on);
-    if (on) h.classList.remove('is-hidden');
+    if (on) { h.classList.remove('is-hidden'); sync(); }
     E('menu:toggle', { header: h, open: on }, h);
+  }
+  /* publishes the visible header height as --psy-header-h (the sticky mobile TOC bar sits right under it) */
+  function sync() {
+    var h = document.querySelector('[data-header]');
+    document.documentElement.style.setProperty('--psy-header-h', h && !h.classList.contains('is-hidden') ? Math.round(h.getBoundingClientRect().height) + 'px' : '0px');
   }
   function openOnes() { return [].slice.call(document.querySelectorAll('[data-header].is-open')); }
 
@@ -41,7 +46,10 @@
       b && b.focus();
     });
   });
+  document.addEventListener('DOMContentLoaded', sync);
+  addEventListener('load', sync);
   addEventListener('resize', function () {
+    sync();
     openOnes().forEach(function (h) { if (innerWidth > O('breakpoint', h)) setOpen(h, false); });
   });
 
@@ -57,6 +65,7 @@
         else if (dy < -6 || y < 10) h.classList.remove('is-hidden');
       });
       last = y;
+      sync();
     });
   }, { passive: true });
 })();
