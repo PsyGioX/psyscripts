@@ -55,6 +55,25 @@ npm run audit        # npm audit --audit-level=low
 - Docs and UI strings need **both RU and EN**. Russian is the default language.
 - Add a line to `CHANGELOG.md` for user-visible changes.
 
+## Pull Requests and Issues (mandatory)
+The **original repository** is `PsyGioX/psyscripts` (https://github.com/PsyGioX/psyscripts). Every change you make must reach it through GitHub — never leave work only in a local checkout, a fork, or a chat reply.
+1. **Issue first.** Before changing anything, search existing issues (`gh issue list --repo PsyGioX/psyscripts --search "<keywords>"`). If none matches, open one in the original repository describing the problem or feature (what, why, expected result). Reuse an existing issue if there is one.
+2. **Branch and PR.** Work on a separate branch (`fix/<short-name>`, `feat/<short-name>`, `docs/<short-name>`) — never push directly to `main`. When done, open a **Pull Request into `PsyGioX/psyscripts`**. If you work from a fork, the PR must target the original repository, not the fork.
+3. **Link them.** The PR description must reference the issue (`Closes #<number>`) and contain: a short summary, the list of changed files, how you tested it (`npm run build`, `npm test`), and whether `CHANGELOG.md` was updated.
+4. **Issues for everything you find but do not fix.** Bugs, inconsistencies, outdated docs, or ideas noticed along the way but out of scope for the current PR → open a separate issue in the original repository. Do not silently ignore them and do not bundle unrelated fixes into one PR.
+5. **Do not open a PR with failing checks.** `npm run build` and `npm test` must pass first.
+6. **Security exception.** Vulnerabilities are **never** reported as public issues or PRs — follow `SECURITY.md` (see "Security constraints").
+7. **If you cannot create the PR/issue** (no `gh`, no token, no network), do not skip it silently: tell the user explicitly, and leave the branch pushed (or a patch) plus ready-to-paste issue and PR texts.
+
+Example:
+```bash
+gh issue create --repo PsyGioX/psyscripts --title "<title>" --body "<description>"
+git switch -c fix/<short-name>
+# ...changes, npm run build, npm test...
+git push -u origin fix/<short-name>
+gh pr create --repo PsyGioX/psyscripts --base main --title "<title>" --body "Closes #<issue>"
+```
+
 ## Definition of done
-`npm run build` succeeds → `npm test` passes → no new relative `dist/` paths in user-facing snippets
+`npm run build` succeeds → `npm test` passes → an Issue and a Pull Request exist in `PsyGioX/psyscripts` (linked via `Closes #N`) → no new relative `dist/` paths in user-facing snippets
 (`grep -rn 'src="dist/' index.html README.md docs.html` should only show the site's own bundle tag).
